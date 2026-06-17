@@ -1,0 +1,14 @@
+{
+  "name": "fc-koenigsfeld",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FC Königsfeld 1954 e.V. — Website (Homepage V2). Static prototype, ACSS-aligned tokens, BEM + native nested CSS. To be rebuilt on Etch + WordPress.",
+  "scripts": {
+    "vendor": "node scripts/vendor.mjs",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "motion": "^12.0.0",
+    "video.js": "next"
+  }
+}

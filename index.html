@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FC Königsfeld 1954 e.V. — Fußball im Schwarzwald, seit 1954</title>
+<meta name="description" content="FC Königsfeld 1954 e.V. – Fußballverein aus Königsfeld im Schwarzwald. Landesliga, Südbadischer Fußballverband. Spielplan, Ergebnisse, Tabelle, News und alles zum Mitmachen.">
+<meta name="theme-color" content="#a11212">
+
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="css/automatic.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/homepage.css">
+
+<!-- Set the scroll-reveal start state before paint, but only when the user
+     allows motion — content is always visible without JS / under reduced motion. -->
+<script>
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    document.documentElement.classList.add("motion-ready");
+  }
+</script>
+</head>
+<body>
+<div class="v2">
+
+  <!-- ══ Header ══ -->
+  <header class="v2-header">
+    <div class="v2-header__inner">
+      <a class="v2-header__brand" href="index.html" aria-label="FC Königsfeld 1954 – Startseite">
+        <img class="v2-header__crest" src="assets/img/logo-fck.svg" alt="FC Königsfeld 1954" width="88" height="88">
+      </a>
+      <nav class="v2-header__nav" aria-label="Hauptnavigation">
+        <a class="v2-header__link" href="Mannschaften.html">Mannschaften</a>
+        <a class="v2-header__link" href="Matchcenter.html">Matchcenter</a>
+        <a class="v2-header__link" href="Verein.html">Verein</a>
+        <a class="v2-header__link" href="Foerderverein.html">Förderverein</a>
+        <a class="v2-header__link" href="Mitmachen.html">Mitmachen</a>
+        <a class="v2-header__link" href="Medien.html">Medien</a>
+        <a class="v2-header__link" href="Sponsoren.html">Sponsoren</a>
+
+        <a class="btn btn--sm" href="Mitmachen.html#mitglied">Mitglied werden</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══ Hero (stadium photo · matchday poster) ══ -->
+  <section class="v2-hero">
+    <img class="v2-hero__photo" src="assets/img/hero-stadium.jpg" alt="Anstoß im Stadion des FC Königsfeld" fetchpriority="high" width="2560" height="1440">
+    <span class="v2-hero__scrim" aria-hidden="true"></span>
+    <span class="v2-hero__ghost" aria-hidden="true">1954</span>
+    <div class="v2-hero__inner">
+      <span class="v2-kicker v2-kicker--light">Landesliga · Südbadischer Fußballverband e.V.</span>
+      <h1 class="v2-hero__title">FC Königsfeld<br><em>1954</em> e.V.</h1>
+      <p class="v2-hero__lead">Seit 1954 Fußball aus Königsfeld – für alle, vom Bambini bis zu den Aktiven.</p>
+      <div class="v2-hero__actions">
+        <a class="btn btn--lg" href="Matchcenter.html#spielplan">Nächstes Spiel ansehen</a>
+        <a class="btn btn--on-dark btn--lg" href="Mitmachen.html#mitglied">Mitglied werden</a>
+      </div>
+    </div>
+    <div class="v2-hero__rail">
+      <span>Königsfeld im Schwarzwald</span>
+      <span>Gegründet 1954</span>
+      <span>Südbadischer Fußballverband</span>
+      <span class="v2-hero__rail-hash">#RotWeiß</span>
+    </div>
+  </section>
+
+  <!-- ══ Nächstes Spiel (overlapping fixture bar) ══ -->
+  <section class="v2-fixture" aria-label="Nächstes Spiel">
+    <div class="v2-fixture__card" data-reveal>
+      <div>
+        <div class="v2-fixture__label">Nächstes Spiel · 34. Spieltag</div>
+        <div class="v2-fixture__when">Sa 21.06. · 15:30 Uhr</div>
+      </div>
+      <div class="v2-fixture__teams">
+        <span class="v2-fixture__team"><span class="v2-fixture__crest">BSC</span>Bahlinger SC II</span>
+        <span class="v2-fixture__vs">:</span>
+        <span class="v2-fixture__team v2-fixture__team--fck">FC Königsfeld<span class="v2-fixture__crest v2-fixture__crest--fck">FCK</span></span>
+      </div>
+      <div class="v2-fixture__venue">Kaiserstuhl-Stadion<br>Bahlingen</div>
+    </div>
+  </section>
+
+  <!-- ══ Zuletzt gespielt ══ -->
+  <section class="v2-section">
+    <div class="v2-section__head">
+      <div>
+        <span class="v2-kicker">Zuletzt gespielt</span>
+        <h2 class="v2-title">Ergebnisse</h2>
+      </div>
+      <a class="btn btn--ghost" href="Matchcenter.html#ergebnisse">Alle Ergebnisse →</a>
+    </div>
+    <div class="v2-results">
+      <article class="v2-result" data-reveal>
+        <div class="v2-result__meta"><span>Landesliga · 33. ST</span><span>So 18.05.</span></div>
+        <div class="v2-result__row"><span class="v2-result__team">FC Königsfeld</span><span class="v2-result__score v2-result__score--win">3:1</span></div>
+        <div class="v2-result__row"><span class="v2-result__team v2-result__team--muted">SV Hölzlebruck</span></div>
+      </article>
+      <article class="v2-result" data-reveal data-reveal-delay="0.08">
+        <div class="v2-result__meta"><span>Relegation</span><span>Mi 14.05.</span></div>
+        <div class="v2-result__row"><span class="v2-result__team">FC Königsfeld</span><span class="v2-result__score v2-result__score--loss">1:2</span></div>
+        <div class="v2-result__row"><span class="v2-result__team v2-result__team--muted">FC Neustadt</span></div>
+      </article>
+      <article class="v2-result" data-reveal data-reveal-delay="0.16">
+        <div class="v2-result__meta"><span>Landesliga · 32. ST</span><span>Sa 10.05.</span></div>
+        <div class="v2-result__row"><span class="v2-result__team v2-result__team--muted">SG Schluchsee</span><span class="v2-result__score v2-result__score--win">0:2</span></div>
+        <div class="v2-result__row"><span class="v2-result__team">FC Königsfeld</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══ Tabelle ══ -->
+  <section class="v2-table">
+    <div class="v2-table__head">
+      <div>
+        <span class="v2-kicker">Landesliga · Staffel 3</span>
+        <h2 class="v2-title">Tabelle · Saison 2025/26</h2>
+      </div>
+      <a class="btn btn--ghost" href="Matchcenter.html#tabelle">Komplette Tabelle →</a>
+    </div>
+    <div class="v2-table__grid">
+      <table class="v2-standings">
+        <caption class="u-visually-hidden">Tabelle der Landesliga, Staffel 3, Saison 2025/26</caption>
+        <thead>
+          <tr><th scope="col">#</th><th scope="col">Verein</th><th scope="col">Sp</th><th scope="col">Diff</th><th scope="col">Pkt</th></tr>
+        </thead>
+        <tbody>
+          <tr class="v2-st--promo"><td class="v2-st__pos">1</td><td class="v2-st__club">FC Neustadt</td><td>33</td><td>+41</td><td class="v2-st__pts">71</td></tr>
+          <tr class="v2-st--fck v2-st--promo"><td class="v2-st__pos">2</td><td class="v2-st__club">FC Königsfeld</td><td>33</td><td>+34</td><td class="v2-st__pts">68</td></tr>
+          <tr><td class="v2-st__pos">3</td><td class="v2-st__club">SV Geisingen</td><td>33</td><td>+27</td><td class="v2-st__pts">61</td></tr>
+          <tr><td class="v2-st__pos">4</td><td class="v2-st__club">DJK Villingen</td><td>33</td><td>+19</td><td class="v2-st__pts">58</td></tr>
+          <tr><td class="v2-st__pos">5</td><td class="v2-st__club">SG Schluchsee</td><td>33</td><td>+12</td><td class="v2-st__pts">52</td></tr>
+          <tr><td class="v2-st__pos">6</td><td class="v2-st__club">FC Bad Dürrheim</td><td>33</td><td>+6</td><td class="v2-st__pts">47</td></tr>
+        </tbody>
+      </table>
+      <aside class="v2-table__aside" data-reveal>
+        <span class="v2-kicker v2-kicker--light">Unsere Saison</span>
+        <h3 class="v2-title">Vizemeister – um Haaresbreite</h3>
+        <p>Platz 2 in der Landesliga, nur die Relegation trennte uns von der Verbandsliga. Eine Saison zum Stolzsein.</p>
+        <div class="v2-form" aria-label="Letzte fünf Spiele: Sieg, Niederlage, Sieg, Unentschieden, Sieg">
+          <span class="v2-form__pill v2-form__pill--win">S</span>
+          <span class="v2-form__pill v2-form__pill--loss">N</span>
+          <span class="v2-form__pill v2-form__pill--win">S</span>
+          <span class="v2-form__pill v2-form__pill--draw">U</span>
+          <span class="v2-form__pill v2-form__pill--win">S</span>
+        </div>
+        <a class="btn btn--on-dark" href="Historie.html">Saisonrückblick</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ══ News ══ -->
+  <section class="v2-news">
+    <div class="v2-news__inner">
+      <div class="v2-news__head">
+        <div>
+          <span class="v2-kicker">Aktuelles</span>
+          <h2 class="v2-title">Neues vom #FCK</h2>
+        </div>
+        <a class="btn btn--ghost" href="Medien.html">Zum Blog →</a>
+      </div>
+      <div class="v2-news__grid">
+        <article class="v2-lead" data-reveal>
+          <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: Verdienter 3:1-Heimsieg zum Saisonende"></a>
+          <div class="v2-media v2-media--dark"><span class="v2-media__label">Aufmacherbild</span></div>
+          <div class="v2-lead__scrim"></div>
+          <div class="v2-lead__body">
+            <span class="badge badge--red badge--solid">Spielbericht</span>
+            <div class="v2-lead__date">19.05.2026</div>
+            <h3 class="v2-lead__title">Verdienter 3:1-Heimsieg zum Saisonende</h3>
+          </div>
+        </article>
+        <div class="v2-list">
+          <article class="v2-item" data-reveal data-reveal-delay="0.06">
+            <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: Relegation knapp verpasst"></a>
+            <div class="v2-item__media"><div class="v2-media v2-media--dark"><span class="v2-media__label">Bild</span></div></div>
+            <div class="v2-item__body">
+              <div class="v2-item__meta"><span class="badge badge--red">Verein</span><span>12.05.2026</span></div>
+              <h3 class="v2-item__title">Relegation knapp verpasst – Kopf hoch, Jungs</h3>
+            </div>
+          </article>
+          <article class="v2-item" data-reveal data-reveal-delay="0.12">
+            <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: A-Jugend ist Staffelsieger"></a>
+            <div class="v2-item__media"><div class="v2-media v2-media--dark"><span class="v2-media__label">Bild</span></div></div>
+            <div class="v2-item__body">
+              <div class="v2-item__meta"><span class="badge badge--red">Jugend</span><span>04.05.2026</span></div>
+              <h3 class="v2-item__title">A-Jugend ist Staffelsieger</h3>
+            </div>
+          </article>
+          <article class="v2-item" data-reveal data-reveal-delay="0.18">
+            <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: Kimmich Junior Cup – Anmeldung läuft"></a>
+            <div class="v2-item__media"><div class="v2-media v2-media--dark"><span class="v2-media__label">Bild</span></div></div>
+            <div class="v2-item__body">
+              <div class="v2-item__meta"><span class="badge badge--red">Termine</span><span>28.04.2026</span></div>
+              <h3 class="v2-item__title">Kimmich Junior Cup – Anmeldung läuft</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Events (keine Spiele) ══ -->
+  <section class="v2-section">
+    <div class="v2-section__head">
+      <div>
+        <span class="v2-kicker">Mehr als Fußball</span>
+        <h2 class="v2-title">Events beim FCK</h2>
+      </div>
+      <a class="btn btn--ghost" href="Veranstaltungen.html">Alle Veranstaltungen →</a>
+    </div>
+    <div class="v2-events">
+      <div class="v2-event" data-reveal>
+        <div class="v2-event__date"><div class="v2-event__d">06</div><div class="v2-event__mo">Sep</div></div>
+        <div class="v2-event__body"><h3>Schwimmerle-Kartenturnier</h3><div class="v2-event__meta">Sa · 19:00 Uhr · Vereinsheim</div><p class="v2-event__desc">Traditionelles Kartenturnier mit Preisen, Vesper und guter Laune – offen für alle.</p></div>
+        <a class="btn btn--secondary btn--sm" href="Veranstaltungen.html">Mehr</a>
+      </div>
+      <div class="v2-event" data-reveal data-reveal-delay="0.08">
+        <div class="v2-event__date"><div class="v2-event__d">04</div><div class="v2-event__mo">Okt</div></div>
+        <div class="v2-event__body"><h3>Familien- &amp; Vereinsfest</h3><div class="v2-event__meta">So · ab 11:00 Uhr · Sportpark</div><p class="v2-event__desc">Spiel, Spaß und Begegnung für Groß und Klein rund um den HSS Hydraulik Sportpark.</p></div>
+        <a class="btn btn--secondary btn--sm" href="Veranstaltungen.html">Mehr</a>
+      </div>
+      <div class="v2-event" data-reveal data-reveal-delay="0.16">
+        <div class="v2-event__date"><div class="v2-event__d">27</div><div class="v2-event__mo">Dez</div></div>
+        <div class="v2-event__body"><h3>Joshua Kimmich Junior Cup</h3><div class="v2-event__meta">Sa · ganztägig · Bregtalhalle</div><p class="v2-event__desc">Hochkarätiges Hallenturnier mit Top-Nachwuchsteams aus der Region und darüber hinaus.</p></div>
+        <a class="btn btn--secondary btn--sm" href="Veranstaltungen.html">Mehr</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Kader ══ -->
+  <section class="v2-kader">
+    <div class="v2-kader__inner">
+      <div class="v2-kader__text" data-reveal>
+        <span class="v2-kicker v2-kicker--light">Mannschaften</span>
+        <h2 class="v2-title v2-title--light">Unsere Spieler stellen sich vor</h2>
+        <p>Bei uns spielt der ganze Ort – und jede Woche zeigen sich hier ein paar Gesichter daraus. Die Auswahl wechselt, vom Bambini bis zu den Aktiven.</p>
+        <a class="btn btn--lg" href="Mannschaften.html">Alle Mannschaften</a>
+      </div>
+      <div class="v2-kader__roster">
+        <div class="v2-kplayer" data-reveal><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Leon</span><span class="v2-kplayer__last">Faller</span></span></div></div>
+        <div class="v2-kplayer" data-reveal data-reveal-delay="0.07"><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Noah</span><span class="v2-kplayer__last">Wirth</span></span></div></div>
+        <div class="v2-kplayer" data-reveal data-reveal-delay="0.14"><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Jan</span><span class="v2-kplayer__last">Keller</span></span></div></div>
+        <div class="v2-kplayer" data-reveal data-reveal-delay="0.21"><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Lavdrim</span><span class="v2-kplayer__last">Amiti</span></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Hauptsponsoren ══ -->
+  <section class="v2-sponsors">
+    <div class="v2-sponsors__inner">
+      <div class="v2-section__head">
+        <div>
+          <span class="v2-kicker">Partner</span>
+          <h2 class="v2-title">Unsere Hauptsponsoren</h2>
+        </div>
+        <a class="btn btn--ghost" href="Sponsoren.html">Alle Sponsoren →</a>
+      </div>
+      <p class="v2-sponsors__intro">Ohne sie kein Anpfiff: Starke Partner aus der Region stehen Woche für Woche hinter dem FCK – auf dem Trikot, an der Bande und mitten im Vereinsleben. Sie machen Jugendarbeit und jedes Heimspiel erst möglich.</p>
+
+      <div class="v2-tier">
+        <div class="v2-tier__label">
+          <span class="v2-tier__name">Sportpark</span>
+          <span class="v2-tier__rule"></span>
+        </div>
+        <div class="v2-logos v2-logos--main">
+          <div class="v2-logo v2-logo--lg"><img class="v2-logo__img" src="assets/img/hss-logo.svg" alt="HSS Hydraulik Sportpark" width="320" height="120" loading="lazy"></div>
+        </div>
+      </div>
+
+      <div class="v2-tier">
+        <div class="v2-tier__label">
+          <span class="v2-tier__name">Exclusiv</span>
+          <span class="v2-tier__rule"></span>
+        </div>
+        <div class="v2-logos">
+          <div class="v2-logo"><div class="v2-media"><span class="v2-media__label">Exclusiv-Partner</span></div></div>
+          <div class="v2-logo"><div class="v2-media"><span class="v2-media__label">Exclusiv-Partner</span></div></div>
+          <div class="v2-logo"><div class="v2-media"><span class="v2-media__label">Exclusiv-Partner</span></div></div>
+        </div>
+      </div>
+
+      <div class="v2-sponsors__cta">
+        <a class="btn btn--secondary" href="Sponsoren.html">Alle Sponsoren</a>
+        <a class="btn" href="Sponsoren.html#mitglied">Sponsor werden</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Mitmachen ══ -->
+  <section class="v2-join">
+    <img class="v2-join__mark" src="assets/img/logo-fck.svg" alt="" aria-hidden="true" loading="lazy">
+    <div class="v2-join__inner" data-reveal>
+      <span class="v2-kicker v2-kicker--light">Mitmachen</span>
+      <h2 class="v2-join__title">Werde Teil des <span class="v2-join__hash">#</span>FCK</h2>
+      <p class="v2-join__text">Ob auf dem Platz oder am Spielfeldrand, als Mitglied, Ehrenamtliche:r oder Sponsor – beim FC Königsfeld ist Platz für alle, die Fußball und ihren Verein mögen.</p>
+      <div class="v2-join__actions">
+        <a class="btn btn--on-dark btn--lg" href="Mitmachen.html#mitglied">Mitglied werden</a>
+        <a class="btn btn--secondary btn--lg btn--on-transparent" href="Sponsoren.html">Sponsor werden</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Footer ══ -->
+  <footer class="v2-footer">
+    <div class="v2-footer__inner">
+      <div class="v2-footer__about">
+        <img src="assets/img/logo-fck.svg" alt="FC Königsfeld 1954" width="56" height="56">
+        <p>FC Königsfeld 1954 e.V. — Fußballverein aus Königsfeld im Schwarzwald. Seit 1954.</p>
+      </div>
+      <div>
+        <div class="v2-footer__col-title">Verein</div>
+        <ul class="v2-footer__list"><li><a href="Verein.html#ueber">Über uns</a></li><li><a href="Historie.html">Historie</a></li><li><a href="Verein.html#sportpark">Sportpark</a></li><li><a href="Verein.html#kontakt">Kontakt</a></li></ul>
+      </div>
+      <div>
+        <div class="v2-footer__col-title">Spielbetrieb</div>
+        <ul class="v2-footer__list"><li><a href="Matchcenter.html#spielplan">Spielpläne</a></li><li><a href="Matchcenter.html#ergebnisse">Ergebnisse</a></li><li><a href="Matchcenter.html#tabelle">Tabelle</a></li></ul>
+      </div>
+      <div>
+        <div class="v2-footer__col-title">Mitmachen</div>
+        <ul class="v2-footer__list"><li><a href="Mitmachen.html#mitglied">Mitglied werden</a></li><li><a href="Foerderverein.html">Förderverein</a></li><li><a href="Sponsoren.html">Sponsor werden</a></li></ul>
+      </div>
+    </div>
+    <div class="v2-footer__bar">
+      <div class="v2-footer__bar-inner">
+        <span>© 2026 FC Königsfeld 1954 e.V.</span>
+        <span class="v2-footer__legal"><a href="Impressum.html">Impressum</a><a href="Datenschutz.html">Datenschutz</a><a href="https://www.instagram.com/" rel="noopener">Instagram</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Scripts: vendored Motion (window.Motion) → site behaviour, plus navigation -->
+<script src="js/vendor/motion.min.js" defer></script>
+<script src="js/navigation.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FC Königsfeld 1954 e.V. — ACSS-aligned framework foundation
+   ───────────────────────────────────────────────────────────────────────────
+   This is a LOCAL stand-in for AutomaticCSS (automatic.css). The production
+   site runs on Etch + WordPress where the real automatic.css is enqueued by
+   the ACSS plugin — so every custom property below uses the EXACT ACSS variable
+   name (--primary, --neutral-*, --space-*, --section-space-*, --h1…--h6,
+   --radius, --box-shadow-*, --btn-*, --grid-*, …). When ACSS is present this
+   file can be dropped: the cascade resolves to the plugin's values instead.
+
+   The values here are tuned to the FC Königsfeld brand (FCK-Rot = --primary
+   #a11212, body on --neutral-ultra-light, sharp ACSS buttons). Adjust the
+   values in the :root block to retune the whole site from one place.
+
+   CSS conventions across the project: BEM class names + modern native nested
+   CSS (&:hover, &.block--mod). Class-based, never inline.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root,
+.color-scheme--main {
+  /* ── Primary · FCK-Rot ──────────────────────────────────────────────── */
+  --primary-hex: #a11212;
+  --primary: #a11212;
+  --primary-hover: #b81414;
+  --primary-ultra-light: #fce8e8;
+  --primary-light: #f7baba;
+  --primary-semi-light: #ed5e5e;
+  --primary-semi-dark: #a11212;
+  --primary-dark: #730d0d;
+  --primary-ultra-dark: #2e0505;
+
+  /* ── Neutral · black ramp ───────────────────────────────────────────── */
+  --neutral: #000000;
+  --neutral-hover: #030303;
+  --neutral-ultra-light: #f2f2f2;
+  --neutral-light: #d9d9d9;
+  --neutral-semi-light: #a6a6a6;
+  --neutral-semi-dark: #595959;
+  --neutral-dark: #404040;
+  --neutral-ultra-dark: #1a1a1a;
+
+  --white: #fff;
+  --black: #000;
+  --shade-white: #fff;
+  --shade-black: #000;
+
+  /* ── ACSS utility colours ───────────────────────────────────────────── */
+  --danger: #dc3545;
+  --danger-hover: #c02d3b;
+  --danger-ultra-light: #fbe9eb;
+  --danger-dark: #410b11;
+  --warning: #ffc10a;
+  --warning-hover: #e6ad00;
+  --warning-ultra-light: #fff9e6;
+  --warning-semi-dark: #b38600;
+  --warning-dark: #4d3900;
+  --success: #1f8a3d;
+  --success-hover: #1a7634;
+  --success-ultra-light: #e6f4ea;
+  --success-semi-dark: #156b2c;
+  --success-dark: #0c3a18;
+
+  /* Football results — Sieg = success · Unentschieden = warning · Niederlage = primary */
+  --win: var(--success);
+  --win-ultra-light: var(--success-ultra-light);
+  --draw: var(--warning-semi-dark);
+  --draw-ultra-light: var(--warning-ultra-light);
+  --loss: var(--primary);
+  --loss-ultra-light: var(--primary-ultra-light);
+
+  /* ── Transparency steps ─────────────────────────────────────────────── */
+  --primary-trans-10: rgba(161, 18, 18, 0.1);
+  --primary-trans-20: rgba(161, 18, 18, 0.2);
+  --primary-trans-60: rgba(161, 18, 18, 0.6);
+  --primary-trans-70: rgba(161, 18, 18, 0.7);
+  --neutral-trans-20: rgba(0, 0, 0, 0.2);
+  --neutral-trans-60: rgba(0, 0, 0, 0.6);
+  --neutral-trans-80: rgba(0, 0, 0, 0.8);
+  --white-trans-10: rgba(255, 255, 255, 0.1);
+  --white-trans-20: rgba(255, 255, 255, 0.2);
+  --white-trans-60: rgba(255, 255, 255, 0.6);
+  --white-trans-70: rgba(255, 255, 255, 0.7);
+  --black-trans-20: rgba(0, 0, 0, 0.2);
+  --black-trans-40: rgba(0, 0, 0, 0.4);
+  --black-trans-60: rgba(0, 0, 0, 0.6);
+
+  /* ── Semantic backgrounds & text ────────────────────────────────────── */
+  --bg-ultra-light: var(--white);
+  --bg-light: var(--neutral-ultra-light);
+  --bg-dark: var(--neutral-ultra-dark);
+  --bg-ultra-dark: var(--black);
+  --text-light: var(--white);
+  --text-light-muted: var(--neutral-light);
+  --text-dark: var(--black);
+  --text-dark-muted: var(--neutral-dark);
+
+  --body-bg-color: var(--neutral-ultra-light);
+  --body-color: var(--text-dark-muted);
+  --heading-color: var(--text-dark);
+
+  --link-color: var(--primary);
+  --link-color-hover: var(--primary-hover);
+
+  /* ── Font families ──────────────────────────────────────────────────── */
+  --heading-font-family: 'Basement Grotesque', 'Archivo', system-ui, sans-serif;
+  --text-font-family: 'Geist', system-ui, -apple-system, sans-serif;
+  --mono-font-family: 'Geist Mono', ui-monospace, monospace;
+
+  --heading-font-weight: 700;
+  --heading-line-height: calc(4px + 2ex);
+  --heading-text-wrap: balance;
+  --text-color: var(--text-dark-muted);
+  --text-line-height: calc(6px + 2ex);
+  --text-max-width: 60ch;
+  --text-text-wrap: pretty;
+
+  /* ── Fluid text scale (ACSS clamps) ─────────────────────────────────── */
+  --text-xs: clamp(0.75rem, calc(-0.167vw + 0.783rem), 0.633rem);
+  --text-s: clamp(0.8125rem, calc(0.045vw + 0.804rem), 0.844rem);
+  --text-m: clamp(1rem, calc(0.179vw + 0.964rem), 1.125rem);
+  --text-l: clamp(1.2rem, calc(0.428vw + 1.114rem), 1.5rem);
+  --text-xl: clamp(1.44rem, calc(0.799vw + 1.28rem), 1.999rem);
+  --text-xxl: clamp(1.728rem, calc(1.338vw + 1.46rem), 2.665rem);
+
+  /* ── Heading scale (ACSS clamps) ────────────────────────────────────── */
+  --h6: clamp(0.75rem, calc(-0.066vw + 0.763rem), 0.703rem);
+  --h5: clamp(0.8125rem, calc(0.179vw + 0.777rem), 0.938rem);
+  --h4: clamp(1.125rem, calc(0.179vw + 1.089rem), 1.25rem);
+  --h3: clamp(1.2375rem, calc(0.613vw + 1.115rem), 1.666rem);
+  --h2: clamp(1.36125rem, calc(1.228vw + 1.116rem), 2.221rem);
+  --h1: clamp(1.497rem, calc(2.09vw + 1.079rem), 2.961rem);
+  --display: clamp(2.75rem, calc(3.6vw + 1.8rem), 5.25rem);
+  --h2-max-width: 45ch;
+
+  /* ── Weights & tracking ─────────────────────────────────────────────── */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-heading: 700;
+  --fw-black: 800;
+  --tracking-display: -0.02em;
+  --tracking-tight: -0.01em;
+  --tracking-kicker: 0.16em;
+
+  /* ── Fluid space scale (ACSS clamps) ────────────────────────────────── */
+  --space-xs: clamp(0.844rem, calc(-0.015vw + 0.847rem), 0.833rem);
+  --space-s: clamp(1.125rem, calc(0.178vw + 1.09rem), 1.25rem);
+  --space-m: clamp(1.5rem, calc(0.536vw + 1.393rem), 1.875rem);
+  --space-l: clamp(1.999rem, calc(1.161vw + 1.767rem), 2.8125rem);
+  --space-xl: clamp(2.665rem, calc(2.219vw + 2.221rem), 4.219rem);
+  --space-xxl: clamp(3.553rem, calc(3.965vw + 2.76rem), 6.328rem);
+
+  /* ── Section rhythm (ACSS clamps) ───────────────────────────────────── */
+  --section-space-xs: clamp(1.688rem, calc(1.16vw + 1.456rem), 2.5rem);
+  --section-space-s: clamp(2.25rem, calc(2.142vw + 1.822rem), 3.75rem);
+  --section-space-m: clamp(3rem, calc(3.75vw + 2.25rem), 5.625rem);
+  --section-space-l: clamp(3.999rem, calc(6.34vw + 2.731rem), 8.4375rem);
+  --section-space-xl: clamp(5.331rem, calc(10.47vw + 3.238rem), 12.656rem);
+  --section-padding-block: var(--section-space-m);
+  --section-padding-x: clamp(1.25rem, calc(3.571vw + 0.536rem), 3.75rem);
+  --gutter: clamp(1.25rem, calc(3.571vw + 0.536rem), 3.75rem);
+
+  /* ── Content width & grids (ACSS) ───────────────────────────────────── */
+  --content-width: 90rem;
+  --content-width-safe: min(var(--content-width), calc(100% - var(--gutter) * 2));
+  --content-width-narrow: 52rem;
+  --content-gap: var(--space-m);
+  --container-gap: var(--space-xl);
+  --grid-gap: var(--space-m);
+  --grid-1: repeat(1, minmax(0, 1fr));
+  --grid-2: repeat(2, minmax(0, 1fr));
+  --grid-3: repeat(3, minmax(0, 1fr));
+  --grid-4: repeat(4, minmax(0, 1fr));
+  --grid-1-2: minmax(0, 1fr) minmax(0, 2fr);
+  --grid-2-1: minmax(0, 2fr) minmax(0, 1fr);
+  --grid-3-2: minmax(0, 3fr) minmax(0, 2fr);
+  --header-height: 5.625rem;
+
+  /* ── Radii, borders (ACSS — sharp buttons) ──────────────────────────── */
+  --radius: 5px;
+  --radius-m: var(--radius);
+  --radius-50: 50%;
+  --radius-circle: 50vw;
+  --radius-none: 0;
+  --radius-card: 10px;
+  --border-size: 1px;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color-dark: var(--black-trans-20);
+  --border-color-light: var(--white-trans-20);
+  --border: var(--border-size) var(--border-style) var(--border-color-dark);
+  --border-light: var(--border-size) var(--border-style) var(--border-color-light);
+
+  /* ── Shadows (ACSS — soft, neutral, no coloured glow) ───────────────── */
+  --box-shadow-m: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  --box-shadow-l: 0 2.7px 3.6px -5px rgba(0, 0, 0, 0.04), 0 7.5px 10px -5px rgba(0, 0, 0, 0.06),
+    0 18px 24.1px -5px rgba(0, 0, 0, 0.08), 0 60px 80px -5px rgba(0, 0, 0, 0.1);
+  --box-shadow-xl: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+
+  /* ── Buttons (ACSS — sharp, sentence case) ──────────────────────────── */
+  --btn-padding-block: 0.85em;
+  --btn-padding-inline: 1.4em;
+  --btn-min-width: 8.75rem;
+  --btn-line-height: 1;
+  --btn-font-weight: 600;
+  --btn-letter-spacing: 0.01em;
+  --btn-text-transform: none;
+  --btn-border-width: 2px;
+  --btn-border-style: solid;
+  --btn-border-radius: 0;
+
+  /* ── Motion (ACSS) — quick, unfussy, ease-out ───────────────────────── */
+  --transition-duration: 0.3s;
+  --transition-timing: ease-in-out;
+  --transition-delay: 0s;
+  --transition: background var(--transition-duration) var(--transition-timing),
+    color var(--transition-duration) var(--transition-timing),
+    border-color var(--transition-duration) var(--transition-timing),
+    transform var(--transition-duration) var(--transition-timing);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Icons & focus (ACSS) ───────────────────────────────────────────── */
+  --icon-size: 32px;
+  --icon-size-s: 16px;
+  --icon-size-m: 32px;
+  --icon-size-l: 64px;
+  --focus-color: var(--warning);
+  --focus-width: 0.2rem;
+  --focus-offset: 0.25em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE / RESET  —  modern native nested CSS, BEM utilities
+   ═══════════════════════════════════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-block-size: 100vh;
+  font-family: var(--text-font-family);
+  font-size: var(--text-m);
+  font-weight: var(--fw-regular);
+  line-height: var(--text-line-height);
+  color: var(--body-color);
+  background: var(--body-bg-color);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--white);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: var(--fw-black);
+  line-height: var(--heading-line-height);
+  letter-spacing: var(--tracking-display);
+  color: var(--heading-color);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--h1); }
+h2 { font-size: var(--h2); max-width: var(--h2-max-width); }
+h3 { font-size: var(--h3); }
+h4 { font-size: var(--h4); }
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color var(--transition-duration) var(--transition-timing);
+
+  &:hover {
+    color: var(--link-color-hover);
+  }
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+/* ── Layout helpers (ACSS-style) ─────────────────────────────────────── */
+.section {
+  padding-block: var(--section-padding-block);
+  padding-inline: var(--gutter);
+
+  &.section--flush {
+    padding-block: 0;
+  }
+}
+
+.container {
+  width: 100%;
+  max-inline-size: var(--content-width);
+  margin-inline: auto;
+
+  &.container--narrow {
+    max-inline-size: var(--content-width-narrow);
+  }
+}
+
+/* ── Background scopes (set readable text colour) ────────────────────── */
+.bg--ultra-light { background-color: var(--bg-ultra-light); color: var(--text-dark-muted); }
+.bg--light { background-color: var(--bg-light); color: var(--text-dark-muted); }
+.bg--dark { background-color: var(--bg-dark); color: var(--text-light-muted); }
+.bg--ultra-dark { background-color: var(--bg-ultra-dark); color: var(--text-light-muted); }
+
+:is(.bg--dark, .bg--ultra-dark) :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--text-light);
+}
+
+/* ── Visually-hidden (a11y) ──────────────────────────────────────────── */
+.u-visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

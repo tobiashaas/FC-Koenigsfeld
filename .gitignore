@@ -1,0 +1,11 @@
+# Dependencies (vendored dist files are committed under js/vendor & css/vendor)
+node_modules/
+
+# Logs / OS / editor cruft
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

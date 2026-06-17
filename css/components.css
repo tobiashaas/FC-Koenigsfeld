@@ -1,0 +1,193 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FC Königsfeld — Reusable UI components  (BEM · modern native nested CSS)
+   Button · Badge · Tag. These map 1:1 to Etch components in the WordPress
+   rebuild, so each block is self-contained and class-driven.
+   Native nesting does not concatenate selectors — element classes are nested
+   as descendants (& .btn__x) and modifiers as compound (&.btn--x) selectors.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ══ Button — sharp ACSS button, sentence case, never all-caps ════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  min-inline-size: var(--btn-min-width);
+  padding: var(--btn-padding-block) var(--btn-padding-inline);
+  font-family: var(--text-font-family);
+  font-size: var(--text-s);
+  font-weight: var(--btn-font-weight);
+  letter-spacing: var(--btn-letter-spacing);
+  line-height: var(--btn-line-height);
+  text-transform: var(--btn-text-transform);
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--white);
+  background: var(--primary);
+  border: var(--btn-border-width) var(--btn-border-style) var(--primary);
+  border-radius: var(--btn-border-radius);
+  transition: var(--transition);
+
+  &:hover {
+    color: var(--white);
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+
+  /* Press nudges down 1px — no scale-up bounce */
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &.btn--secondary {
+    color: var(--text-dark);
+    background: transparent;
+    border-color: var(--neutral-light);
+
+    &:hover {
+      color: var(--text-dark);
+      background: var(--neutral-ultra-light);
+      border-color: var(--neutral-semi-light);
+    }
+  }
+
+  &.btn--ghost {
+    min-inline-size: 0;
+    color: var(--primary);
+    background: transparent;
+    border-color: transparent;
+
+    &:hover {
+      color: var(--primary-hover);
+      background: var(--primary-ultra-light);
+      border-color: transparent;
+    }
+  }
+
+  &.btn--on-dark {
+    color: var(--neutral-ultra-dark);
+    background: var(--white);
+    border-color: var(--white);
+
+    &:hover {
+      color: var(--neutral-ultra-dark);
+      background: var(--neutral-ultra-light);
+      border-color: var(--neutral-ultra-light);
+    }
+  }
+
+  /* Outlined-on-photo / on dark red bands — white outline, transparent fill */
+  &.btn--on-transparent {
+    color: var(--white);
+    background: transparent;
+    border-color: var(--white-trans-60);
+
+    &:hover {
+      color: var(--neutral-ultra-dark);
+      background: var(--white);
+      border-color: var(--white);
+    }
+  }
+
+  &.btn--sm {
+    font-size: var(--text-xs);
+    padding: 0.6em 1em;
+    min-inline-size: 0;
+  }
+
+  &.btn--lg {
+    font-size: var(--text-m);
+    padding: 1em 1.8em;
+  }
+
+  &.btn--full {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  &[disabled],
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &[disabled]:active {
+    transform: none;
+  }
+}
+
+/* ══ Badge — small label / result tint ═══════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.4em 0.65em;
+  font-family: var(--text-font-family);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  color: var(--neutral-dark);
+  background: var(--neutral-ultra-light);
+  border-radius: var(--radius);
+
+  &.badge--win { color: var(--win); background: var(--win-ultra-light); }
+  &.badge--draw { color: var(--draw); background: var(--draw-ultra-light); }
+  &.badge--loss { color: var(--loss); background: var(--loss-ultra-light); }
+  &.badge--red { color: var(--primary); background: var(--primary-ultra-light); }
+  &.badge--neutral { color: var(--neutral-dark); background: var(--neutral-ultra-light); }
+
+  &.badge--solid { color: var(--white); background: var(--neutral-dark); }
+  &.badge--solid.badge--win { background: var(--win); }
+  &.badge--solid.badge--draw { background: var(--draw); }
+  &.badge--solid.badge--loss { background: var(--loss); }
+  &.badge--solid.badge--red { background: var(--primary); }
+}
+
+/* ══ Tag — #FCK hashtag pill ═════════════════════════════════════════ */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5em 0.95em;
+  font-family: var(--text-font-family);
+  font-size: var(--text-s);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  color: var(--text-dark);
+  background: var(--white);
+  border: 1px solid var(--neutral-light);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+
+  & .tag__hash {
+    color: var(--primary);
+    margin-inline-end: 1px;
+  }
+
+  &:hover {
+    border-color: var(--primary);
+  }
+
+  &.tag--active {
+    color: var(--white);
+    background: var(--primary);
+    border-color: var(--primary);
+
+    & .tag__hash {
+      color: var(--white-trans-70);
+    }
+
+    &:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+  }
+
+  &.tag--static {
+    cursor: default;
+
+    &:hover {
+      border-color: var(--neutral-light);
+    }
+  }
+}
