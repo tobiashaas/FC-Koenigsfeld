@@ -27,7 +27,7 @@ npm run serve    # serve at http://localhost:8000  (open index.html)
 index.html                Homepage V2
 assets/
   fonts/                  self-hosted woff2 + fonts.css (Geist, Geist Mono,
-                          Archivo, Basement Grotesque) — no CDN at runtime
+                          Basement Grotesque) — no CDN at runtime
   img/                    crest, hero, sponsor logo, placeholders
 css/
   automatic.css           ACSS-aligned framework foundation (tokens + base)
@@ -67,9 +67,9 @@ the design handoff; each block maps to one Etch component.
 
 All webfonts are downloaded into `assets/fonts/` and declared in
 `assets/fonts/fonts.css` — nothing is fetched from Google Fonts or any CDN at
-runtime (latin + latin-ext subsets only). Families: **Geist** (body/UI),
-**Geist Mono** (data: scores, times, tables), **Basement Grotesque** (display
-headlines), with **Archivo** as the metric fallback for Basement Grotesque.
+runtime (latin + latin-ext subsets only). Three families: **Geist** (body/UI),
+**Geist Mono** (data: scores, times, tables, kicker labels) and **Basement
+Grotesque** (display headlines).
 
 ## Animation — Motion.dev
 
