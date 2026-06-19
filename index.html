@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/automatic.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/homepage.css">
+<link rel="stylesheet" href="css/motion.css">
 
 <!-- Set the scroll-reveal start state before paint, but only when the user
      allows motion — content is always visible without JS / under reduced motion. -->
@@ -24,7 +25,7 @@
 <div class="v2">
 
   <!-- ══ Header ══ -->
-  <header class="v2-header">
+  <header class="v2-header" data-motion-header>
     <div class="v2-header__inner">
       <a class="v2-header__brand" href="index.html" aria-label="FC Königsfeld 1954 – Startseite">
         <img class="v2-header__crest" src="assets/img/logo-fck.svg" alt="FC Königsfeld 1954" width="88" height="88">
@@ -45,10 +46,10 @@
 
   <!-- ══ Hero (stadium photo · matchday poster) ══ -->
   <section class="v2-hero">
-    <img class="v2-hero__photo" src="assets/img/hero-stadium.jpg" alt="Anstoß im Stadion des FC Königsfeld" fetchpriority="high" width="2560" height="1440">
+    <img class="v2-hero__photo" src="assets/img/hero-stadium.jpg" alt="Anstoß im Stadion des FC Königsfeld" fetchpriority="high" width="2560" height="1440" data-motion-hero-media>
     <span class="v2-hero__scrim" aria-hidden="true"></span>
     <span class="v2-hero__ghost" aria-hidden="true">1954</span>
-    <div class="v2-hero__inner">
+    <div class="v2-hero__inner" data-motion-intro>
       <span class="v2-kicker v2-kicker--light">Landesliga · Südbadischer Fußballverband e.V.</span>
       <h1 class="v2-hero__title">FC Königsfeld<br><em>1954</em> e.V.</h1>
       <p class="v2-hero__lead">Seit 1954 Fußball aus Königsfeld – für alle, vom Bambini bis zu den Aktiven.</p>
@@ -66,8 +67,8 @@
   </section>
 
   <!-- ══ Nächstes Spiel (overlapping fixture bar) ══ -->
-  <section class="v2-fixture" aria-label="Nächstes Spiel">
-    <div class="v2-fixture__card" data-reveal>
+  <section class="v2-fixture" aria-label="Nächstes Spiel" data-motion-stagger>
+    <div class="v2-fixture__card">
       <div>
         <div class="v2-fixture__label">Nächstes Spiel · 34. Spieltag</div>
         <div class="v2-fixture__when">Sa 21.06. · 15:30 Uhr</div>
@@ -84,24 +85,24 @@
   <!-- ══ Zuletzt gespielt ══ -->
   <section class="v2-section">
     <div class="v2-section__head">
-      <div>
+      <div data-motion-reveal>
         <span class="v2-kicker">Zuletzt gespielt</span>
         <h2 class="v2-title">Ergebnisse</h2>
       </div>
       <a class="btn btn--ghost" href="Matchcenter.html#ergebnisse">Alle Ergebnisse →</a>
     </div>
-    <div class="v2-results">
-      <article class="v2-result" data-reveal>
+    <div class="v2-results" data-motion-stagger>
+      <article class="v2-result">
         <div class="v2-result__meta"><span>Landesliga · 33. ST</span><span>So 18.05.</span></div>
         <div class="v2-result__row"><span class="v2-result__team">FC Königsfeld</span><span class="v2-result__score v2-result__score--win">3:1</span></div>
         <div class="v2-result__row"><span class="v2-result__team v2-result__team--muted">SV Hölzlebruck</span></div>
       </article>
-      <article class="v2-result" data-reveal data-reveal-delay="0.08">
+      <article class="v2-result">
         <div class="v2-result__meta"><span>Relegation</span><span>Mi 14.05.</span></div>
         <div class="v2-result__row"><span class="v2-result__team">FC Königsfeld</span><span class="v2-result__score v2-result__score--loss">1:2</span></div>
         <div class="v2-result__row"><span class="v2-result__team v2-result__team--muted">FC Neustadt</span></div>
       </article>
-      <article class="v2-result" data-reveal data-reveal-delay="0.16">
+      <article class="v2-result">
         <div class="v2-result__meta"><span>Landesliga · 32. ST</span><span>Sa 10.05.</span></div>
         <div class="v2-result__row"><span class="v2-result__team v2-result__team--muted">SG Schluchsee</span><span class="v2-result__score v2-result__score--win">0:2</span></div>
         <div class="v2-result__row"><span class="v2-result__team">FC Königsfeld</span></div>
@@ -112,7 +113,7 @@
   <!-- ══ Tabelle ══ -->
   <section class="v2-table">
     <div class="v2-table__head">
-      <div>
+      <div data-motion-reveal>
         <span class="v2-kicker">Landesliga · Staffel 3</span>
         <h2 class="v2-title">Tabelle · Saison 2025/26</h2>
       </div>
@@ -133,7 +134,7 @@
           <tr><td class="v2-st__pos">6</td><td class="v2-st__club">FC Bad Dürrheim</td><td>33</td><td>+6</td><td class="v2-st__pts">47</td></tr>
         </tbody>
       </table>
-      <aside class="v2-table__aside" data-reveal>
+      <aside class="v2-table__aside" data-motion-reveal>
         <span class="v2-kicker v2-kicker--light">Unsere Saison</span>
         <h3 class="v2-title">Vizemeister – um Haaresbreite</h3>
         <p>Platz 2 in der Landesliga, nur die Relegation trennte uns von der Verbandsliga. Eine Saison zum Stolzsein.</p>
@@ -153,16 +154,17 @@
   <section class="v2-news">
     <div class="v2-news__inner">
       <div class="v2-news__head">
-        <div>
+        <div data-motion-reveal>
           <span class="v2-kicker">Aktuelles</span>
           <h2 class="v2-title">Neues vom #FCK</h2>
         </div>
         <a class="btn btn--ghost" href="Medien.html">Zum Blog →</a>
       </div>
       <div class="v2-news__grid">
-        <article class="v2-lead" data-reveal>
+        <article class="v2-lead" data-motion-curtain>
+          <span class="motion-curtain"></span>
           <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: Verdienter 3:1-Heimsieg zum Saisonende"></a>
-          <div class="v2-media v2-media--dark"><span class="v2-media__label">Aufmacherbild</span></div>
+          <div class="v2-media v2-media--dark motion-curtain-target"><span class="v2-media__label">Aufmacherbild</span></div>
           <div class="v2-lead__scrim"></div>
           <div class="v2-lead__body">
             <span class="badge badge--red badge--solid">Spielbericht</span>
@@ -170,8 +172,8 @@
             <h3 class="v2-lead__title">Verdienter 3:1-Heimsieg zum Saisonende</h3>
           </div>
         </article>
-        <div class="v2-list">
-          <article class="v2-item" data-reveal data-reveal-delay="0.06">
+        <div class="v2-list" data-motion-stagger>
+          <article class="v2-item">
             <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: Relegation knapp verpasst"></a>
             <div class="v2-item__media"><div class="v2-media v2-media--dark"><span class="v2-media__label">Bild</span></div></div>
             <div class="v2-item__body">
@@ -179,7 +181,7 @@
               <h3 class="v2-item__title">Relegation knapp verpasst – Kopf hoch, Jungs</h3>
             </div>
           </article>
-          <article class="v2-item" data-reveal data-reveal-delay="0.12">
+          <article class="v2-item">
             <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: A-Jugend ist Staffelsieger"></a>
             <div class="v2-item__media"><div class="v2-media v2-media--dark"><span class="v2-media__label">Bild</span></div></div>
             <div class="v2-item__body">
@@ -187,7 +189,7 @@
               <h3 class="v2-item__title">A-Jugend ist Staffelsieger</h3>
             </div>
           </article>
-          <article class="v2-item" data-reveal data-reveal-delay="0.18">
+          <article class="v2-item">
             <a class="v2-stretch" href="Artikel.html" aria-label="Artikel lesen: Kimmich Junior Cup – Anmeldung läuft"></a>
             <div class="v2-item__media"><div class="v2-media v2-media--dark"><span class="v2-media__label">Bild</span></div></div>
             <div class="v2-item__body">
@@ -203,24 +205,24 @@
   <!-- ══ Events (keine Spiele) ══ -->
   <section class="v2-section">
     <div class="v2-section__head">
-      <div>
+      <div data-motion-reveal>
         <span class="v2-kicker">Mehr als Fußball</span>
         <h2 class="v2-title">Events beim FCK</h2>
       </div>
       <a class="btn btn--ghost" href="Veranstaltungen.html">Alle Veranstaltungen →</a>
     </div>
-    <div class="v2-events">
-      <div class="v2-event" data-reveal>
+    <div class="v2-events" data-motion-stagger>
+      <div class="v2-event">
         <div class="v2-event__date"><div class="v2-event__d">06</div><div class="v2-event__mo">Sep</div></div>
         <div class="v2-event__body"><h3>Schwimmerle-Kartenturnier</h3><div class="v2-event__meta">Sa · 19:00 Uhr · Vereinsheim</div><p class="v2-event__desc">Traditionelles Kartenturnier mit Preisen, Vesper und guter Laune – offen für alle.</p></div>
         <a class="btn btn--secondary btn--sm" href="Veranstaltungen.html">Mehr</a>
       </div>
-      <div class="v2-event" data-reveal data-reveal-delay="0.08">
+      <div class="v2-event">
         <div class="v2-event__date"><div class="v2-event__d">04</div><div class="v2-event__mo">Okt</div></div>
         <div class="v2-event__body"><h3>Familien- &amp; Vereinsfest</h3><div class="v2-event__meta">So · ab 11:00 Uhr · Sportpark</div><p class="v2-event__desc">Spiel, Spaß und Begegnung für Groß und Klein rund um den HSS Hydraulik Sportpark.</p></div>
         <a class="btn btn--secondary btn--sm" href="Veranstaltungen.html">Mehr</a>
       </div>
-      <div class="v2-event" data-reveal data-reveal-delay="0.16">
+      <div class="v2-event">
         <div class="v2-event__date"><div class="v2-event__d">27</div><div class="v2-event__mo">Dez</div></div>
         <div class="v2-event__body"><h3>Joshua Kimmich Junior Cup</h3><div class="v2-event__meta">Sa · ganztägig · Bregtalhalle</div><p class="v2-event__desc">Hochkarätiges Hallenturnier mit Top-Nachwuchsteams aus der Region und darüber hinaus.</p></div>
         <a class="btn btn--secondary btn--sm" href="Veranstaltungen.html">Mehr</a>
@@ -231,17 +233,17 @@
   <!-- ══ Kader ══ -->
   <section class="v2-kader">
     <div class="v2-kader__inner">
-      <div class="v2-kader__text" data-reveal>
+      <div class="v2-kader__text" data-motion-reveal>
         <span class="v2-kicker v2-kicker--light">Mannschaften</span>
         <h2 class="v2-title v2-title--light">Unsere Spieler stellen sich vor</h2>
         <p>Bei uns spielt der ganze Ort – und jede Woche zeigen sich hier ein paar Gesichter daraus. Die Auswahl wechselt, vom Bambini bis zu den Aktiven.</p>
         <a class="btn btn--lg" href="Mannschaften.html">Alle Mannschaften</a>
       </div>
-      <div class="v2-kader__roster">
-        <div class="v2-kplayer" data-reveal><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Leon</span><span class="v2-kplayer__last">Faller</span></span></div></div>
-        <div class="v2-kplayer" data-reveal data-reveal-delay="0.07"><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Noah</span><span class="v2-kplayer__last">Wirth</span></span></div></div>
-        <div class="v2-kplayer" data-reveal data-reveal-delay="0.14"><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Jan</span><span class="v2-kplayer__last">Keller</span></span></div></div>
-        <div class="v2-kplayer" data-reveal data-reveal-delay="0.21"><div class="v2-media v2-media--dark"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Lavdrim</span><span class="v2-kplayer__last">Amiti</span></span></div></div>
+      <div class="v2-kader__roster" data-motion-curtain-group>
+        <div class="v2-kplayer" data-motion-curtain><span class="motion-curtain"></span><div class="v2-media v2-media--dark motion-curtain-target"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Leon</span><span class="v2-kplayer__last">Faller</span></span></div></div>
+        <div class="v2-kplayer" data-motion-curtain><span class="motion-curtain"></span><div class="v2-media v2-media--dark motion-curtain-target"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Noah</span><span class="v2-kplayer__last">Wirth</span></span></div></div>
+        <div class="v2-kplayer" data-motion-curtain><span class="motion-curtain"></span><div class="v2-media v2-media--dark motion-curtain-target"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Jan</span><span class="v2-kplayer__last">Keller</span></span></div></div>
+        <div class="v2-kplayer" data-motion-curtain><span class="motion-curtain"></span><div class="v2-media v2-media--dark motion-curtain-target"></div><div class="v2-kplayer__plate"><span class="v2-kplayer__meta"><span class="v2-kplayer__first">Lavdrim</span><span class="v2-kplayer__last">Amiti</span></span></div></div>
       </div>
     </div>
   </section>
@@ -250,13 +252,13 @@
   <section class="v2-sponsors">
     <div class="v2-sponsors__inner">
       <div class="v2-section__head">
-        <div>
+        <div data-motion-reveal>
           <span class="v2-kicker">Partner</span>
           <h2 class="v2-title">Unsere Hauptsponsoren</h2>
         </div>
         <a class="btn btn--ghost" href="Sponsoren.html">Alle Sponsoren →</a>
       </div>
-      <p class="v2-sponsors__intro">Ohne sie kein Anpfiff: Starke Partner aus der Region stehen Woche für Woche hinter dem FCK – auf dem Trikot, an der Bande und mitten im Vereinsleben. Sie machen Jugendarbeit und jedes Heimspiel erst möglich.</p>
+      <p class="v2-sponsors__intro" data-motion-reveal>Ohne sie kein Anpfiff: Starke Partner aus der Region stehen Woche für Woche hinter dem FCK – auf dem Trikot, an der Bande und mitten im Vereinsleben. Sie machen Jugendarbeit und jedes Heimspiel erst möglich.</p>
 
       <div class="v2-tier">
         <div class="v2-tier__label">
@@ -264,7 +266,7 @@
           <span class="v2-tier__rule"></span>
         </div>
         <div class="v2-logos v2-logos--main">
-          <div class="v2-logo v2-logo--lg"><img class="v2-logo__img" src="assets/img/hss-logo.svg" alt="HSS Hydraulik Sportpark" width="320" height="120" loading="lazy"></div>
+          <div class="v2-logo v2-logo--lg" data-motion-reveal-scale><img class="v2-logo__img" src="assets/img/hss-logo.svg" alt="HSS Hydraulik Sportpark" width="320" height="120" loading="lazy"></div>
         </div>
       </div>
 
@@ -290,7 +292,7 @@
   <!-- ══ Mitmachen ══ -->
   <section class="v2-join">
     <img class="v2-join__mark" src="assets/img/logo-fck.svg" alt="" aria-hidden="true" loading="lazy">
-    <div class="v2-join__inner" data-reveal>
+    <div class="v2-join__inner" data-motion-reveal>
       <span class="v2-kicker v2-kicker--light">Mitmachen</span>
       <h2 class="v2-join__title">Werde Teil des <span class="v2-join__hash">#</span>FCK</h2>
       <p class="v2-join__text">Ob auf dem Platz oder am Spielfeldrand, als Mitglied, Ehrenamtliche:r oder Sponsor – beim FC Königsfeld ist Platz für alle, die Fußball und ihren Verein mögen.</p>

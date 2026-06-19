@@ -1,0 +1,79 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   FC Königsfeld — Motion: Initialzustände
+   Portiert aus dem Fewo-Rösslewald-Stack (motion.dev). Zwei Signaturen:
+     1. Heading-Reveal  — opacity + y + blur(10px), gestaffelt ("Editorial").
+     2. Image-Reveal    — Curtain (Vorhang wischt hoch) + Ken-Burns-Zoom.
+   Nur Compositor-Properties (transform, opacity, filter) → 60fps+.
+
+   Resilienz: alle Startzustände hängen an `.motion-ready` (im <head> nur
+   gesetzt, wenn der Nutzer Motion erlaubt). Ohne JS oder unter
+   prefers-reduced-motion bleibt `.motion-ready` aus → Inhalt ist sofort
+   sichtbar, Vorhänge bleiben verborgen. will-change wird JIT in main.js
+   gesetzt (promote()) und danach entfernt — kein "stale will-change".
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Heading-Stack: direkte Kinder eines Intro-/Reveal-Containers ──────────
+   Klassenagnostisch: neue Headings, Leads, Buttons funktionieren automatisch.
+     data-motion-intro   → großer Editorial-Stack (Hero, Closing-CTA)
+     data-motion-reveal  → kompakteres Stack-Reveal für Section-Heads */
+.motion-ready [data-motion-intro] > *,
+.motion-ready [data-motion-reveal] > * {
+  opacity: 0;
+  transform: translateY(1.125rem);
+  filter: blur(10px);
+}
+
+/* Block-Reveal (Element ohne direkte Kinder) + Stagger-Items + Scale-Reveal */
+.motion-ready [data-motion-reveal]:empty,
+.motion-ready [data-motion-stagger] > *,
+.motion-ready [data-motion-reveal-scale] {
+  opacity: 0;
+  transform: translateY(1rem);
+}
+
+.motion-ready [data-motion-reveal-scale] {
+  transform: scale(0.98);
+}
+
+/* Header: dezenter Fade-In von oben */
+.motion-ready [data-motion-header] {
+  opacity: 0;
+  transform: translateY(-0.35rem);
+}
+
+/* ── Curtain-Reveal für Bilder/Medien ──────────────────────────────────────
+   Wrapper braucht position:relative + overflow:hidden (hier erzwungen).
+   Der Vorhang (.motion-curtain) deckt den Wrapper und wird per JS scaleY(0)
+   nach oben weggerollt; das Bild/Medium zoomt parallel scale(1.12) → 1. */
+[data-motion-curtain] {
+  position: relative;
+  overflow: hidden;
+}
+
+.motion-ready [data-motion-curtain] .motion-curtain-target,
+.motion-ready [data-motion-curtain] > img,
+.motion-ready [data-motion-curtain] > video,
+.motion-ready [data-motion-curtain] > figure > img {
+  transform: scale(1.12);
+}
+
+/* Hero-Bild: Ken-Burns beim Laden (scale 1.12 → 1, ohne Vorhang) */
+.motion-ready [data-motion-hero-media] {
+  transform: scale(1.12);
+}
+
+.motion-curtain {
+  position: absolute;
+  inset: 0;
+  background: var(--primary);
+  transform-origin: bottom;
+  /* über Plates, Labels, ::before-Akzente (z 2–3) — alles wird gleichzeitig
+     vom Vorhang aufgedeckt. */
+  z-index: 5;
+  pointer-events: none;
+  display: none;
+}
+
+.motion-ready .motion-curtain {
+  display: block;
+}

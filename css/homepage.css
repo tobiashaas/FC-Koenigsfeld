@@ -1569,11 +1569,5 @@
   }
 }
 
-/* ══ Motion reveal — initial state only when JS + motion are active ════
-   Content stays fully visible without JS or under reduced-motion. */
-@media (prefers-reduced-motion: no-preference) {
-  .motion-ready [data-reveal] {
-    opacity: 0;
-    will-change: opacity, transform;
-  }
-}
+/* Motion reveal — Startzustände + Animationen liegen jetzt in css/motion.css
+   (data-motion-* Attribute, portiert aus dem motion.dev-Stack). */
