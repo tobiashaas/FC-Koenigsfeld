@@ -49,7 +49,7 @@ The styling is built on **AutomaticCSS** conventions. `css/automatic.css` is a
 ACSS custom-property names (`--primary`, `--neutral-*`, `--space-*`,
 `--section-space-*`, `--h1`…`--h6`, `--radius`, `--box-shadow-*`, `--btn-*`,
 `--grid-*`, …) with values tuned to the FCK brand (FCK-Rot `--primary #a11212`,
-body on `--neutral-ultra-light`, sharp ACSS buttons).
+body on `--neutral-ultra-light`, buttons on the 5px `--radius`).
 
 > The ACSS source at `patterns-etch.1wp.site` was **not reachable from the build
 > environment**, and (per the brief) didn't yet carry the final values. So the
@@ -116,7 +116,7 @@ To add a player anywhere:
 - **Imagery** is placeholder (`.v2-media`, crest-watermarked, labelled). Drop
   the club's real freigestellte player cut-outs and news photos in and replace
   each `.v2-media` slot; in WordPress these become dynamic image / ACF fields.
-- **Crest** uses the local `assets/img/logo-fck.svg` (the live club URL was not
-  reachable from the build environment; everything is local by requirement).
+- **Crest** is the official club crest, self-hosted at `assets/img/crest-fck.svg`
+  (downloaded from fc-koenigsfeld.de; everything is local by requirement).
 - Sub-pages referenced in the nav/footer (`Matchcenter.html`, `Verein.html`, …)
   are not part of this homepage task; the links are in place for when they land.

@@ -208,7 +208,7 @@
   --btn-text-transform: none;
   --btn-border-width: 2px;
   --btn-border-style: solid;
-  --btn-border-radius: 0;
+  --btn-border-radius: var(--radius);
 
   /* ── Motion (ACSS) — quick, unfussy, ease-out ───────────────────────── */
   --transition-duration: 0.3s;
