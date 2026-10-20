@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp · Seiten-Hintergrund</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #f2f2f2; }
+  body.dark { background: #121212; }
+  body.red { background: #a11212; }
+  /* One canvas behind the whole page; height follows the document. */
+  .page-bg { position: absolute; left: 0; top: 0; width: 100%; height: var(--page-h, 3200px); display: block; pointer-events: none; }
+  .demo { position: relative; height: var(--page-h, 3200px); }
+</style>
+</head>
+<body>
+<div class="demo"><canvas class="page-bg" aria-hidden="true"></canvas></div>
+<script>
+/* Seiten-Hintergrund — native.security-style grainy contour terraces across the
+   whole page, with single football-pitch details (penalty spot + arc, corner arc,
+   centre-circle segment, goal area) drawn as worn chalk lines at fixed page
+   positions. Light (?theme=light) for content, dark (?theme=dark) for bands.
+   ?h=3200 sets the page height. Static frame unless ?animate=1. */
+(function () {
+  var q = new URLSearchParams(location.search);
+  var theme = ["dark", "red"].indexOf(q.get("theme")) > -1 ? q.get("theme") : "light";
+  var pageH = parseInt(q.get("h") || "3200", 10);
+  document.documentElement.style.setProperty("--page-h", pageH + "px");
+  document.body.classList.add(theme);
+
+  var T = {
+    //       ground                low step               rim      grain   chalk(rgb)            chalk alpha
+    light: { g: [0.955, 0.955, 0.955], s: [0.860, 0.860, 0.855], rim: -0.22, grain: 0.075, c: [0.63, 0.07, 0.07], ca: 0.26 },
+    dark:  { g: [0.070, 0.070, 0.070], s: [0.150, 0.150, 0.148], rim: 0.22, grain: 0.080, c: [1.0, 1.0, 1.0], ca: 0.18 }
+    ,red:  { g: [0.631, 0.071, 0.071], s: [0.520, 0.050, 0.050], rim: 0.18, grain: 0.070, c: [1.0, 1.0, 1.0], ca: 0.20 }
+  }[theme];
+
+  var canvas = document.querySelector(".page-bg");
+  var gl = canvas.getContext("webgl2", { antialias: false, alpha: false, preserveDrawingBuffer: true });
+  if (!gl) return;
+
+  var frag = [
+    "#version 300 es",
+    "precision highp float;",
+    "uniform vec2 uRes; uniform float uTime; uniform float uDpr;",
+    "uniform vec3 uG; uniform vec3 uS; uniform float uRim; uniform float uGrain; uniform vec3 uC; uniform float uCA;",
+    "out vec4 o;",
+    "float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}",
+    "float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);",
+    "  return mix(mix(h21(i),h21(i+vec2(1,0)),f.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),f.x),f.y);}",
+    "float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*vn(p);p=p*2.03+17.1;a*=.5;}return s;}",
+    "float smooth3(vec2 p){float s=0.,a=.6;for(int i=0;i<3;i++){s+=a*vn(p);p=p*1.9+5.3;a*=.35;}return s/.87;}",
+    // chalk line: distance d to a curve, w half-width in px
+    "float line(float d,float w){return 1.-smoothstep(w,w+1.2,d);}",
+    "float seg(vec2 p,vec2 a,vec2 b){vec2 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);return length(pa-ba*h);}",
+    "void main(){",
+    "  vec2 px=vec2(gl_FragCoord.x, uRes.y-gl_FragCoord.y)/uDpr;", // page px, y down
+    "  vec2 uv=px/900.;",
+    // terraces (only in bands so content areas stay calm): mask by a slow field
+    "  float hgt=smooth3(uv*vec2(.9,1.1)+vec2(uTime*.01,0.));",
+    "  float steps=14.;",
+    "  float fr=fract(hgt*steps);",
+    "  float lv=floor(hgt*steps)/steps;",
+    "  float mask=smoothstep(.42,.58,smooth3(uv*.5+3.7));",           // where the topo shows at all
+    "  float level=clamp((lv-.30)*1.5,0.,1.)*mask;",
+    "  vec3 col=mix(uG,uS,level);",
+    "  float rim=(1.-smoothstep(0.,fwidth(hgt*steps)*1.4,fr))*mask;",
+    "  col+=rim*uRim*.6;",
+    // grain everywhere, stronger on terraces (sandy look)
+    "  float g=h21(gl_FragCoord.xy)-.5;",
+    "  col+=g*uGrain*(.35+level*.9);",
+    // pitch details (page coordinates, desktop 1440 wide)
+    "  float w=1.1;",
+    "  float ch=0.;",
+    //   1) penalty spot + penalty arc, upper right
+    "  vec2 ps=vec2(1210.,560.);",
+    "  ch=max(ch,1.-smoothstep(4.,5.2,length(px-ps)));",
+    "  float arc=abs(length(px-ps)-183.);",
+    "  ch=max(ch,line(arc,w)*step(px.x,ps.x-110.));",                 // only the D outside the box
+    "  ch=max(ch,line(abs(px.x-(ps.x-110.)),w)*step(abs(px.y-ps.y),400.));", // 16m line
+    //   2) corner arc, left edge
+    "  vec2 cn=vec2(-2.,1540.);",
+    "  ch=max(ch,line(abs(length(px-cn)-58.),w)*step(cn.y,px.y));",
+    "  ch=max(ch,line(abs(px.y-cn.y),w)*step(px.x,260.));",
+    //   3) centre-circle segment, right edge
+    "  vec2 cc=vec2(1530.,2330.);",
+    "  ch=max(ch,line(abs(length(px-cc)-230.),w));",
+    "  ch=max(ch,1.-smoothstep(3.,4.2,length(px-cc+vec2(0.,0.))));",
+    //   4) goal area (5m box), lower left
+    "  vec2 ga=vec2(0.,2980.);",
+    "  ch=max(ch,line(seg(px,ga+vec2(0.,-120.),ga+vec2(150.,-120.)),w));",
+    "  ch=max(ch,line(seg(px,ga+vec2(150.,-120.),ga+vec2(150.,120.)),w));",
+    "  ch=max(ch,line(seg(px,ga+vec2(150.,120.),ga+vec2(0.,120.)),w));",
+    // worn chalk
+    "  ch*=.45+.55*vn(px*.35);",
+    "  col=mix(col,uC,ch*uCA);",
+    "  o=vec4(col,1.);",
+    "}"
+  ].join("\n");
+
+  function sh(t, s) { var x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x); if (!gl.getShaderParameter(x, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(x)); } return x; }
+  var p = gl.createProgram();
+  gl.attachShader(p, sh(gl.VERTEX_SHADER, "#version 300 es\nin vec2 a;void main(){gl_Position=vec4(a,0.,1.);}"));
+  gl.attachShader(p, sh(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(p); gl.useProgram(p);
+  var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(p, "a"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  function u(n) { return gl.getUniformLocation(p, n); }
+  gl.uniform3fv(u("uG"), T.g); gl.uniform3fv(u("uS"), T.s); gl.uniform1f(u("uRim"), T.rim);
+  gl.uniform1f(u("uGrain"), T.grain); gl.uniform3fv(u("uC"), T.c); gl.uniform1f(u("uCA"), T.ca);
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  function draw(t) {
+    var w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+    gl.uniform2f(u("uRes"), w, h); gl.uniform1f(u("uDpr"), dpr); gl.uniform1f(u("uTime"), t / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (q.get("animate") === "1") requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
