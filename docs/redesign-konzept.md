@@ -145,6 +145,71 @@ Sechs Hauptpunkte. Jeder Punkt hat ein Mega-Panel auf Desktop und ein Akkordeon 
 - Schnellzeile „Spieltag · Tabelle · Probetraining“
 - `role="dialog"`, Fokus-Trap, `inert` für die Seite dahinter
 
+### Navigation nach Vorbild Crystal Palace (cpfc.co.uk, gesichtet 20.10.2026)
+
+**Desktop-Header:**
+- Großes Wappen links, es ragt über die Leiste.
+- 4 Hauptlinks als **schräg geschnittene Segmente**. Das passt zur FCK-Diagonale (110°) aus dem Hero.
+- Rechts ein **rot abgesetztes Schrägsegment** für die Hauptaktion: bei CPFC „Login“, beim FCK „Mitglied werden“.
+- Burger mit „Menü“.
+
+**Mobil-Header, zweistufig:**
+- Oben eine Utility-Leiste: *Spielplan · Tabelle · rotes Segment „Mitglied werden“*.
+- Darunter die Hauptleiste: Wappen, 2–3 sichtbare Top-Links (*Spieltag · Teams · News*) und Burger.
+- Die wichtigsten Aufgaben sind damit auch mobil mit einem Tipp erreichbar, statt im Burger zu verschwinden.
+
+**Menü = Vollbild-Overlay**, gleich auf Desktop und Mobil. Es ersetzt Mega-Menü *und* Drawer:
+- FCK-roter Grund mit Wappen als großem Wasserzeichen
+- links die 6 Hauptpunkte in **riesiger Basement Grotesque** (Spieltag · Teams · Aktuelles · Verein · Mitmachen · Partner)
+- rechts (mobil darunter) gruppierte Sekundärlinks:
+  - *Dein Besuch:* Heimspiel & Anfahrt · Für Gastvereine · Vereinsheim
+  - *Jugend & Mädchen:* Für Eltern · Probetraining · Mädchen · Kinderschutz
+  - *Service:* Kontakt & Vorstand · Presse · Downloads · Kalender-Abo
+- dazu Social-Icons
+- unten ein fixiertes Schrägsegment als CTA „Mitglied werden“
+- technisch ein Dialog mit Fokus-Falle; die Logik aus dem aktuellen Drawer lässt sich übernehmen
+
+**Spieltags-Widget im Hero**, rechts auf Desktop, mobil direkt unter dem Hero:
+- schräge Team-Tabs (Herren · Jugend · Mädchen · Ü35)
+- Karte *Letztes Spiel*: Ergebnis mit Text-Pille SIEG/NIEDERLAGE/REMIS zwischen den Toren, dazu 2 Aktionen (Spielbericht · Spielplan)
+- Karte *Nächstes Spiel*: Anstoß groß, Aktionen Anfahrt · In Kalender
+- Mini-Tabelle ±1 um das eigene Team, mit Trendpfeilen
+- Das ersetzt die eigene „Nächstes Spiel“-Leiste und rückt das Spieltags-Modul in den ersten Bildschirm.
+
+**Nicht übernehmen:**
+- Hero-Slider (Pflegeaufwand)
+- Versalien überall
+- graue Datumsangabe auf Blau mit zu wenig Kontrast
+- 9 gleich große Overlay-Links ohne Gruppierung (beim FCK bleibt es bei 6)
+- Shop, Login, Sprachwahl
+
+### Bento-Grids (Wunsch des Nutzers)
+
+Bento ersetzt mehrere gestapelte Bänder durch ein Raster mit unterschiedlich großen Kacheln. Jede Kachel ist ein Persona-Einstieg mit genau einer Aktion. Das verkürzt die Seite und bricht die Gleichförmigkeit auf. Einsatz an zwei Stellen:
+
+1. **„Dein FCK“-Bento** unter dem Hero mit Spieltags-Widget. Es ersetzt das Einstiegsband, die Sections *Jugend & Mädchen* und *Mitmachen* sowie den Kader-Teaser.
+
+   | Kachel | Größe | Inhalt |
+   |---|---|---|
+   | Jugend & Mädchen | groß, 2×2 | Teamfoto, Jahrgangs-Chips, „Probetraining vereinbaren“ |
+   | Probetraining | 1×1 | rote Kachel, „Einfach vorbeikommen“ |
+   | Heimspiel & Anfahrt | 2×1 | nächstes Heimspiel + Adresse + „Route“ |
+   | Nächster Termin | 1×1 | Event mit großem Datum, „Alle Termine“ + ICS |
+   | Mitglied werden | 1×1 | „ab 70 € im Jahr“ (Beiträge aus ACF) |
+   | Ehrenamt | 1×1 | aktuell offene Rolle („Trainer:in E-Jugend gesucht“) |
+   | Teams | 2×1 | Raster aller Teams mit Liga, Link zur Teamseite |
+   | Instagram | 1×1 | Handle `@fckoenigsfeld1954`, Link ohne Einbettung (keine Einwilligung nötig) |
+   | Partner werden | 1×1 | Kennzahl + Ansprechperson |
+
+2. **News-Bento:** Aufmacher 2×2, zwei Beiträge 1×1, ein Spielbericht 2×1.
+
+**Regeln:**
+- Feste Kachelgrößen (1×1, 2×1, 2×2) auf einem 4-Spalten-Raster (Desktop), 2 Spalten (Tablet), 1 Spalte (Mobil).
+- Mobil bleiben die wichtigsten Kacheln oben: Jugend → Probetraining → Heimspiel.
+- Jede Kachel ist komplett klickbar und hat einen Fokus-Ring. Rot gibt es pro Raster nur in *einer* Kachel.
+- Jede Kachel hat einen Leerzustand. Ohne offene Ehrenamt-Rolle erscheint ein allgemeiner Aufruf, ohne Termin die Kalender-Abo-Kachel.
+- In Etch ist das CSS-Grid mit `grid-template-areas`. In Paper wird es mit Flex-Zeilen nachgebaut.
+
 **Unterseiten, die das Konzept voraussetzt (noch nicht vorhanden):**
 - Heimspiel & Anfahrt
 - Für Gastvereine
