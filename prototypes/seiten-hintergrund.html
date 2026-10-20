@@ -21,7 +21,7 @@
    whole page, with single football-pitch details (penalty spot + arc, corner arc,
    centre-circle segment, goal area) drawn as worn chalk lines at fixed page
    positions. Light (?theme=light) for content, dark (?theme=dark) for bands.
-   ?h=3200 sets the page height. Static frame unless ?animate=1. */
+   ?h=3200 sets the page height. Static frame unless ?animate=1. ?contours=0 / ?chalk=0 give a plain grain ground. */
 (function () {
   var q = new URLSearchParams(location.search);
   var theme = ["dark", "red"].indexOf(q.get("theme")) > -1 ? q.get("theme") : "light";
@@ -44,9 +44,10 @@
     "#version 300 es",
     "precision highp float;",
     "uniform vec2 uRes; uniform float uTime; uniform float uDpr;",
-    "uniform vec3 uG; uniform vec3 uS; uniform float uRim; uniform float uGrain; uniform vec3 uC; uniform float uCA;",
+    "uniform vec3 uG; uniform vec3 uS; uniform float uRim; uniform float uGrain; uniform vec3 uC; uniform float uCA; uniform float uContour;",
     "out vec4 o;",
     "float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}",
+    "float hq(vec2 p){vec3 p3=fract(vec3(p.xyx)*.1031);p3+=dot(p3,p3.yzx+33.33);return fract((p3.x+p3.y)*p3.z);}",
     "float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);",
     "  return mix(mix(h21(i),h21(i+vec2(1,0)),f.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),f.x),f.y);}",
     "float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*vn(p);p=p*2.03+17.1;a*=.5;}return s;}",
@@ -63,13 +64,16 @@
     "  float fr=fract(hgt*steps);",
     "  float lv=floor(hgt*steps)/steps;",
     "  float mask=smoothstep(.42,.58,smooth3(uv*.5+3.7));",           // where the topo shows at all
+    "  mask*=uContour;",
     "  float level=clamp((lv-.30)*1.5,0.,1.)*mask;",
     "  vec3 col=mix(uG,uS,level);",
     "  float rim=(1.-smoothstep(0.,fwidth(hgt*steps)*1.4,fr))*mask;",
     "  col+=rim*uRim*.6;",
     // grain everywhere, stronger on terraces (sandy look)
-    "  float g=h21(gl_FragCoord.xy)-.5;",
-    "  col+=g*uGrain*(.35+level*.9);",
+    "  float g=(hq(gl_FragCoord.xy)+hq(gl_FragCoord.xy*1.37+19.1))*.5-.5;",
+    "  col+=g*uGrain*(.35+level*.9+(1.-uContour)*.55);",
+    "  float lamp=1.-smoothstep(0.,1.6,length((px/vec2(1440.,900.))-vec2(.5,-.1))*.9);",
+    "  col+=lamp*.035*(1.-uContour);",
     // pitch details (page coordinates, desktop 1440 wide)
     "  float w=1.1;",
     "  float ch=0.;",
@@ -109,7 +113,9 @@
   var loc = gl.getAttribLocation(p, "a"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   function u(n) { return gl.getUniformLocation(p, n); }
   gl.uniform3fv(u("uG"), T.g); gl.uniform3fv(u("uS"), T.s); gl.uniform1f(u("uRim"), T.rim);
-  gl.uniform1f(u("uGrain"), T.grain); gl.uniform3fv(u("uC"), T.c); gl.uniform1f(u("uCA"), T.ca);
+  gl.uniform1f(u("uGrain"), T.grain); gl.uniform3fv(u("uC"), T.c);
+  gl.uniform1f(u("uCA"), q.get("chalk") === "0" ? 0 : T.ca);
+  gl.uniform1f(u("uContour"), q.get("contours") === "0" ? 0 : 1);
 
   var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   function draw(t) {

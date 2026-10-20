@@ -20,6 +20,13 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 
 > **Typografie-Entscheidung (20.10.2026):** Keine Monospace-Schrift mehr. Geist Mono fällt komplett weg. Kicker, Labels, Daten, Ergebnisse und Tabellen laufen in **Geist**: Versal-Labels in 600 mit 0,08 em Laufweite, Zahlen mit `tabular-nums`. Überschriften bleiben Basement Grotesque.
 
+> **Hintergrund-Entscheidung (20.10.2026):** Die ganze Seite liegt auf **dunklem Grund (#121212) mit feinem Filmkorn** und leichtem Flutlicht-Schein von oben. Es gibt keine Höhenlinien und keinen Rasen. Spielfeld-Markierungen (weiß, ca. 14 % Deckkraft) erscheinen nur, wo sie Sinn ergeben, und die Seite liest sich wie ein Spielfeld von oben nach unten:
+> - Eckfahnen-Bögen in den oberen Ecken unter dem Hero
+> - Mittellinie, Mittelkreis und Mittelpunkt in der Lücke zwischen den Sections
+> - Strafraum mit Torraum, Elfmeterpunkt und Bogen direkt vor dem Footer; die Footer-Kante ist die Torlinie
+>
+> Rote Flächen (Footer-Karte, Menü) nutzen rotes Korn. Technisch ist das Korn ein Shader (`prototypes/seiten-hintergrund.html?theme=dark&contours=0&chalk=0`) oder alternativ eine kachelbare Noise-Textur; die Markierungen sind SVG pro Section.
+
 ## 1. Grundsätze
 
 1. **Nichts Handgepflegtes, das veraltet.** Spieldaten kommen aus der Pipeline. News, Termine, Partner und Rollen kommen aus WordPress-Inhalten mit Ablaufdatum. Jede Komponente hat einen **Leerzustand**.
