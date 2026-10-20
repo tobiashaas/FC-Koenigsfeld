@@ -27,6 +27,13 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 >
 > Rote Flächen (Footer-Karte, Menü) nutzen rotes Korn. Technisch ist das Korn ein Shader (`prototypes/seiten-hintergrund.html?theme=dark&contours=0&chalk=0`) oder alternativ eine kachelbare Noise-Textur; die Markierungen sind SVG pro Section.
 
+> **Tabelle (20.10.2026):** Die Mini-Tabelle ist aus dem Hero raus. Der Spieltags-Block im Hero zeigt nur noch letztes und nächstes Spiel mit Team-Tabs. Die Tabelle hat jetzt eine eigene Section **„Wo wir stehen.“** direkt unter „Dein FCK“:
+> - links die Tabellenkarte mit `# · Verein · Sp · S · U · N · Tore · Diff · Pkt`, Zonen-Balken und Legende (Aufstieg/Relegation/Abstieg), eigene Zeile hervorgehoben, Link „Komplette Tabelle“
+> - rechts „Nächste Spiele“ mit Heim/Auswärts-Badge, Buttons „Spielplan“ und „Kalender abonnieren“
+> - oben ein Team-Umschalter (1. Herren · SG B.K.N. · A-Junioren · Weitere)
+>
+> Die Mittellinie mit Mittelkreis liegt seitdem zwischen Tabelle und News.
+
 ## 1. Grundsätze
 
 1. **Nichts Handgepflegtes, das veraltet.** Spieldaten kommen aus der Pipeline. News, Termine, Partner und Rollen kommen aus WordPress-Inhalten mit Ablaufdatum. Jede Komponente hat einen **Leerzustand**.
