@@ -18,6 +18,8 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 
 ---
 
+> **Typografie-Entscheidung (20.10.2026):** Keine Monospace-Schrift mehr. Geist Mono fällt komplett weg. Kicker, Labels, Daten, Ergebnisse und Tabellen laufen in **Geist**: Versal-Labels in 600 mit 0,08 em Laufweite, Zahlen mit `tabular-nums`. Überschriften bleiben Basement Grotesque.
+
 ## 1. Grundsätze
 
 1. **Nichts Handgepflegtes, das veraltet.** Spieldaten kommen aus der Pipeline. News, Termine, Partner und Rollen kommen aus WordPress-Inhalten mit Ablaufdatum. Jede Komponente hat einen **Leerzustand**.
