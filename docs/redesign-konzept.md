@@ -183,6 +183,42 @@ Sechs Hauptpunkte. Jeder Punkt hat ein Mega-Panel auf Desktop und ein Akkordeon 
 - 9 gleich große Overlay-Links ohne Gruppierung (beim FCK bleibt es bei 6)
 - Shop, Login, Sprachwahl
 
+### Hover „Rolling Text“ (Vorbild motion.dev)
+
+Jeder Navi-Link (und optional jeder Button) enthält sein Label zweimal. Beim Hover und Fokus rollt die sichtbare Kopie nach unten raus, die zweite rollt von oben rein: `translateY` über ca. 0,38 s, `cubic-bezier(.22,1,.36,1)`. Das ist reines CSS und braucht kein JS.
+- Für Screenreader trägt der Link ein `aria-label`, die beiden Kopien sind `aria-hidden`.
+- Bei `prefers-reduced-motion` gibt es keine Animation.
+
+Zusätzlich von motion.dev: Mobil bleiben die Hauptlinks als kompakte Zeile sichtbar, statt im Burger zu verschwinden. Das deckt sich mit dem zweistufigen Mobil-Header oben.
+
+**Prototyp:** `prototypes/rasen-shader.html` (Header mit Schrägsegmenten und Rolling Text).
+
+### Hintergrund „Rasen-Shader“ (Vorbild native.security)
+
+native.security nutzt eine three.js-WebGL-Szene: Rauschen wird in Stufen quantisiert (Höhenlinien mit hellem Rand), darüber liegt animiertes Korn. Die Szene bewegt sich langsam mit Zeit und Scroll.
+
+Unsere Variante ist ein **reiner WebGL2-Fragment-Shader ohne Bibliothek** (wenige KB statt three.js plus 550-KB-Heldenfoto):
+- Mähstreifen, wellig verzogen entlang der Höhenstufen, die an den Schwarzwald erinnern
+- Korn als Grashalme
+- Mittelkreis und Mittellinie in Kreide, dezent
+- Flutlicht-Abfall von oben rechts
+- Abdunklung links für die Lesbarkeit der Headline
+
+Varianten: `?mode=nacht | tag | rot`.
+
+**Empfehlung:**
+- **„Flutlicht“ (nacht)** für den Hero. Bestes Kontrastverhältnis, und Rot bleibt Akzent.
+- **„FCK-Rot“** für das Overlay-Menü bzw. das Mitmachen-Band, dort nur mit weißem Text. Rotes „1954“ auf Rot ist zu schwach.
+- **„Matchday“ (grün)** nicht verwenden. Grün und Rot beißen sich, und das Grün dominiert die Marke.
+
+**Technische Regeln:**
+- pausiert außerhalb des Viewports (IntersectionObserver)
+- bei `prefers-reduced-motion` ein Standbild
+- DPR auf 1,5 begrenzt
+- CSS-Streifen als Fallback ohne WebGL
+- `aria-hidden` auf dem Canvas
+- In Etch als kleines Script plus `<canvas>` in der Hero-Komponente; der Modus wird pro Section als Attribut gesetzt.
+
 ### Bento-Grids (Wunsch des Nutzers)
 
 Bento ersetzt mehrere gestapelte Bänder durch ein Raster mit unterschiedlich großen Kacheln. Jede Kachel ist ein Persona-Einstieg mit genau einer Aktion. Das verkürzt die Seite und bricht die Gleichförmigkeit auf. Einsatz an zwei Stellen:

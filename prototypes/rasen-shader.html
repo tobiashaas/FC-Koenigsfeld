@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp · Rasen-Shader</title>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #0b130d; color: #fff; font-family: 'Geist', system-ui, sans-serif; }
+
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    /* Static fallback (no WebGL / before first frame): mowing stripes */
+    background:
+      linear-gradient(90deg, rgba(11, 19, 13, .92) 0%, rgba(11, 19, 13, .55) 45%, transparent 75%),
+      repeating-linear-gradient(90deg, #12201a 0 120px, #16271c 120px 240px);
+  }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero__inner { position: relative; max-width: 760px; }
+  .kicker { font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.75); display: flex; gap: 10px; align-items: center; }
+  .kicker::before { content: ""; width: 22px; height: 2px; background: #ed5e5e; }
+  h1 { font-family: 'Basement Grotesque', system-ui, sans-serif; font-weight: 800; font-size: clamp(44px, 7vw, 96px); line-height: .95; letter-spacing: -.02em; margin-top: 18px; }
+  h1 em { font-style: normal; color: #ed5e5e; }
+  p { font-size: 20px; line-height: 1.5; color: rgba(255,255,255,.8); margin-top: 20px; max-width: 34ch; }
+
+  .switch { position: fixed; top: 16px; right: 16px; z-index: 2; display: flex; gap: 6px; font-family: 'Geist Mono', monospace; font-size: 12px; }
+  .switch a { color: #fff; text-decoration: none; padding: 8px 12px; border: 1px solid rgba(255,255,255,.3); border-radius: 5px; background: rgba(0,0,0,.4); }
+  .switch a[aria-current] { background: #a11212; border-color: #a11212; }
+
+  /* ── Header: CPFC-style slanted segments + motion.dev rolling-text hover ── */
+  .site-header { position: absolute; inset: 0 0 auto; z-index: 3; display: flex; align-items: flex-start; justify-content: space-between; padding: 0 60px; }
+  .site-header__crest { display: block; margin-top: 14px; width: 92px; height: 92px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
+  .site-nav { display: flex; align-items: stretch; height: 64px; margin-right: -14px; }
+  .seg {
+    --skew: -20deg;                    /* = the 110° FCK diagonal */
+    position: relative; display: flex; align-items: center; padding: 0 26px;
+    color: #fff; text-decoration: none;
+    font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    isolation: isolate;
+  }
+  .seg::before {                       /* slanted panel behind the label */
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: rgba(8, 14, 10, .72); backdrop-filter: blur(8px);
+    border-left: 1px solid rgba(255,255,255,.14);
+    transform: skewX(var(--skew)); transform-origin: bottom left;
+    transition: background-color .25s ease;
+  }
+  .seg:hover::before, .seg:focus-visible::before { background: rgba(8, 14, 10, .9); }
+  .seg--cta::before { background: #a11212; border-left: 0; }
+  .seg--cta:hover::before, .seg--cta:focus-visible::before { background: #b81414; }
+  .seg--menu { gap: 12px; }
+  .seg--menu svg { width: 20px; height: 20px; }
+  .seg:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+
+  /* Rolling text: two stacked copies, the visible one rolls out, the other rolls in */
+  .roll { position: relative; display: block; overflow: hidden; line-height: 1.25; }
+  .roll > span { display: block; white-space: nowrap; transition: transform .38s cubic-bezier(.22, 1, .36, 1); }
+  .roll > span + span { position: absolute; inset: 0; transform: translateY(-100%); }
+  .seg:hover .roll > span:first-child, .seg:focus-visible .roll > span:first-child { transform: translateY(100%); }
+  .seg:hover .roll > span + span, .seg:focus-visible .roll > span + span { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .roll > span { transition: none; } }
+  @media (max-width: 900px) { .seg--link { display: none; } .site-header { padding: 0 20px; } }
+
+  .switch { top: auto; bottom: 16px; }
+</style>
+</head>
+<body>
+<nav class="switch" aria-label="Variante">
+  <a href="?mode=nacht">Flutlicht</a>
+  <a href="?mode=tag">Matchday</a>
+  <a href="?mode=rot">FCK-Rot</a>
+</nav>
+
+<header class="site-header">
+  <a href="../index.html" aria-label="FC Königsfeld 1954 – Startseite"><img class="site-header__crest" src="../assets/img/crest-fck.svg" alt=""></a>
+  <nav class="site-nav" aria-label="Hauptnavigation">
+    <a class="seg seg--link" href="#" aria-label="Spieltag"><span class="roll" aria-hidden="true"><span>Spieltag</span><span>Spieltag</span></span></a>
+    <a class="seg seg--link" href="#" aria-label="Teams"><span class="roll" aria-hidden="true"><span>Teams</span><span>Teams</span></span></a>
+    <a class="seg seg--link" href="#" aria-label="Aktuelles"><span class="roll" aria-hidden="true"><span>Aktuelles</span><span>Aktuelles</span></span></a>
+    <a class="seg seg--link" href="#" aria-label="Verein"><span class="roll" aria-hidden="true"><span>Verein</span><span>Verein</span></span></a>
+    <a class="seg seg--cta" href="#" aria-label="Mitglied werden"><span class="roll" aria-hidden="true"><span>Mitglied werden</span><span>Mitglied werden</span></span></a>
+    <a class="seg seg--menu" href="#" aria-label="Menü öffnen"><span class="roll" aria-hidden="true"><span>Menü</span><span>Menü</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a>
+  </nav>
+</header>
+
+<section class="hero">
+  <canvas aria-hidden="true"></canvas>
+  <div class="hero__inner">
+    <span class="kicker">Landesliga 3 · Südbadischer Fußballverband</span>
+    <h1>FC Königsfeld<br><em>1954</em> e.V.</h1>
+    <p>Seit 1954 Fußball aus Königsfeld – für alle, vom Bambini bis zu den Aktiven.</p>
+  </div>
+</section>
+
+<script>
+/* Rasen-Shader — mowing stripes warped by slow noise, cut into "contour" terraces
+   (the native.security trick), with animated grain for grass texture and faint
+   chalk pitch lines. Plain WebGL2, no library. Pauses off-screen, renders a single
+   frame under prefers-reduced-motion, caps DPR, falls back to the CSS stripes. */
+(function () {
+  var MODES = {
+    //          stripe A              stripe B              chalk  vignette(rgb)
+    nacht: { a: [0.055, 0.095, 0.065], b: [0.075, 0.125, 0.085], chalk: 0.10, vig: [0.043, 0.075, 0.051] },
+    tag:   { a: [0.180, 0.380, 0.200], b: [0.215, 0.440, 0.235], chalk: 0.22, vig: [0.060, 0.120, 0.070] },
+    rot:   { a: [0.330, 0.045, 0.045], b: [0.395, 0.060, 0.060], chalk: 0.14, vig: [0.120, 0.015, 0.015] }
+  };
+  var modeName = new URLSearchParams(location.search).get("mode") || "nacht";
+  var mode = MODES[modeName] || MODES.nacht;
+  document.querySelectorAll(".switch a").forEach(function (a) {
+    if (a.getAttribute("href") === "?mode=" + modeName) a.setAttribute("aria-current", "true");
+  });
+
+  var canvas = document.querySelector(".hero canvas");
+  var gl = canvas.getContext("webgl2", { antialias: false, alpha: false, powerPreference: "low-power" });
+  if (!gl) return; // CSS fallback stays visible
+
+  var vert = "#version 300 es\nin vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  var frag = [
+    "#version 300 es",
+    "precision highp float;",
+    "uniform vec2 uRes; uniform float uTime; uniform float uScroll;",
+    "uniform vec3 uA; uniform vec3 uB; uniform vec3 uVig; uniform float uChalk;",
+    "out vec4 o;",
+    // hash + value noise + fbm
+    "float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}",
+    "float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);",
+    "  return mix(mix(h21(i),h21(i+vec2(1,0)),f.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),f.x),f.y);}",
+    "float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*vn(p);p=p*2.03+17.1;a*=.5;}return s;}",
+    "void main(){",
+    "  vec2 uv=gl_FragCoord.xy/uRes.y;",              // aspect-correct, 1 unit = viewport height
+    "  float aspect=uRes.x/uRes.y;",
+    "  float t=uTime;",
+    "  vec2 q=uv+vec2(0.,uScroll*.35);",               // background drifts slower than content
+    // 1) slow height field → stepped terraces (contour look)
+    "  float hgt=fbm(q*1.35+vec2(t*.012,-t*.008));",
+    "  float steps=7.;",
+    "  float lv=floor(hgt*steps)/steps;",
+    "  float fr=fract(hgt*steps);",
+    "  float edge=1.-smoothstep(0.,fwidth(hgt*steps)*1.5,fr);", // thin rim on each terrace step
+    // 2) mowing stripes, wobbling along the terraces
+    "  float stripeW=.16;",
+    "  float sx=uv.x+ (lv-.5)*.05 + (fbm(q*.6+t*.01)-.5)*.04;",
+    "  float parity=mod(floor(sx/stripeW),2.);",
+    "  vec3 col=mix(uA,uB,parity);",
+    "  col*=.74+lv*.62;",                                // higher terraces catch more floodlight
+    "  col+=edge*.07;",
+    // 3) grass grain: stretched blade noise + animated fine grain
+    "  float blade=vn(vec2(gl_FragCoord.x*.9,gl_FragCoord.y*.12+parity*31.));",
+    "  float grain=h21(gl_FragCoord.xy+floor(t*18.)*7.13)-.5;",
+    "  col*=.93+blade*.12;",
+    "  col+=grain*.035;",
+    // 4) faint chalk: halfway line + centre circle, placed right of the text
+    "  vec2 c=vec2(aspect*.72,.5);",
+    "  float r=abs(length(uv-c)-.28);",
+    "  float lineW=.0025;",
+    "  float chalk=1.-smoothstep(lineW,lineW+fwidth(r)*1.5,r);",
+    "  float midl=abs(uv.x-c.x);",
+    "  chalk=max(chalk,1.-smoothstep(lineW,lineW+fwidth(midl)*1.5,midl));",
+    "  chalk*=.55+.45*vn(uv*40.);",                      // worn, chalky line
+    "  col+=chalk*uChalk;",
+    // 5) floodlight falloff + left vignette for text legibility
+    "  float lamp=smoothstep(1.2,.0,length((uv-vec2(aspect*.8,1.1))*vec2(.7,1.)));",
+    "  col+=lamp*.06;",
+    "  float vig=smoothstep(.05,.62,uv.x/aspect);",
+    "  col=mix(uVig,col,.25+.75*vig);",
+    "  o=vec4(col,1.);",
+    "}"
+  ].join("\n");
+
+  function sh(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  }
+  var vs = sh(gl.VERTEX_SHADER, vert), fs = sh(gl.FRAGMENT_SHADER, frag);
+  if (!vs || !fs) return;
+  var prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(prog)); return; }
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(prog, "p");
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  var U = {};
+  ["uRes", "uTime", "uScroll", "uA", "uB", "uVig", "uChalk"].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+  gl.uniform3fv(U.uA, mode.a);
+  gl.uniform3fv(U.uB, mode.b);
+  gl.uniform3fv(U.uVig, mode.vig);
+  gl.uniform1f(U.uChalk, mode.chalk);
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    var w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+    gl.uniform2f(U.uRes, w, h);
+  }
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var visible = true, start = performance.now(), raf = 0;
+
+  function frame(now) {
+    resize();
+    gl.uniform1f(U.uTime, reduce ? 12.0 : (now - start) / 1000);
+    gl.uniform1f(U.uScroll, window.scrollY / Math.max(1, window.innerHeight));
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (!reduce && visible) raf = requestAnimationFrame(frame);
+  }
+
+  new IntersectionObserver(function (e) {
+    visible = e[0].isIntersecting;
+    cancelAnimationFrame(raf);
+    if (visible) raf = requestAnimationFrame(frame);
+  }).observe(canvas);
+  window.addEventListener("resize", function () { if (reduce) requestAnimationFrame(frame); });
+  raf = requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
