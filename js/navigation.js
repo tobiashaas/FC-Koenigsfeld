@@ -58,18 +58,18 @@
           ["Downloads", "Verein.html#kontakt"],
           ["Satzung", "Verein.html#kontakt"] ] }
       ],
-      feature: { kicker: "Seit 1954", title: "70 Jahre FCK", text: "Die Geschichte eines Dorfes und seiner Leidenschaft für den Fußball.", href: "Historie.html" }
+      feature: { kicker: "Seit 1954", title: "Unsere Geschichte", text: "Die Geschichte eines Dorfes und seiner Leidenschaft für den Fußball.", href: "Historie.html" }
     },
     "Mitmachen": {
       tagline: "Ob auf dem Platz oder am Spielfeldrand – beim FCK ist Platz für alle.",
       cols: [
         { title: "Aktiv werden", links: [
           ["Mitglied werden", "Mitmachen.html#mitglied"],
-          ["Probetraining", "Mitmachen.html#mitglied"],
+          ["Probetraining", "Mitmachen.html#probetraining"],
           ["Ehrenamt", "Mitmachen.html#ehrenamt"] ] },
         { title: "Unterstützen", links: [
           ["Förderverein", "Mitmachen.html#foerderverein"],
-          ["Sponsor werden", "Sponsoren.html"],
+          ["Sponsor werden", "Sponsoren.html#partner-werden"],
           ["Spenden", "Mitmachen.html#foerderverein"] ] }
       ],
       feature: { kicker: "Rot-Weiß", title: "Werde Teil des #FCK", text: "Mitglied, Ehrenamtliche:r oder Sponsor – jede Hand zählt.", href: "Mitmachen.html#mitglied" }
@@ -85,7 +85,7 @@
         { title: "Mehr", links: [
           ["Veranstaltungen", "Veranstaltungen.html"],
           ["Matchcenter", "Matchcenter.html"],
-          ["#FCK auf Instagram", "#"] ] }
+          ["#FCK auf Instagram", "https://www.instagram.com/fckoenigsfeld1954/"] ] }
       ],
       feature: { kicker: "Spielbericht", title: "3:1 zum Saisonende", text: "Verdienter Heimsieg im letzten Spiel der Saison.", href: "Artikel.html" }
     },
@@ -99,7 +99,7 @@
           ["Impressum", "Foerderverein.html#impressum"] ] },
         { title: "Unterstützen", links: [
           ["Förderer werden", "Foerderverein.html#mitglied"],
-          ["Sponsor werden", "Sponsoren.html"],
+          ["Sponsor werden", "Sponsoren.html#partner-werden"],
           ["Spenden", "Foerderverein.html#kontakt"] ] }
       ],
       feature: { kicker: "Seit 1998", title: "Ab 40 € im Jahr dabei", text: "Dein Beitrag bleibt komplett beim FCK – für den Nachwuchs.", href: "Foerderverein.html#mitglied" }
@@ -150,21 +150,28 @@
 
   function initDesktop(header, nav) {
     var panel = el("div", "v2-mega");
+    panel.id = "v2-mega-panel";
     panel.setAttribute("role", "region");
     header.appendChild(panel);
     var closeTimer = null;
     var current = null;
+    var currentLink = null;
+    var links = [].slice.call(nav.querySelectorAll(".v2-header__link"));
 
     function open(key, link) {
       if (!MENU[key]) return;
       if (current !== key) {
         panel.innerHTML = "";
         panel.appendChild(buildPanelContent(MENU[key]));
+        panel.setAttribute("aria-label", key);
         current = key;
       }
-      [].forEach.call(nav.querySelectorAll(".v2-header__link"), function (l) {
-        l.classList.toggle("is-hovered", l === link);
+      links.forEach(function (l) {
+        var on = l === link;
+        l.classList.toggle("is-hovered", on);
+        if (l.hasAttribute("aria-expanded")) l.setAttribute("aria-expanded", String(on));
       });
+      currentLink = link;
       panel.classList.add("is-open");
       clearTimeout(closeTimer);
     }
@@ -175,20 +182,54 @@
     function close() {
       panel.classList.remove("is-open");
       current = null;
-      [].forEach.call(nav.querySelectorAll(".v2-header__link"), function (l) {
+      links.forEach(function (l) {
         l.classList.remove("is-hovered");
+        if (l.hasAttribute("aria-expanded")) l.setAttribute("aria-expanded", "false");
       });
     }
+    function panelLinks() {
+      return [].slice.call(panel.querySelectorAll("a"));
+    }
 
-    [].forEach.call(nav.querySelectorAll(".v2-header__link"), function (link) {
+    links.forEach(function (link, i) {
       var key = (link.textContent || "").trim();
       if (!MENU[key]) {
         link.addEventListener("mouseenter", scheduleClose);
+        link.addEventListener("focus", close);
         return;
       }
-      link.setAttribute("aria-haspopup", "true");
+      link.setAttribute("aria-expanded", "false");
+      link.setAttribute("aria-controls", panel.id);
       link.addEventListener("mouseenter", function () { open(key, link); });
       link.addEventListener("focus", function () { open(key, link); });
+      // Keyboard: ArrowDown or Tab moves into the open panel, so its links are reachable
+      link.addEventListener("keydown", function (e) {
+        var first = panelLinks()[0];
+        if (!first) return;
+        if (e.key === "ArrowDown" || (e.key === "Tab" && !e.shiftKey)) {
+          e.preventDefault();
+          open(key, link);
+          first.focus();
+        }
+      });
+    });
+
+    panel.addEventListener("keydown", function (e) {
+      var items = panelLinks();
+      var idx = items.indexOf(document.activeElement);
+      if (e.key === "Escape" && currentLink) {
+        e.preventDefault();
+        var back = currentLink;
+        close();
+        back.focus();
+      } else if (e.key === "Tab" && !e.shiftKey && idx === items.length - 1) {
+        // leaving the panel forwards → continue with the next top-level item
+        var next = links[links.indexOf(currentLink) + 1] || nav.querySelector(".btn");
+        if (next) { e.preventDefault(); close(); next.focus(); }
+      } else if (e.key === "Tab" && e.shiftKey && idx === 0 && currentLink) {
+        e.preventDefault();
+        currentLink.focus();
+      }
     });
 
     panel.addEventListener("mouseenter", function () { clearTimeout(closeTimer); });
@@ -197,56 +238,138 @@
     header.addEventListener("focusout", function (e) {
       if (!header.contains(e.relatedTarget)) close();
     });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && panel.classList.contains("is-open")) {
+        var back = currentLink;
+        close();
+        if (back && header.contains(document.activeElement)) back.focus();
+      }
+    });
   }
 
   function initMobile(header, nav) {
     var inner = header.querySelector(".v2-header__inner");
+    var page = document.querySelector(".v2");
     var burger = el("button", "v2-burger", "<span></span><span></span><span></span>");
+    burger.type = "button";
     burger.setAttribute("aria-label", "Menü öffnen");
     burger.setAttribute("aria-expanded", "false");
+    burger.setAttribute("aria-controls", "v2-drawer");
     inner.appendChild(burger);
 
     var drawer = el("div", "v2-drawer");
+    drawer.id = "v2-drawer";
     var dInner = el("div", "v2-drawer__inner");
+    dInner.setAttribute("role", "dialog");
+    dInner.setAttribute("aria-modal", "true");
+    dInner.setAttribute("aria-label", "Hauptmenü");
     drawer.appendChild(dInner);
 
-    [].forEach.call(nav.querySelectorAll(".v2-header__link"), function (link) {
+    // Top bar with an always-visible close button
+    var bar = el("div", "v2-drawer__bar");
+    bar.appendChild(el("span", "v2-drawer__title", "Menü"));
+    var closeBtn = el("button", "v2-drawer__close",
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>');
+    closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Menü schließen");
+    bar.appendChild(closeBtn);
+    dInner.appendChild(bar);
+
+    // One accordion per top-level item; items without a sub menu are plain links
+    var dNav = el("nav", "v2-drawer__nav");
+    dNav.setAttribute("aria-label", "Hauptnavigation");
+    links(nav).forEach(function (link) {
       var key = (link.textContent || "").trim();
-      var group = el("div", "v2-drawer__group");
-      var head = el("a", "v2-drawer__head", key);
-      head.href = link.getAttribute("href") || "#";
-      group.appendChild(head);
-      if (MENU[key]) {
-        var ul = el("ul", "v2-drawer__list");
-        MENU[key].cols.forEach(function (c) {
-          c.links.forEach(function (l) {
-            var li = el("li");
-            var a = el("a", "v2-drawer__link", l[0]);
-            a.href = l[1];
-            li.appendChild(a);
-            ul.appendChild(li);
-          });
-        });
-        group.appendChild(ul);
+      var href = link.getAttribute("href") || "#";
+      if (!MENU[key]) {
+        var plain = el("div", "v2-drawer__group");
+        var a = el("a", "v2-drawer__head");
+        a.textContent = key;
+        a.href = href;
+        plain.appendChild(a);
+        dNav.appendChild(plain);
+        return;
       }
-      dInner.appendChild(group);
+      var group = el("details", "v2-drawer__group");
+      var head = el("summary", "v2-drawer__head");
+      head.textContent = key;
+      group.appendChild(head);
+      var ul = el("ul", "v2-drawer__list");
+      var overview = el("a", "v2-drawer__link v2-drawer__link--overview");
+      overview.textContent = key + " – Übersicht";
+      overview.href = href;
+      var li0 = el("li");
+      li0.appendChild(overview);
+      ul.appendChild(li0);
+      MENU[key].cols.forEach(function (c) {
+        c.links.forEach(function (l) {
+          var li = el("li");
+          var a = el("a", "v2-drawer__link");
+          a.textContent = l[0];
+          a.href = l[1];
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+      });
+      group.appendChild(ul);
+      dNav.appendChild(group);
     });
+    dInner.appendChild(dNav);
+
+    // Primary CTA pinned to the bottom (thumb zone), taken from the header button
+    var headerCta = nav.querySelector(".btn");
+    if (headerCta) {
+      var foot = el("div", "v2-drawer__foot");
+      var cta = el("a", "btn btn--lg");
+      cta.textContent = headerCta.textContent.trim();
+      cta.href = headerCta.getAttribute("href") || "#";
+      foot.appendChild(cta);
+      dInner.appendChild(foot);
+    }
+
     document.body.appendChild(drawer);
+
+    function focusables() {
+      return [].slice.call(dInner.querySelectorAll("a[href], button, summary"));
+    }
 
     function toggle(openIt) {
       var willOpen = openIt != null ? openIt : !drawer.classList.contains("is-open");
+      if (willOpen === drawer.classList.contains("is-open")) return;
       drawer.classList.toggle("is-open", willOpen);
       burger.classList.toggle("is-active", willOpen);
       burger.setAttribute("aria-expanded", String(willOpen));
       burger.setAttribute("aria-label", willOpen ? "Menü schließen" : "Menü öffnen");
       document.documentElement.style.overflow = willOpen ? "hidden" : "";
+      // Page behind the dialog is inert while the drawer is open
+      if (page) page.inert = willOpen;
+      if (willOpen) closeBtn.focus();
+      else burger.focus();
     }
+
     burger.addEventListener("click", function () { toggle(); });
+    closeBtn.addEventListener("click", function () { toggle(false); });
     drawer.addEventListener("click", function (e) {
-      if (e.target === drawer || e.target.classList.contains("v2-drawer__link") || e.target.classList.contains("v2-drawer__head")) toggle(false);
+      if (e.target === drawer || (e.target.closest && e.target.closest("a.v2-drawer__link, a.v2-drawer__head, .v2-drawer__foot a"))) toggle(false);
     });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") toggle(false); });
+    document.addEventListener("keydown", function (e) {
+      if (!drawer.classList.contains("is-open")) return;
+      if (e.key === "Escape") { toggle(false); return; }
+      if (e.key !== "Tab") return;
+      // Focus trap
+      var items = focusables().filter(function (n) { return n.offsetParent !== null; });
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    // Leaving the mobile breakpoint closes the drawer
+    window.matchMedia("(min-width: 981px)").addEventListener("change", function (mq) {
+      if (mq.matches) toggle(false);
+    });
+  }
+
+  function links(nav) {
+    return [].slice.call(nav.querySelectorAll(".v2-header__link"));
   }
 
   function init() {

@@ -9,7 +9,7 @@
    file can be dropped: the cascade resolves to the plugin's values instead.
 
    The values here are tuned to the FC Königsfeld brand (FCK-Rot = --primary
-   #a11212, body on --neutral-ultra-light, sharp ACSS buttons). Adjust the
+   #a11212, body on --neutral-ultra-light, buttons on the 5px --radius). Adjust the
    values in the :root block to retune the whole site from one place.
 
    CSS conventions across the project: BEM class names + modern native nested
@@ -60,10 +60,11 @@
   --success-semi-dark: #156b2c;
   --success-dark: #0c3a18;
 
-  /* Football results — Sieg = success · Unentschieden = warning · Niederlage = primary */
-  --win: var(--success);
+  /* Football results — Sieg = success · Unentschieden = warning · Niederlage = primary.
+     Text/pill shades chosen for WCAG AA on white (win 6.6:1, draw 5.2:1, loss 8.0:1). */
+  --win: var(--success-semi-dark);
   --win-ultra-light: var(--success-ultra-light);
-  --draw: var(--warning-semi-dark);
+  --draw: #8a6700;
   --draw-ultra-light: var(--warning-ultra-light);
   --loss: var(--primary);
   --loss-ultra-light: var(--primary-ultra-light);
@@ -225,9 +226,11 @@
   --icon-size-s: 16px;
   --icon-size-m: 32px;
   --icon-size-l: 64px;
-  --focus-color: var(--warning);
-  --focus-width: 0.2rem;
-  --focus-offset: 0.25em;
+  /* Two-tone focus ring: dark outline + white halo, visible on light and dark surfaces */
+  --focus-color: var(--neutral-ultra-dark);
+  --focus-halo: var(--white);
+  --focus-width: 0.1875rem;
+  --focus-offset: 0.125rem;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -313,6 +316,31 @@ a {
 :focus-visible {
   outline: var(--focus-width) solid var(--focus-color);
   outline-offset: var(--focus-offset);
+  box-shadow: 0 0 0 var(--focus-offset) var(--focus-halo);
+}
+
+/* Programmatic focus targets (e.g. <main> after the skip link) need no ring */
+[tabindex="-1"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Skip link — first focusable element, visible only on keyboard focus */
+.u-skip-link {
+  position: absolute;
+  inset-block-start: var(--space-xs);
+  inset-inline-start: var(--space-xs);
+  z-index: 100;
+  padding: 0.75em 1.25em;
+  background: var(--neutral-ultra-dark);
+  color: var(--white);
+  font-weight: 600;
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+
+  &:focus-visible {
+    transform: none;
+  }
 }
 
 /* ── Layout helpers (ACSS-style) ─────────────────────────────────────── */
