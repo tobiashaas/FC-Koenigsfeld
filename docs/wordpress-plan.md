@@ -95,7 +95,7 @@ Etch kann eigene Felder anlegen, aber nur einfache Typen: Text, Textbereich, Zah
 | **Mannschaft** | Name, Kurzname, Altersklasse, Jahrgänge, Liga/Staffel, `fd_team_id` (leer = keine Liga), Teamfoto, Trainingszeiten (Repeater: Tag, von, bis, Spielstätte), Zonen (Plätze Aufstieg/Relegation/Abstieg), Sortierung, „auf Startseite“, Trikotsponsor | Spielstätte, Trainer:innen, Ansprechperson, Sponsor | Teams, einmal pro Saison |
 | **Spiel** | `fd_spiel_id`, Anstoß (lokal, sortierbar), Spieltag, Wettbewerb, Heim (ja/nein), Gegner, Gegner-Wappen (Mediathek), Tore eigen/Gegner (Zahl), Zusatz (n.V./i.E.), Status (geplant/beendet/verlegt/abgesagt), Quelle (fussball.de/manuell) | Mannschaft, Spielstätte, Spielbericht (Beitrag) | **Pipeline**; bei Teams ohne Liga das Team |
 | **Tabelle** | eine Tabelle pro Mannschaft als Liste: Platz, Verein, Sp, S, U, N, Tore, Diff, Pkt, eigenes Team, Zone | Mannschaft | **Pipeline** |
-| **Person** | Vorname, Nachname, Foto, Rolle(n) (Spieler, Trainer, Betreuer, Jugendleitung, Vorstand, Kinderschutz), Telefon, E-Mail, Einwilligung (Datum), erwachsen (ja/nein) | Mannschaft(en) | Teams / Vorstand |
+| **Person** | Vorname, Nachname, Foto, Rolle(n) (Spieler, Trainer, Betreuer, Jugendleitung, Vorstand, Kinderschutz), Telefon, E-Mail, Profil ausblenden (ja/nein) | Mannschaft(en) | Teams / Vorstand |
 | **Spieler-Profil** (Felder an Person) | Rückennummer, Position, im Verein seit, starker Fuß, Lieblingsmoment, Saisonzahlen | Mannschaft | Spieler selbst über das Team |
 | **Spielstätte** | Name, Adresse, Koordinaten, Belag, Parken, Hinweise für Gäste, Telefon am Spieltag | – | Vorstand, einmalig |
 | **Partner** | Name, Logo (SVG), Stufe (Haupt/Exklusiv/Premium/Ausstattung/Bande-Plus/Bande/Basis), Rolle („Trikot SG B.K.N.“), Website, Ort, Laufzeit bis | Mannschaft (z. B. Trikot) | Vorstand |
@@ -142,7 +142,7 @@ Beitrag ──── Mannschaft (Taxonomie)
 | Spielplan nach Tagen, nächstes Spiel über alle Teams | `fck-core` stellt fertige Listen bereit (Etch-Filter `etch/dynamic_data/option`, gecacht) | automatisch |
 | Partner ausblenden nach Laufzeit-Ende | `fck-core` | automatisch |
 | Termin-Kachel, Weihnachtsmarkt usw. | nächster Termin aus dem CPT | automatisch |
-| Spieler-Saisonzahlen | Pipeline, nur für Personen mit Einwilligung und erwachsen; sonst manuell | automatisch |
+| Spieler-Saisonzahlen | Pipeline, nur für Personen der Aktiven-Teams; sonst manuell | automatisch |
 | Kader, Trainer, Trainingszeiten, Jugendleitung | einmal im CPT, erscheint auf Startseite, Teamseite, Jugendseite, Kontakt | einmal pro Saison |
 
 Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten über gute Daten.
@@ -158,7 +158,7 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 | Artikel | Single Beitrag | Beitrag; wenn „zu Spiel“ gesetzt: Spieldaten-Kasten und nächstes Spiel |
 | Teams · Übersicht | Archiv Mannschaft | Mannschaften nach Altersklasse und Sortierung |
 | Teamseite | Single Mannschaft | Spiele mit `team_id = this.id`, Tabelle, Personen nach Position, Trainingszeiten (Repeater), Trikotsponsor |
-| Spielerprofil | Single Person | nur wenn Einwilligung und erwachsen, sonst 404 |
+| Spielerprofil | Single Person | nicht, wenn „Profil ausblenden“ gesetzt ist |
 | Spielplan | Seite „Spielplan“ | `options.fck.spiele_nach_tag` (gruppiert), Filter Team / Kommende / Ergebnisse |
 | Jugend & Eltern | Seite | Mannschaften der Jugend mit Trainingszeiten, Fragen „Eltern“, Person mit Rolle Jugendleitung/Kinderschutz |
 | Partner | Seite | Partner nach Stufe, Suche, Pakete als Fragen/Inhalt |
@@ -195,7 +195,7 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 2. **Was übernommen wird:** Beiträge (mit Datum, Kategorie, Beitragsbild), Medien, Partner-Logos, Teams, Ansprechpartner, Downloads (Satzung, Anträge).
 3. **Wie:** Neue Staging-Seite mit Etch, dann **Bricks2Etch**: überträgt Beiträge, Seiten, Medien, Beitragsbilder, CPTs, Meta-Box-Feldgruppen und Feldwerte, Fonts und globale Klassen. Danach alte Kategorien auf die neuen abbilden und `mitglieder` → Person, `vereine` → Gegner-Wappen nutzen. Bricks-Templates werden nicht gebraucht, die Seiten entstehen neu nach den Paper-Entwürfen.
 4. **Weiterleitungen:** Alle alten URLs auf die neuen (301), damit Google-Links und geteilte Links weiter funktionieren.
-5. **Aufräumen:** Bilder ohne Einwilligung (Kinder!) beim Import markieren und prüfen.
+5. **Aufräumen:** Riesige Originalfotos (bis 17 MB) beim Import verkleinern, Reste von WP All Import/Export nicht übernehmen.
 
 ---
 
@@ -215,7 +215,7 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 ## 9. Datenschutz
 
 - Keine Spielerprofile für Minderjährige, kein Geburtsdatum.
-- Spielerprofil nur mit Einwilligung (Datum im Feld), sonst nicht abrufbar.
+- Einwilligung für Fotos und Namen über Mitgliedschaft und Fotoshooting; bei Widerruf „Profil ausblenden“ setzen.
 - Keine Torschützen-Namen bei Jugendspielen.
 - Gegner-Wappen in die eigene Mediathek laden, kein Hotlinking.
 - Instagram und Karten nur mit Zwei-Klick-Einwilligung.
@@ -230,7 +230,7 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 | 1 | Staging-Seite mit Etch, Bricks2Etch-Migration der Inhalte, CPTs in Etch, Felder in Meta Box, `fck-core`, ACSS-Tokens aus den Entwürfen | Datenmodell mit echten Altdaten |
 | 2 | Etch: Header, Footer, Komponenten (Spielkarte, Tabelle, Kachel, Partner-Zeile, Person), dann die Templates | alle Seiten mit Testdaten |
 | 3 | Pipeline umbauen und an `fck/v1/sync` anschließen, Rechenwerte in `fck-core` | echte Spieldaten |
-| 4 | Inhalte aufräumen und ergänzen (Einwilligungen, Logos als SVG), Weiterleitungen | Inhalte fertig |
+| 4 | Inhalte aufräumen und ergänzen (Logos als SVG, Rückennummern, Trainingszeiten), Weiterleitungen | Inhalte fertig |
 | 5 | Teams schulen (Trainer-Rolle), Abnahme, Umzug auf die Live-Domain | live |
 
 ---
