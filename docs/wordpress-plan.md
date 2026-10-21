@@ -50,7 +50,22 @@ Etch kann eigene Felder anlegen, aber nur einfache Typen: Text, Textbereich, Zah
 - **Eigene Inhaltstypen:** `mannschaften` (11), `mitglieder` (131, Taxonomien Position und Vorstandsrolle), `sponsor` (70, Taxonomie Partner-Stufe), `vereine` (128 – Gegner mit Wappen, wichtig gegen Hotlinking), `historie` (5), `foerderverein` (4), `rechtlich` (2).
 - **Mannschaften heute:** 1. Mannschaft, 2. und 3. Mannschaft SG Gem. B.K.N., AH, A-, B-, C- (SG), D-, E- (SG, 2 Teams), Schiedsrichter. **Abweichung zu den Entwürfen:** Dort steht Ü35 statt AH, es gibt keine 3. Mannschaft, und Mädchen, Bambini und F-Junioren fehlen auf der alten Seite. Das mit dem Verein klären.
 - **Sponsoren:** Stufen wie im Entwurf (Sportpark, Trikot 1. Mannschaft, Trikot SG, Exklusiv 3, Premium 3, Präsentationsanzüge, Bande-Plus 7, Bande 49, Basis 5).
-- Die SSH-Inventur (Felder im Detail, Plugins inaktiv/aktiv, Größe der Uploads) steht noch aus.
+### SSH-Inventur (21.10.2026, nur gelesen)
+
+- **System:** WordPress 7.1.3, Bricks 2.4.3 + Child, WP-CLI vorhanden, Uploads 620 MB (einzelne Originalfotos 16–17 MB → bei der Migration verkleinern).
+- **Aktive Plugins:** Admin Columns Pro, AutomaticCSS 3.3.8, Frames, Fluent Forms Pro, HappyFiles Pro, Meta Box AIO, SEOPress Pro, Wordfence, WPvivid Backup Pro, Pressidium Cookie Consent, Maileroo SMTP, GDPR-YouTube, Remove CPT Base, IONOS-Plugins, **WP File Manager** (Sicherheitsrisiko, sollte auf der neuen Seite nicht mehr drauf).
+- **Schema per Code:** mu-plugin `fck-club-meta-box` lädt alle Feldgruppen aus JSON (Quelle: Repo `wordpress-club-meta-box`). CPTs und Taxonomien sind in Meta Box angelegt (7 CPTs, 3 Taxonomien, 1 Relationship), dazu 8 MB Views und 7 Bricks-Templates (Header, Footer, Blog, Mannschaft, Historie).
+- **Feldgruppen heute:**
+  - *Mannschaften:* Teamschlüssel, fussball.de-ID, Liga, Kategorie, Schalter „Spielplan anzeigen“ + die serialisierten Sync-Felder (letzte Spiele, nächste Spiele, Tabelle).
+  - *Mitglieder:* Vorname, Nachname, Spieler ja/nein, Foto, Position; Vorstand ja/nein, Vorstandsfoto, Rolle, Adresse, E-Mail, Telefon. **Keine Rückennummer, kein Einwilligungsfeld.**
+  - *Sponsoren:* Logo, Website, Stufe. *Vereine (Gegner):* Platzadresse (+ Beitragsbild als Wappen).
+  - *Club-Einstellungen:* Logo, Adresse, Vereinsheim, Social-Links und ein **zweiter, manueller Spielplan** (18 Spiele, mit Gegnern aus „Vereine“, abgesagt, Ergebnis).
+- **Daten:** 120 Spieler (fast alle mit Foto), 13 Vorstandsmitglieder. Die Relationship „Mannschaft ↔ Spieler“ ist **leer**: Spieler sind keinem Team zugeordnet → beim Umzug zuordnen.
+- **Pipeline läuft:** 10 von 11 Teams haben eine fussball.de-ID und wurden heute um 03:00 synchronisiert. Die D-Junioren hängen seit 30.06. (vermutlich alte Team-ID der Vorsaison). Schiedsrichter haben keine ID.
+- **Kategorien:** Aktive 73, Allgemein 57, Nachwuchs 49, Spielberichte 38, Veranstaltungen 20, Kunstrasen 10, Neubau 7, AH 5, Förderverein 5, Bezirkspokal 4, Weihnachten 3, Verbandspokal 2, Gemeindepokal 1.
+- **Datenschutz-Hinweis:** Viele Spielerfotos ohne dokumentierte Einwilligung, vermutlich auch von Jugendlichen. Vor dem Umzug klären, welche Fotos übernommen werden.
+
+**Was das für den Plan heißt:** Das bestehende Meta-Box-Schema ist die Basis. Wir erweitern es (Spiel als eigener CPT, Rückennummer, Einwilligung, Team-Zuordnung, Trainingszeiten, Spielstätte) statt neu anzufangen. Der manuelle Spielplan aus den Club-Einstellungen wird durch den CPT „Spiel“ mit `quelle=manuell` ersetzt.
 
 ---
 
