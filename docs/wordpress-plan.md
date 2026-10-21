@@ -25,16 +25,16 @@ Stand: 21.10.2026. Grundlage sind die Entwürfe in Paper (Startseite, 9 Untersei
 | Baustein | Entscheidung | Warum |
 |---|---|---|
 | WordPress | neue Installation `fck.tobiashaas.dev` (xCloud, PHP 8.4, WP 7.1.3), später Umzug auf die Domain | alte Seite läuft auf IONOS mit Bricks |
-| Etch | Page-Builder: Templates, Loops, Komponenten | Loops mit echten `WP_Query`-Argumenten. **Inhaltstypen legen wir nicht in Etch an:** Die Etch-Doku nennt den Content Manager (CPTs und Felder) „proof-of-concept and playground … not recommended in production“ |
+| Etch | Page-Builder und **Inhaltstypen/Taxonomien** (Content Hub) | Loops mit echten `WP_Query`-Argumenten. Die Definitionen liegen im Git (`wordpress/setup/content-types.php`) und werden mit `setup/etch-content-types.php` über Etchs eigene Route geschrieben (wiederholbar). Die Warnung „playground only“ auf der alten Doku-Seite „Content Manager“ ist überholt (Content Hub seit 1.6) |
 | AutomaticCSS + Frames | Design-Tokens, Abstände, Typo | beides läuft schon auf der alten Seite |
 | **Meta Box** (inkl. MB Relationships) | Felder, die Etch selbst nicht kann | siehe unten |
-| Plugin `fck-core` (eigen, im Git unter `wordpress/fck-core`) | registriert Inhaltstypen, Taxonomien, Meta-Box-Felder und die Options-Seite per Code; später Rechenwerte (nächstes Spiel, Form), Sync-Endpoint, Trainer-Rechte | versioniert, Staging und Live identisch; Etch kann nicht sortieren, gruppieren oder filtern |
+| Plugin `fck-core` (eigen, im Git unter `wordpress/fck-core`) | registriert Meta-Box-Felder, die Options-Seite und feste Begriffe per Code, hält die Taxonomie `team` synchron; später Rechenwerte (nächstes Spiel, Form), Sync-Endpoint, Trainer-Rechte | versioniert, Staging und Live identisch; Etch kann nicht sortieren, gruppieren oder filtern |
 | Umzugs-Skripte (WP-CLI über SSH) | Migration von der alten Seite | beide Server per SSH erreichbar; wir ziehen nur, was in die neue Struktur passt |
 | n8n | holt Daten von fussball.de | gibt es schon, wird umgebaut |
 
 ### Warum Etch-Felder allein nicht reichen
 
-Etch 1.7.1 kann eigene Felder anlegen: Text, Textbereich, Zahl, Ja/Nein, **Bild**, Datum, Uhrzeit, Auswahl, Checkbox, Radio. Es fehlen weiterhin **Datei, Repeater und Verknüpfungen (Relationship)**. Die brauchen wir für Trainingszeiten, Downloads, Spiel → Mannschaft und Person → Mannschaft. Dazu rät die Etch-Doku vom Content Manager im Live-Betrieb ab. Alle Felder liegen deshalb als Code in Meta Box (`fck-core`).
+Etch 1.7.1 kann eigene Felder anlegen: Text, Textbereich, Zahl, Ja/Nein, **Bild**, Datum, Uhrzeit, Auswahl, Checkbox, Radio. Es fehlen weiterhin **Datei, Repeater und Verknüpfungen (Relationship)**. Die brauchen wir für Trainingszeiten, Downloads, Spiel → Mannschaft und Person → Mannschaft. Alle Felder liegen deshalb als Code in Meta Box (`fck-core`), ein Feldsystem statt zwei.
 
 ### Warum Meta Box und nicht ACF
 
@@ -71,7 +71,7 @@ Etch 1.7.1 kann eigene Felder anlegen: Text, Textbereich, Zahl, Ja/Nein, **Bild*
 
 - `fck.tobiashaas.dev` auf xCloud (Hetzner), PHP 8.4, WordPress 7.1.3, Redis-Cache, Nginx-Helper.
 - Etch-Theme 0.0.7, Etch 1.7.1, AutomaticCSS 4.0.1. Fluent SMTP ist installiert, aber aus.
-- Meta Box AIO 3.13.1 (von der alten Seite kopiert) und `fck-core` 0.1.0 sind aktiv: 10 Inhaltstypen, 3 Taxonomien, Felder, Options-Seite „Verein“. Noch keine Inhalte.
+- Meta Box AIO 3.13.1 (von der alten Seite kopiert) und `fck-core` 0.2.0 sind aktiv. Etch registriert 10 Inhaltstypen und 3 Taxonomien, `fck-core` die Felder und die Options-Seite „Verein“. Noch keine Inhalte.
 - **Deploy:** `tar czf - fck-core | ssh … 'cd files/wp-content/plugins && tar xzf -'` aus `wordpress/`.
 
 ### Heute → Neu
@@ -239,7 +239,7 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 | Phase | Inhalt | Ergebnis |
 |---|---|---|
 | 0 | SSH-Inventur der alten Seite, Teamliste klären, Rechtsfrage fussball.de anstoßen | Bestandsliste |
-| 1 | Staging-Seite mit Etch, Inhaltstypen und Felder in `fck-core`, Umzugs-Skripte für die Inhalte, ACSS-Tokens aus den Entwürfen | Datenmodell mit echten Altdaten |
+| 1 | Staging-Seite mit Etch, Inhaltstypen in Etch, Felder in `fck-core`, Umzugs-Skripte für die Inhalte, ACSS-Tokens aus den Entwürfen | Datenmodell mit echten Altdaten |
 | 2 | Etch: Header, Footer, Komponenten (Spielkarte, Tabelle, Kachel, Partner-Zeile, Person), dann die Templates | alle Seiten mit Testdaten |
 | 3 | Pipeline umbauen und an `fck/v1/sync` anschließen, Rechenwerte in `fck-core` | echte Spieldaten |
 | 4 | Inhalte aufräumen und ergänzen (Logos als SVG, Rückennummern, Trainingszeiten), Weiterleitungen | Inhalte fertig |
