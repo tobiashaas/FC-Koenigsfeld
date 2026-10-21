@@ -309,7 +309,7 @@ Zusätzlich von motion.dev: Mobil bleiben die Hauptlinks als kompakte Zeile sich
 
 ### Navigation V4 (21.10.2026, ersetzt Schrägsegmente und Menü-Button am Desktop)
 
-Abgeschaut von motion.dev (gesichtet 21.10.2026): Die Leiste hat einen dunklen Grund mit feiner diagonaler Schraffur, `repeating-linear-gradient(119deg, Linie 1,5 px, Abstand 8 px)`. Dazu kommen Rolling Text beim Hover und ein schräger Wisch (animierte `clip-path`-Polygonfläche) auf dem CTA. Die Schräge im Winkel von 119° passt zur roten Diagonale im Hero.
+Abgeschaut von motion.dev (gesichtet 21.10.2026): Die Leiste hat eine feine diagonale Schraffur, die zwischen den Linien durchsichtig ist: `repeating-linear-gradient(110deg, Weiß 12 % 0–1,5 px, transparent 1,5–9 px)`. Über dem Hero scheint das Foto durch. Sobald die Kopfzeile beim Scrollen über Inhalt liegt, kommt `#121212` mit 88 % Deckkraft unter die Linien, damit die Links lesbar bleiben. Dazu kommen Rolling Text beim Hover und ein schräger Wisch (animierte `clip-path`-Polygonfläche) auf dem CTA. **Ein Winkel für alles:** Die Hero-Diagonale (`linear-gradient(110deg …)`), die Schraffur (110deg) und alle schrägen Kanten (CTA, Menü-Block, 23 × 64 px = 70° zur Waagerechten) laufen parallel.
 
 - **Desktop ohne Menü-Button:** Wappen links, daneben eine durchgehende Leiste mit Schraffur, bündig zum Raster (60 px).
   - Hauptpunkte: Spieltag · Teams · Aktuelles · Verein · Mitmachen · Partner.
