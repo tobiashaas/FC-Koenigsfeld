@@ -24,14 +24,33 @@ Stand: 21.10.2026. Grundlage sind die Entwürfe in Paper (Startseite, 9 Untersei
 
 | Baustein | Entscheidung | Warum |
 |---|---|---|
-| WordPress | aktuell, eigener Hoster | gibt es schon |
-| Etch | Page-Builder für alle Templates | Templates als Code-nahes HTML, Loops mit echten `WP_Query`-Argumenten |
-| AutomaticCSS | Design-Tokens, Abstände, Typo | unsere Tokens sind bereits ACSS-nah |
-| **ACF Pro** (Empfehlung) | Felder, Repeater, Relationships, Options-Seiten | bester Etch-Adapter, Relationships liegen in normaler Post-Meta → per `meta_query` abfragbar, ca. 49 $/Jahr (Preis unverifiziert) |
-| Plugin `fck-core` (eigen, im Git) | CPTs, Taxonomien, Feldgruppen, Rechenwerte, Sync-Endpoint | Datenmodell versioniert und unabhängig vom Builder |
+| WordPress | neue Installation (Staging), später Umzug auf die Domain | alte Seite läuft auf IONOS mit Bricks |
+| Etch | Page-Builder, **legt auch die Inhaltstypen (CPTs) und Taxonomien an** | Etch hat eigene Content Types; Loops mit echten `WP_Query`-Argumenten |
+| AutomaticCSS + Frames | Design-Tokens, Abstände, Typo | beides läuft schon auf der alten Seite |
+| **Meta Box** (inkl. MB Relationships) | Felder, die Etch selbst nicht kann | siehe unten |
+| Plugin `fck-core` (eigen, im Git) | Rechenwerte (nächstes Spiel, Spiele nach Tag, Form), Sync-Endpoint für die Pipeline, Trainer-Rechte | Etch kann nicht sortieren, gruppieren oder filtern |
+| Bricks2Etch | Migration von der alten Seite | überträgt Beiträge, Medien, CPTs, Meta-Box-Feldgruppen und -Werte |
 | n8n | holt Daten von fussball.de | gibt es schon, wird umgebaut |
 
-**Offene Entscheidung ACF Pro oder Meta Box:** Die alte Seite und die Pipeline nutzen heute Meta Box. Meta Box geht auch, aber MB-Relationships liegen in einer eigenen Tabelle und brauchen in Etch Sonder-Loops (`mbFrom`/`mbTo`). Weil `fck-core` alles per Code registriert und die Pipeline künftig über einen eigenen Endpoint schreibt, kostet der Wechsel zu ACF wenig. Endgültig entscheiden, nachdem wir die alte Seite per SSH gesehen haben.
+### Warum Etch-Felder allein nicht reichen
+
+Etch kann eigene Felder anlegen, aber nur einfache Typen: Text, Textbereich, Zahl, Ja/Nein, Auswahl, Checkbox, Radio, Datum, Uhrzeit (Etch 1.5.1, Quellcode; die Public-API-Doku nennt nur text/textarea/number/boolean). Es fehlen **Bild/Logo, Datei, Repeater und Verknüpfungen (Relationship)**. Genau die brauchen wir: Teamfoto, Partner-Logo, Trainingszeiten, Spiel → Mannschaft, Person → Mannschaft.
+
+### Warum Meta Box und nicht ACF
+
+- Die alte Seite nutzt Meta Box schon (inkl. Relationships, Builder, Views). Die vorhandenen Feldgruppen und Werte (Mannschaften, Mitglieder, Sponsoren, Vereine) kommen mit Bricks2Etch direkt mit.
+- Etch unterstützt Meta Box offiziell (`this.metabox.*`).
+- **Regel für Verknüpfungen, nach denen gefiltert wird:** als einfaches Feld mit einer Post-ID speichern (z. B. Spiel → `team_id`), nicht über MB Relationships. MB Relationships liegen in einer eigenen Tabelle und brauchen in Etch Sonder-Loops (`mbFrom`/`mbTo`); ein einfaches Feld geht mit `meta_query` und `$team: this.id`.
+- ACF Pro wäre die Alternative mit dem breitesten Etch-Adapter, kostet aber Lizenz und eine zusätzliche Umstellung der Altdaten.
+
+### Bestand der alten Seite (öffentliche REST-API, 21.10.2026)
+
+- **Technik:** WordPress auf IONOS, Theme Bricks + Child, AutomaticCSS, Frames, Meta Box (Builder, Relationships, Views, Blocks), Fluent Forms, SEOPress, Wordfence, Pressidium Cookie Consent, HappyFiles.
+- **Inhalte:** 178 Beiträge (seit 2013), 10 Seiten, 482 Medien.
+- **Eigene Inhaltstypen:** `mannschaften` (11), `mitglieder` (131, Taxonomien Position und Vorstandsrolle), `sponsor` (70, Taxonomie Partner-Stufe), `vereine` (128 – Gegner mit Wappen, wichtig gegen Hotlinking), `historie` (5), `foerderverein` (4), `rechtlich` (2).
+- **Mannschaften heute:** 1. Mannschaft, 2. und 3. Mannschaft SG Gem. B.K.N., AH, A-, B-, C- (SG), D-, E- (SG, 2 Teams), Schiedsrichter. **Abweichung zu den Entwürfen:** Dort steht Ü35 statt AH, es gibt keine 3. Mannschaft, und Mädchen, Bambini und F-Junioren fehlen auf der alten Seite. Das mit dem Verein klären.
+- **Sponsoren:** Stufen wie im Entwurf (Sportpark, Trikot 1. Mannschaft, Trikot SG, Exklusiv 3, Premium 3, Präsentationsanzüge, Bande-Plus 7, Bande 49, Basis 5).
+- Die SSH-Inventur (Felder im Detail, Plugins inaktiv/aktiv, Größe der Uploads) steht noch aus.
 
 ---
 
@@ -142,7 +161,7 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 
 1. **Inventur, nur lesend:** WordPress-Version, Theme, Plugins, CPTs, Feldgruppen, Anzahl Beiträge/Seiten/Medien, Menüs, Formulare, Größe der Uploads.
 2. **Was übernommen wird:** Beiträge (mit Datum, Kategorie, Beitragsbild), Medien, Partner-Logos, Teams, Ansprechpartner, Downloads (Satzung, Anträge).
-3. **Wie:** Neue Seite als Staging aufsetzen, Beiträge per WP-CLI/WXR-Export importieren, Medien per rsync kopieren, alte Kategorien auf die neuen abbilden.
+3. **Wie:** Neue Staging-Seite mit Etch, dann **Bricks2Etch**: überträgt Beiträge, Seiten, Medien, Beitragsbilder, CPTs, Meta-Box-Feldgruppen und Feldwerte, Fonts und globale Klassen. Danach alte Kategorien auf die neuen abbilden und `mitglieder` → Person, `vereine` → Gegner-Wappen nutzen. Bricks-Templates werden nicht gebraucht, die Seiten entstehen neu nach den Paper-Entwürfen.
 4. **Weiterleitungen:** Alle alten URLs auf die neuen (301), damit Google-Links und geteilte Links weiter funktionieren.
 5. **Aufräumen:** Bilder ohne Einwilligung (Kinder!) beim Import markieren und prüfen.
 
@@ -175,18 +194,18 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 
 | Phase | Inhalt | Ergebnis |
 |---|---|---|
-| 0 | SSH-Inventur der alten Seite, Entscheidung ACF/Meta Box, Rechtsfrage fussball.de anstoßen | Bestandsliste, Entscheidung |
-| 1 | Staging-Seite, `fck-core` mit CPTs/Feldern/Optionen, ACSS-Tokens aus den Entwürfen | leeres, sauberes Datenmodell |
+| 0 | SSH-Inventur der alten Seite, Teamliste klären, Rechtsfrage fussball.de anstoßen | Bestandsliste |
+| 1 | Staging-Seite mit Etch, Bricks2Etch-Migration der Inhalte, CPTs in Etch, Felder in Meta Box, `fck-core`, ACSS-Tokens aus den Entwürfen | Datenmodell mit echten Altdaten |
 | 2 | Etch: Header, Footer, Komponenten (Spielkarte, Tabelle, Kachel, Partner-Zeile, Person), dann die Templates | alle Seiten mit Testdaten |
 | 3 | Pipeline umbauen und an `fck/v1/sync` anschließen, Rechenwerte in `fck-core` | echte Spieldaten |
-| 4 | Migration: Beiträge, Medien, Partner, Personen; Weiterleitungen | Inhalte drin |
+| 4 | Inhalte aufräumen und ergänzen (Einwilligungen, Logos als SVG), Weiterleitungen | Inhalte fertig |
 | 5 | Teams schulen (Trainer-Rolle), Abnahme, Umzug auf die Live-Domain | live |
 
 ---
 
 ## 11. Offene Punkte
 
-- ACF Pro oder Meta Box (nach SSH-Inventur).
+- Teamliste mit dem Verein abgleichen (AH/Ü35, 3. Mannschaft, Mädchen, Bambini, F-Junioren, Schiedsrichter).
 - Erlaubnis für das Auslesen von fussball.de.
 - Liefert fussball.de Spieler-Saisonzahlen überhaupt? Sonst manuell.
 - Echte Inhalte vom Verein: Logos (SVG), Fotos, Namen von Jugendleitung und Vertrauensperson, Trainingszeiten, Adressen Neuhausen/Buchenberg, Satzung und Kinderschutzkonzept, Sponsorenmappe.
