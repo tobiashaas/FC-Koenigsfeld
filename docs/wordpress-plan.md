@@ -60,12 +60,29 @@ Etch kann eigene Felder anlegen, aber nur einfache Typen: Text, Textbereich, Zah
   - *Mitglieder:* Vorname, Nachname, Spieler ja/nein, Foto, Position; Vorstand ja/nein, Vorstandsfoto, Rolle, Adresse, E-Mail, Telefon. **Keine Rückennummer, kein Einwilligungsfeld.**
   - *Sponsoren:* Logo, Website, Stufe. *Vereine (Gegner):* Platzadresse (+ Beitragsbild als Wappen).
   - *Club-Einstellungen:* Logo, Adresse, Vereinsheim, Social-Links und ein **zweiter, manueller Spielplan** (18 Spiele, mit Gegnern aus „Vereine“, abgesagt, Ergebnis).
-- **Daten:** 120 Spieler (fast alle mit Foto), 13 Vorstandsmitglieder. Die Relationship „Mannschaft ↔ Spieler“ ist **leer**: Spieler sind keinem Team zugeordnet → beim Umzug zuordnen.
+- **Daten:** 120 Spieler (fast alle mit Foto), 13 Vorstandsmitglieder. 80 Zuordnungen Mannschaft ↔ Spieler (1. Mannschaft 27, 2. Mannschaft 34, A-Junioren 18, Schiedsrichter 1). Achtung: Die Daten liegen unter der Relationship-ID `mannschaft-spieler`, die Definition heißt inzwischen `teams-players` – beim Umzug über die alte ID auslesen.
 - **Pipeline läuft:** 10 von 11 Teams haben eine fussball.de-ID und wurden heute um 03:00 synchronisiert. Die D-Junioren hängen seit 30.06. (vermutlich alte Team-ID der Vorsaison). Schiedsrichter haben keine ID.
 - **Kategorien:** Aktive 73, Allgemein 57, Nachwuchs 49, Spielberichte 38, Veranstaltungen 20, Kunstrasen 10, Neubau 7, AH 5, Förderverein 5, Bezirkspokal 4, Weihnachten 3, Verbandspokal 2, Gemeindepokal 1.
-- **Datenschutz-Hinweis:** Viele Spielerfotos ohne dokumentierte Einwilligung, vermutlich auch von Jugendlichen. Vor dem Umzug klären, welche Fotos übernommen werden.
+- **Fotos:** Die Einwilligung für Fotos und Namen gibt es über die Mitgliedschaft und beim Fotoshooting (Aussage Verein, 21.10.2026). Ein Einzel-Einwilligungsfeld ist deshalb nicht nötig; es gibt nur einen Schalter „Profil ausblenden“ für Widerrufe.
 
-**Was das für den Plan heißt:** Das bestehende Meta-Box-Schema ist die Basis. Wir erweitern es (Spiel als eigener CPT, Rückennummer, Einwilligung, Team-Zuordnung, Trainingszeiten, Spielstätte) statt neu anzufangen. Der manuelle Spielplan aus den Club-Einstellungen wird durch den CPT „Spiel“ mit `quelle=manuell` ersetzt.
+**Was das für den Plan heißt:** Wir bauen die Struktur neu und besser. Die alten Daten ziehen wir per Bricks2Etch und kleinen Umzugs-Skripten in die neue Struktur.
+
+### Heute → Neu
+
+| Heute | Problem | Neu |
+|---|---|---|
+| Sync-Daten als serialisierte Blöcke an der Mannschaft (`fd_letzte_spiele`, `fd_naechste_spiele`, `fd_tabelle`) | nicht teamübergreifend abfragbar, kein Heim/Ort/Status/ID | **CPT Spiel** (ein Eintrag pro Spiel) + **Tabelle** je Mannschaft mit Zone und eigenem Team |
+| Zweiter, manueller Spielplan in den Club-Einstellungen (Repeater mit 18 Spielen) | doppelte Pflege, zwei Systeme | entfällt; manuelle Spiele sind ebenfalls **Spiele** mit `quelle = manuell` |
+| `match_team_key`, Shortcode-Felder, MB-View-Namen an der Mannschaft | Technik-Felder in der Redaktion | entfällt; Etch-Templates holen alles selbst |
+| Liga als Freitext-Auswahl | Tippfehler, „Kreisliga B1“ | **Taxonomie Wettbewerb** (Liga, Pokal, Freundschaftsspiel) |
+| Mitglieder: Spieler und Vorstand in einem Datensatz mit doppelten Feldern (zwei Fotos, zwei Positionsfelder) | unübersichtlich | **CPT Person** mit einem Foto und einer **Taxonomie Rolle** (Spieler, Trainer, Betreuer, Jugendleitung, Vorstand, Kinderschutz) – eine Person kann mehrere Rollen haben |
+| Relationship Mannschaft ↔ Spieler über MB-Tabelle, ID geändert | Etch braucht Sonder-Loops, alte ID verwaist | Feld **Mannschaft(en)** an der Person (Post-IDs), per `meta_query` abfragbar |
+| Keine Rückennummer, kein Trainerbezug, keine Trainingszeiten | Teamseite nicht baubar | Rückennummer, Position an der Person; **Trainingszeiten** (Repeater) und **Spielstätte** an der Mannschaft |
+| „Vereine“ nur mit Platzadresse | Wappen nur als Beitragsbild | **CPT Gegner** mit Wappen-Feld, Kurzname, fussball.de-Name (für den automatischen Abgleich im Sync) |
+| Sponsor mit Logo, Website, Stufe | keine Rolle, kein Laufzeitende | + Rolle („Trikot SG B.K.N.“), Ort, Laufzeit bis, Verknüpfung Mannschaft |
+| Kategorien gemischt (Teams, Themen, Pokale: „AH“, „Aktive“, „Nachwuchs“, „Bezirkspokal“, „Neubau“) | Filter nach Team unmöglich | **Kategorie** nur für die Art (Spielbericht, Jugend, Verein, Förderverein, Veranstaltung) + **Taxonomie Mannschaft** für das Team |
+| Club-Einstellungen: Kontakt, Social, Spielplan | Spielplan gehört nicht hierher | **Options-Seite Verein**: Kontakt, Vereinsheim, Social, Saison, Pausen, Beiträge |
+| Historie (5), Förderverein (4), Rechtlich (2) als eigene CPTs | sehr wenige Einträge | Historie bleibt CPT (Zeitstrahl); Förderverein-Beiträge werden normale Beiträge mit Kategorie; Rechtliches sind Seiten |
 
 ---
 
