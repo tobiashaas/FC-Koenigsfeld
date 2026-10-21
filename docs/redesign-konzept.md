@@ -135,6 +135,7 @@ Auf den Seiten stehen keine Quellen- oder Zeitstempelzeilen („Daten: fussball.
 
 - **Mitmachen · Jugend & Eltern (Desktop):** H1 „Dein Kind will kicken?“, Probetraining und „Seite an Eltern schicken“, Jugendleitung in roter 70°-Fläche; Tabelle aller Jahrgänge mit Trainingszeit, Ort und Trainer:in; „Für Eltern“ als aufklappbare Fragen (Kosten, Ausrüstung, Fahrten, Spielgemeinschaft, Absagen); Kinderschutz mit Vertrauensperson und Konzept-PDF.
 - **Mobil (390 px):** Artikel (Spieldaten klappbar, Teilen oben), Teamseite (Hero mit Form, Unternavigation zum Wischen, Spielkarten, Tabellenausschnitt, Kader zum Wischen, Training und Trainer), Spielplan (Team-Chips, Kommende/Ergebnisse, Liste nach Tagen), Jugend & Eltern.
+- **Mobil, Rest:** News-Übersicht (Filter zum Wischen, Aufmacher, Liste mit Vorschaubild), Spielerprofil (Foto-Fläche mit 70°-Schräge, Steckbrief, Saisonzahlen 2 × 2, vorheriger/nächster Spieler), Partner (HSS-Band, Stufenlisten, Suche über alle 61, Partner werden, Förderverein), Kontakt (Ansprechpartner mit Direktaktion, Formular, Spielstätten mit Route, Downloads). Damit hat jede Desktop-Seite eine Mobil-Version.
 - Trainingszeiten und Jahrgänge auf den Entwürfen sind Beispiele; echte Werte kommen aus dem Team-CPT.
 
 ### Leerzustände (Paper, Seite „Zustände & Komponenten“, 21.10.2026)
