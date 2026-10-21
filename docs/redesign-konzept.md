@@ -121,21 +121,30 @@ Alle Unterseiten nutzen dieselbe Kopfzeile (aktiver Punkt weiß), Korn-Grund, Ha
 | Aktuelles · Artikel | Meta, H1, Lead, Autor und Lesezeit, Teilen (WhatsApp, Link kopieren), Titelbild mit Bildnachweis, Spalte „Spieldaten“ (Ergebnis, Halbzeit, Ort, Tore aus fussball.de, Tabelle danach), Fließtext 720 px mit Zitat, Ausblick aufs nächste Spiel, „Weitere Meldungen“ |
 | Teams · 1. Herren | Hero mit Teamfoto und 70°-Diagonale, Platz, Punkte, Form (S/U/N mit Buchstaben, nicht nur Farbe), Trikotsponsor; Unternavigation; Spielkarten + Tabellenausschnitt + nächste Spiele; Kader nach Positionen (Spielerkarten, weitere Gruppen eingeklappt); Trainerteam, Trainingszeiten, Probetraining; Trikotsponsor-Zeile mit HSS-Jobs-Link |
 | Teams · Spielerprofil | Foto-Fläche mit roter 70°-Schräge und Rückennummer, Name, Steckbrief (im Verein seit, starker Fuß, vorherige Vereine, Lieblingsmoment), Saisonzahlen aus fussball.de, vorheriger/nächster Spieler. **Nur für Erwachsene mit Einwilligung, keine Profile für Jugendspieler, kein Geburtsdatum.** |
-| Spieltag · Spielplan | Filter nach Team, Umschalter Kommende/Ergebnisse/Nur Heimspiele, Kalender-Abo, Platzbelegung; Liste nach Tagen mit Uhrzeit, Team, Paarung (eigenes Team fett), Ort, Wettbewerb, Anfahrt; Quelle und Stand |
+| Spieltag · Spielplan | Filter nach Team, Umschalter Kommende/Ergebnisse/Nur Heimspiele, Kalender-Abo, Platzbelegung; Liste nach Tagen mit Uhrzeit, Team, Paarung (eigenes Team fett), Ort, Wettbewerb, Anfahrt |
 | Partner · Übersicht | HSS-Band, Partner-Wand, alle 61 Partner nach Stufe mit Suche, „Partner werden“ mit vier Paketen (Bande, Trikot, Turniere, Jugend), Sponsorenmappe, Ansprechpartner |
 | Verein · Kontakt | Kennzahlen, „Wer hilft dir weiter?“ (Vorstand, Jugend, Kinderschutz, Spielbetrieb, Förderverein, Spieltag), Kontaktformular mit Themenauswahl, Spielstätten mit Route, Formulare & Downloads (Mitgliedsantrag, Satzung, Kinderschutzkonzept, Förderverein) |
 
 Offen vom Verein: echte Spieler- und Trainerfotos, Trainingszeiten je Team, Adressen der Plätze Neuhausen und Buchenberg, Namen der Jugendleitung und der Kinderschutz-Vertrauensperson, Satzung und Kinderschutzkonzept als PDF.
 
+### Keine Hilfs- und Quellentexte auf den Seiten (21.10.2026)
+
+Auf den Seiten stehen keine Quellen- oder Zeitstempelzeilen („Daten: fussball.de“, „Stand …“), keine Erklär- oder Platzhaltertexte („Beispielzeiten …“, „Platzhaltertext …“) und keine Füllsätze. Platzhalter sind realistische Inhalte (Namen, Zeiten), die sich nicht selbst erklären. Herkunft der Daten und offene Inhalte stehen nur in diesem Konzept. Footer-Kontakte zeigen nur die Rolle (Vorstand, Jugend …) als Mail-Link.
+
+### Weitere Seiten (21.10.2026)
+
+- **Mitmachen · Jugend & Eltern (Desktop):** H1 „Dein Kind will kicken?“, Probetraining und „Seite an Eltern schicken“, Jugendleitung in roter 70°-Fläche; Tabelle aller Jahrgänge mit Trainingszeit, Ort und Trainer:in; „Für Eltern“ als aufklappbare Fragen (Kosten, Ausrüstung, Fahrten, Spielgemeinschaft, Absagen); Kinderschutz mit Vertrauensperson und Konzept-PDF.
+- **Mobil (390 px):** Artikel (Spieldaten klappbar, Teilen oben), Teamseite (Hero mit Form, Unternavigation zum Wischen, Spielkarten, Tabellenausschnitt, Kader zum Wischen, Training und Trainer), Spielplan (Team-Chips, Kommende/Ergebnisse, Liste nach Tagen), Jugend & Eltern.
+- Trainingszeiten und Jahrgänge auf den Entwürfen sind Beispiele; echte Werte kommen aus dem Team-CPT.
+
 ### Leerzustände (Paper, Seite „Zustände & Komponenten“, 21.10.2026)
 
-Regeln: nie eine leere Box, sondern Grund und nächsten Schritt nennen · Quelle und Stand bleiben sichtbar · gleiche Karte, gleiche Größe, das Layout springt nicht.
+Regeln: nie eine leere Box, sondern Grund und nächsten Schritt nennen · gleiche Karte, gleiche Größe, das Layout springt nicht.
 
 | Modul | Zustand | Auslöser (Daten) | Darstellung |
 |---|---|---|---|
 | Spieltag-Widget | Spielpause | kein Spiel in den nächsten 21 Tagen | Letztes Spiel bleibt stehen; Karte „Nächstes Spiel“ mit Badge Winter-/Sommerpause, Rückrundenstart nur wenn im Spielplan, Buttons „Kalender abonnieren“ und „Alle Termine“ |
 | Spieltag-Widget | Team ohne Liga | Team hat keine fussball.de-ID (Mädchen, Bambini, F) | Eine Karte in der Höhe beider Karten: Badge „Keine Liga“, nächster Termin aus dem CPT oder „Noch nicht eingetragen“, Trainingszeiten, „Probetraining vereinbaren“; Fußzeile „Gepflegt vom Team · Stand …“ |
-| Spieltag-Widget | Daten veraltet | letzter erfolgreicher Import > 36 h | Inhalte bleiben; gelber Hinweis „Stand … – evtl. nicht aktuell · fussball.de ↗“ statt der grauen Quellenzeile |
 | Spieltag-Widget | Spieltag heute | Anstoß heute | Badge „Heute“ in `--primary`, Heim/Auswärts wandert in die Datumszeile; kein Live-Ticker |
 | Spieltag-Widget | Ergebnis folgt | Anstoß + 2 h vorbei, kein Ergebnis | „– –“ mit neutralem Badge „Ergebnis folgt“, Buttons „fussball.de ↗“ und „Alle Ergebnisse“; nie ein falsches 0:0 |
 | Spieltag-Widget | Abgesagt/verlegt | Status von fussball.de | Badge „Abgesagt“ in `--draw`, Uhrzeit durchgestrichen, „Entfällt“, „Nachholtermin folgt“ |
