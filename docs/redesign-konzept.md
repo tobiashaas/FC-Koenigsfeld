@@ -314,7 +314,9 @@ Abgeschaut von motion.dev (gesichtet 21.10.2026): Die Leiste ist schwarz-transpa
 - **Desktop ohne Menü-Button:** Wappen links, daneben eine durchgehende Leiste mit Schraffur, bündig zum Raster (60 px).
   - Hauptpunkte: Spieltag · Teams · Aktuelles · Verein · Mitmachen · Partner.
   - Rechts der CTA „Mitglied werden“ als roter Block mit schräger linker Kante.
-  - Aktive Seite: 2 px Unterstrich in `--primary-semi-light`.
+  - Jeder Hauptpunkt ist eine Parallelogramm-Fläche im 70°-Winkel (schräge Kanten 23 × 64 px), im Ruhezustand unsichtbar.
+  - **Hover und offenes Panel:** Fläche `--primary`, eingeblendet mit dem schrägen Wisch von links.
+  - **Aktive Seite:** Fläche Weiß, Text `#121212`. Auf der Startseite ist kein Punkt aktiv.
 - **Mega-Panel:** Jeder Hauptpunkt öffnet bei Hover, Klick oder Fokus ein Panel direkt unter der Leiste, in der Breite der Leiste. Aufbau: Titel mit einem Satz links, zwei Linkspalten, rechts ein Teaser. Der Rest der Seite wird abgedunkelt. `Esc` schließt das Panel, Pfeiltasten führen durch die Links. Damit ersetzen die Panels das Vollbild-Menü am Desktop.
 - **Mobil:** Die Kopfzeile bleibt oben stehen und hat dieselbe Schraffur. Links das Wappen, Schnelllink „Spieltag“, rechts der rote Menü-Block mit schräger Kante. Das rote Vollbild-Menü bleibt nur mobil.
 - **Hover:** Rolling Text auf allen Links. Auf dem CTA ein schräger Wisch von links (0,4 s, `cubic-bezier(.25,0,0,1)`). Bei `prefers-reduced-motion` gibt es nur einen Farbwechsel.
