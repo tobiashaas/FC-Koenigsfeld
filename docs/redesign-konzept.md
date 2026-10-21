@@ -25,7 +25,7 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 > - Mittellinie, Mittelkreis und Mittelpunkt in der Lücke zwischen den Sections
 > - Strafraum mit Torraum, Elfmeterpunkt und Bogen direkt vor dem Footer; die Footer-Kante ist die Torlinie
 >
-> Rote Flächen (Footer-Karte, Menü) nutzen rotes Korn. Technisch ist das Korn ein Shader (`prototypes/seiten-hintergrund.html?theme=dark&contours=0&chalk=0`) oder alternativ eine kachelbare Noise-Textur; die Markierungen sind SVG pro Section.
+> **Update 21.10.2026 (Konsistenz):** Korn gibt es **nur auf dem dunklen Grund**. Rot ist überall eine **flache Markenfläche ohne Korn**: Hero-Diagonale, Akzentkachel, Buttons, Menü und Footer-Karte. Grund dafür: Rot mit Korn im Footer und flaches Rot oben wirkten wie zwei verschiedene Farben. Das Korn ist eine nahtlose 600-px-Kachel ohne Lichtschein (`prototypes/bg-korn-kachel.png`, erzeugt mit `scripts/korn-kachel.py`). Sie wird auf Body, Sections und Footer identisch gekachelt, damit es an den Übergängen keine Kanten gibt (im Code: `background: #121212 url(korn.png) repeat` am `body`, Sections transparent). Der frühere Flutlicht-Schein entfällt, weil er sich in jedem Abschnitt wiederholte. Die Markierungen sind SVG.
 
 > **Tabelle (20.10.2026):** Die Mini-Tabelle ist aus dem Hero raus. Der Spieltags-Block im Hero zeigt nur noch letztes und nächstes Spiel mit Team-Tabs. Die Tabelle hat jetzt eine eigene Section **„Wo wir stehen.“** direkt unter „Dein FCK“:
 > - links die Tabellenkarte mit `# · Verein · Sp · S · U · N · Tore · Diff · Pkt`, Zonen-Balken und Legende (Aufstieg/Relegation/Abstieg), eigene Zeile hervorgehoben, Link „Komplette Tabelle“
@@ -54,7 +54,14 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 
 **Startseiten-Reihenfolge seit V3:** Hero (mit Spieltags-Widget) → Spieltag/Tabelle → Dein FCK (Bento) → Neues vom #FCK → Partner → Footer. Jedes Spiel steht nur noch **einmal**: letztes und nächstes Spiel im Hero, das nächste Heimspiel neben der Tabelle. Die Bento-Kachel „Dein Besuch“ zeigt den Spielort, keinen Gegner.
 
+**Förderverein auf der Startseite (21.10.2026):**
+- Partner-Section heißt jetzt „Partner & Förderer“. Unter den Logos stehen zwei gleichwertige Karten: *Partner werden* (für Unternehmen) und *Förderverein* (für Fans, Eltern & Ehemalige) mit „Förderverein beitreten“.
+- Die Bento-Kachel „Mithelfen“ verlinkt Förderverein und Ehrenamt.
+- Die Termin-Kachel zeigt den Weihnachtsmarkt am 12.12. (der nächste Termin, veranstaltet vom Förderverein).
+- Im Footer steht er bei den Ansprechpartnern, im Menü in der neuen Gruppe „Unterstützen“ (Förderverein · Ehrenamt · Partner werden).
+
 **Noch offen (Persona-Review V3):**
+- Förderverein: Zweck in einem Satz, Beitrag, Spendenkonto und ggf. Spendenquittung (vom Förderverein liefern lassen)
 - Leerzustände gestalten: Winter-/Sommerpause, „kein Termin“, Sync-Fehler mit „Stand“, Team ohne Tabelle (Mädchen, Ü35, F/Bambini)
 - Partner: Logozeile „weitere Partner“, Erklärung der Stufen, Mediadaten als PDF
 - Trainer-Service (Platzbelegung, Formulare) als Unterseite verlinken
@@ -99,6 +106,7 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
   - Sportplatz Buchenberg: Beerenreute 2
 - **Kontakt:** Funktionsadressen für Vorstand, Jugendleitung und Spielausschuss existieren (vorstand@, jugendleiter@, spielausschuss@).
 - **Social Media:** Instagram `@fckoenigsfeld1954`, Facebook `FC.Koenigsfeld`, YouTube `@FCKonigsfeldeV`.
+- **Förderverein FC Königsfeld e.V.** (eigener Verein, sammelt Geld für den FCK): foerderverein@fc-koenigsfeld.de, Theodor-Heuss-Str. 13, 78126 Königsfeld. Eigener Vorstand, Mitgliedsantrag als PDF. Veranstaltet den **Weihnachtsmarkt** (12.12.2026, Standanfragen an weihnachtsmarkt@fc-koenigsfeld.de). Unterseiten im Altbestand: /foerderverein/vorstand, /kontakt, /weihnachtsmarkt, /impressum. Zweck im Detail, Beitrag und Spendenkonto stehen nirgends, das muss der Förderverein liefern.
 - **Beiträge** (ab 01.01.2025): Erwachsene 80 €, Jugendliche bis 18 Jahre 70 €, Familien 120 €. Einzug am 1. März.
 - **Joshua Kimmich Junior Cup:** offizieller Name, darf verwendet werden.
 - **Saison 2025/26:** Herren 1. Platz in der Landesliga, danach Aufstiegsspiel zur Verbandsliga; A-Junioren 1. Platz Kreisliga (laut fussball.de-Vereinserfolgen).
