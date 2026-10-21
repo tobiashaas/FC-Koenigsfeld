@@ -99,6 +99,18 @@ Spannung aus der Persona-Runde: Der HSS-CEO will mehr Sichtbarkeit, der Fan fand
 
 Offen vom Verein: Rollenzeilen der Exklusiv-/Premiumpartner, Pakete mit „ab“-Preisen und Sponsorenmappe als PDF, Reichweitenzahlen.
 
+### Mobil 390 px (Paper, Seite „Homepage V3 · Mobil“, 21.10.2026)
+
+Reihenfolge mobil: Hero → Spieltag-Modul → **Dein FCK** → Tabelle → News → HSS-Band → Partner → Footer. „Dein FCK“ steht mobil vor der Tabelle (Wunsch der Eltern-Persona); am Desktop bleibt die Tabelle zuerst.
+
+- **Kopf (sticky):** Wappen, Kurzlink „Spieltag“, roter Menü-Button. Alle Touch-Ziele mindestens 44 px.
+- **Spieltag-Modul:** Team-Chips zum Wischen, darunter „Letztes Spiel“ (mit „Spielbericht“ und „Teilen“) und „Nächstes Spiel“ (Anstoß-Box, „Anfahrt“, „In den Kalender“).
+- **Dein FCK:** Jugend-Kachel mit Jahrgängen, Linkliste (Trainingszeiten, Kinderschutz, „Für Eltern: Infos teilen“) und Jugendleitung mit Anruf- und Mail-Button · rote Probetraining-Kachel · Termin und Mithelfen als halbe Kacheln · Dein Besuch mit Spieltag-Kontakt · Mitgliedsbeiträge · Teamliste ohne Karte.
+- **Tabelle:** fünf Spalten (#, Verein, Sp, Diff, Pkt), Team-Auswahl als Dropdown, offen mit Haarlinien.
+- **Partner:** Liste je Stufe (Logo links, Name und Rolle rechts) statt Raster.
+- **Footer:** rote Karte, Akkordeon in der Menü-Schrift, Kontakte inkl. Sponsoring und Presse.
+- **Menü-Overlay:** rot, große Hauptpunkte als Akkordeon, unten Schnelllinks und „Mitglied werden“.
+
 ### Leerzustände (Paper, Seite „Zustände & Komponenten“, 21.10.2026)
 
 Regeln: nie eine leere Box, sondern Grund und nächsten Schritt nennen · Quelle und Stand bleiben sichtbar · gleiche Karte, gleiche Größe, das Layout springt nicht.
