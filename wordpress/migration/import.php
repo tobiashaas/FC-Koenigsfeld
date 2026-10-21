@@ -708,6 +708,12 @@ if ( in_array( 'fertig', $fck_steps, true ) ) {
 
 if ( $GLOBALS['fck_redirects'] ) {
 	$csv = dirname( $fck_file ) . '/redirects.csv';
+	// Teilläufe ergänzen die Liste statt sie zu ersetzen.
+	if ( is_readable( $csv ) ) {
+		foreach ( array_map( 'str_getcsv', file( $csv, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES ) ) as $row ) {
+			$GLOBALS['fck_redirects'] += array( $row[0] => $row[1] );
+		}
+	}
 	$fh  = fopen( $csv, 'w' );
 	foreach ( $GLOBALS['fck_redirects'] as $from => $to ) {
 		fputcsv( $fh, array( $from, $to ) );
