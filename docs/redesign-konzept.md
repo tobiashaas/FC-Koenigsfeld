@@ -69,18 +69,35 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 - Registergericht/VR-Nummer für Footer & Impressum
 - Mobile Version (9-spaltige Tabelle → `Sp · Diff · Pkt`, Footer-Akkordeon, Chip-Umbruch)
 
-### Partner-Bento (21.10.2026)
+### Seitenrhythmus und Karten-Regel (Persona-Runde V4, 21.10.2026)
+
+Befund: Bento war übernutzt. Ab der Tabelle bestand die Seite aus gleichen dunklen Karten, dadurch wirkte alles gleich wichtig.
+
+**Regel:** Karten nur für klickbare Einheiten mit eigener Aufgabe. Daten, Listen und Logos stehen offen auf dem Grund, getrennt durch Haarlinien (Kopflinie 2 px Weiß 85 %, Zeilen 1 px Weiß 14 %). Bento bleibt nur bei „Dein FCK“ und beim Spieltag-Widget im Hero.
+
+Rhythmus: Hero (Foto) → Tabelle (offen) → Dein FCK (dicht, Bento) → News (Aufmacher + Liste) → HSS-Band (Foto, volle Breite) → Partner-Wand (offen) → Footer (rot).
+
+Weitere Beschlüsse aus der Runde:
+- „Probetraining vereinbaren“ nur noch einmal (rote Kachel). Im Jugend-Block steht stattdessen die Jugendleitung mit Foto, Name, Telefon und Mail (Name und Nummer folgen vom Verein).
+- „Dein Besuch“ nennt einen Spieltag-Kontakt (Vereinsheim 07725 24 93).
+- News-Kopf und Footer verlinken „Presse & Fotos“; Footer nennt „Sponsoring · vorstand@“.
+- Kein grauer Fließtext unter 14 px, Labels mindestens 13 px; `--text-on-dark-muted` nur noch sparsam.
+- Footer-Navigation in derselben Schrift wie das Menü (Basement Grotesque 800).
+- Keine roten CTA-Flächen direkt vor dem roten Footer.
+
+### Partner (21.10.2026, ersetzt das Partner-Bento)
 
 Stufen laut alter Sponsorenseite (abgerufen 21.10.2026): Sportpark/Trikot 1. Herren **HSS Hydraulik und Antriebstechnik GmbH** · Exklusiv: Müller (bm-vorsorge.de), Warrle Personal, Autocenter Heuberg · Premium: Schreinerei Schwarzwälder, EGT, Sprinter VS · Trikot SG: EDEKA Holzky · Präsentationsanzüge: cws workwear · dazu 61 Basis-, Banden-Plus- und Bandenpartner. Pakete und Preise stehen nur in der Sponsorenmappe (auf Anfrage).
 
-Aufbau der Section „Partner & Förderer“:
-- **Hauptpartner 2×2:** Foto vom Sportpark (Namensgeber), Logo auf weißer Fläche, Satz zur Rolle, Link zur Website. Bild im Prototyp ist ein Platzhalter; echtes Sportpark- oder Trikotfoto vom Verein.
-- **Rechts 2×2:** drei Exklusiv-Kacheln (Logo-Fläche + Stufe + Name + ↗) und eine Foto-Kachel „Trikotsponsor SG“ mit Trikotfoto.
-- **Premium-Reihe:** vier flache Kacheln (Logo links, Stufe + Name rechts), inkl. Teamwear.
-- **Logo-Leiste:** „+ 61 Partner“, Laufband mit einfarbig weißen Logos (CSS `filter: brightness(0) invert(1)`, `opacity: .7`, Pause bei Hover und bei `prefers-reduced-motion`), „Alle Partner →“.
-- darunter die Karten „Partner werden“ und „Förderverein“.
+Spannung aus der Persona-Runde: Der HSS-CEO will mehr Sichtbarkeit, der Fan fand HSS schon fast zu oft. Lösung: **ein** starker HSS-Moment statt vieler Kacheln.
 
-**Logo-Proportionen:** Jede Stufe hat eine feste Logo-Fläche. Logos werden nach **Fläche** skaliert, nicht nach Breite: Zielfläche je Stufe, Skalierung `sqrt(Zielfläche / (Breite × Höhe))`, begrenzt auf 80 % Breite und 60 % Höhe der Fläche. So wirken Querformat- und Quadratlogos gleich groß. Im CPT: Logo als SVG (bevorzugt) mit Feld „Stufe“ und „Rolle“ (z. B. Trikotsponsor SG).
+- **HSS-Band (volle Breite, 620 px):** Foto, Claim „Ohne sie kein Anpfiff.“, Satz zur Rolle (Namensgeber Sportpark, Trikot 1. Herren), Logo in Originalfarben auf weißer Fläche, Links „Jobs & Ausbildung bei HSS ↗“ und „hss-hydraulik.de ↗“ (beide mit UTM, damit HSS Klicks sieht). Foto im Prototyp ist ein Platzhalter; gebraucht wird das HSS-Schild am Sportpark oder das HSS-Trikot. Kein fremdes Trikot im Band, Stadionname immer voll ausgeschrieben, HSS nie im Laufband.
+- **Partner-Wand ohne Karten:** Raster mit Haarlinien, Stufen-Label links. Logos einfarbig weiß. Zeilen: Exklusiv (größte Zellen) · Premium · Trikot & Ausstattung (EDEKA Holzky „Trikot SG B.K.N.“, cws „Teamwear“, freier Platz „Hier ist Platz für dich“) · „+ 61 Basis- und Bandenpartner … danke!“ mit Link „Alle Partner mit Namen“ (Unterseite listet alle 61 namentlich).
+- **Darunter zwei Textspalten ohne Box:** „Partner werden“ (Ansprechpartner Dietmar Eschner, vorstand@) und „Förderverein“.
+
+**Logo-Proportionen:** Jede Stufe hat eine feste Logo-Fläche. Logos werden nach **Fläche** skaliert, nicht nach Breite: Zielfläche je Stufe, Skalierung `sqrt(Zielfläche / (Breite × Höhe))`, begrenzt auf 80 % Breite und 60 % Höhe der Fläche. Im CPT: Logo als SVG (bevorzugt) mit Feldern „Stufe“, „Rolle“ und „Website“.
+
+Offen vom Verein: Rollenzeilen der Exklusiv-/Premiumpartner, Pakete mit „ab“-Preisen und Sponsorenmappe als PDF, Reichweitenzahlen.
 
 ### Leerzustände (Paper, Seite „Zustände & Komponenten“, 21.10.2026)
 
@@ -97,7 +114,7 @@ Regeln: nie eine leere Box, sondern Grund und nächsten Schritt nennen · Quelle
 | Tabelle | Team ohne Tabelle | Wettbewerb nur Pokal oder keine Liga | Karte: was das Team spielt, nächste Runde („Auslosung steht noch aus“), Link zum Wettbewerb und zur Teamseite |
 | Tabelle | Vor dem 1. Spieltag | alle Spiele = 0 | alphabetisch, ohne Platz und Zonen, eigene Zeile markiert, Hinweis „Die Tabelle startet mit dem 1. Spieltag“ |
 | Kachel Termin | Kein Termin | nichts in 60 Tagen | „Gerade ist nichts geplant.“ und „Kalender abonnieren →“ |
-| Partner | Exklusiv-Platz frei | weniger als 3 Exklusiv-Partner | gestrichelte Kachel „Hier könnte dein Logo stehen.“ und „Partner werden →“ |
+| Partner | Platz frei | Stufe hat weniger Partner als Zellen | leere Zelle „Hier ist Platz für dich“ mit „Partner werden ↓“ |
 | News | Instagram ohne Einwilligung | kein Consent | kein Embed; Profilname, Hinweis auf die Datenübertragung an Meta, „Beiträge laden“ und „Auf Instagram öffnen ↗“ |
 
 Für die Pipeline heißt das: Import-Zeitstempel, Spielstatus (abgesagt/verlegt) und ein Flag „Team hat Liga/Tabelle“ werden gebraucht, siehe Gaps in Abschnitt 5.
