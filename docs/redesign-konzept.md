@@ -63,11 +63,24 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 **Noch offen (Persona-Review V3):**
 - Förderverein: Zweck in einem Satz, Beitrag, Spendenkonto und ggf. Spendenquittung (vom Förderverein liefern lassen)
 - ~~Leerzustände gestalten~~ erledigt 21.10.2026, siehe unten
-- Partner: Logozeile „weitere Partner“, Erklärung der Stufen, Mediadaten als PDF
+- Partner: echte Logos (SVG) und Fotos vom Verein, Sponsorenmappe als PDF
 - Trainer-Service (Platzbelegung, Formulare) als Unterseite verlinken
 - Fotos/Galerie, Ferienangebote (Event-Kategorie), sichtbarer Hinweis zu Bild-Einwilligungen
 - Registergericht/VR-Nummer für Footer & Impressum
 - Mobile Version (9-spaltige Tabelle → `Sp · Diff · Pkt`, Footer-Akkordeon, Chip-Umbruch)
+
+### Partner-Bento (21.10.2026)
+
+Stufen laut alter Sponsorenseite (abgerufen 21.10.2026): Sportpark/Trikot 1. Herren **HSS Hydraulik und Antriebstechnik GmbH** · Exklusiv: Müller (bm-vorsorge.de), Warrle Personal, Autocenter Heuberg · Premium: Schreinerei Schwarzwälder, EGT, Sprinter VS · Trikot SG: EDEKA Holzky · Präsentationsanzüge: cws workwear · dazu 61 Basis-, Banden-Plus- und Bandenpartner. Pakete und Preise stehen nur in der Sponsorenmappe (auf Anfrage).
+
+Aufbau der Section „Partner & Förderer“:
+- **Hauptpartner 2×2:** Foto vom Sportpark (Namensgeber), Logo auf weißer Fläche, Satz zur Rolle, Link zur Website. Bild im Prototyp ist ein Platzhalter; echtes Sportpark- oder Trikotfoto vom Verein.
+- **Rechts 2×2:** drei Exklusiv-Kacheln (Logo-Fläche + Stufe + Name + ↗) und eine Foto-Kachel „Trikotsponsor SG“ mit Trikotfoto.
+- **Premium-Reihe:** vier flache Kacheln (Logo links, Stufe + Name rechts), inkl. Teamwear.
+- **Logo-Leiste:** „+ 61 Partner“, Laufband mit einfarbig weißen Logos (CSS `filter: brightness(0) invert(1)`, `opacity: .7`, Pause bei Hover und bei `prefers-reduced-motion`), „Alle Partner →“.
+- darunter die Karten „Partner werden“ und „Förderverein“.
+
+**Logo-Proportionen:** Jede Stufe hat eine feste Logo-Fläche. Logos werden nach **Fläche** skaliert, nicht nach Breite: Zielfläche je Stufe, Skalierung `sqrt(Zielfläche / (Breite × Höhe))`, begrenzt auf 80 % Breite und 60 % Höhe der Fläche. So wirken Querformat- und Quadratlogos gleich groß. Im CPT: Logo als SVG (bevorzugt) mit Feld „Stufe“ und „Rolle“ (z. B. Trikotsponsor SG).
 
 ### Leerzustände (Paper, Seite „Zustände & Komponenten“, 21.10.2026)
 
