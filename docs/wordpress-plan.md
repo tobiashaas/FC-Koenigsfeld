@@ -95,6 +95,8 @@ Etch 1.7.1 kann eigene Felder anlegen: Text, Textbereich, Zahl, Ja/Nein, **Bild*
 
 ## 3. Inhaltsmodell
 
+> Stand 22.10.2026: Nach der Persona-Prüfung (`datenmodell-pruefung.md`) erweitert und in `fck-core` 0.3 umgesetzt. Neu: Inhaltstypen **Amt**, **Gegner**, **Projekt**; Taxonomien **Saison**, **Wettbewerb**, **Organisation**, **Terminart**, **Reihe**; Options-Seite **Förderverein**; Rollen Trainer:in, Förderverein, Abgleich. Turniere sind Spiele mit Art „Turnier“. Die Tabelle unten ist die Ausgangsfassung; maßgeblich sind `wordpress/setup/content-types.php` und `wordpress/fck-core/includes/fields.php`.
+
 ### 3.1 Inhaltsarten (CPTs)
 
 | CPT | Wichtige Felder | Verknüpft mit | Wer pflegt |
@@ -226,8 +228,10 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 
 ## 9. Datenschutz
 
-- Keine Spielerprofile für Minderjährige, kein Geburtsdatum.
-- Einwilligung für Fotos und Namen über Mitgliedschaft und Fotoshooting; bei Widerruf „Profil ausblenden“ setzen.
+- Alle Teams dürfen einen Kader mit Foto pflegen, auch die Jugend (Entscheidung Verein, 22.10.2026). Kein Geburtsdatum.
+- Kontaktdaten nie über REST; auf der Seite nur mit „Kontakt zeigen“, sonst Funktions- oder Team-Adresse.
+- Einwilligung für Fotos und Namen über Mitgliedschaft und Fotoshooting; bei Widerruf „Profil ausblenden“: Die Person wird privat und Verweise auf sie werden entfernt.
+- Beim Umzug werden nur genutzte Medien übernommen, JPEG ohne EXIF/GPS. Vorstandsadressen und -telefon werden nicht übernommen.
 - Keine Torschützen-Namen bei Jugendspielen.
 - Gegner-Wappen in die eigene Mediathek laden, kein Hotlinking.
 - Instagram und Karten nur mit Zwei-Klick-Einwilligung.
