@@ -1,6 +1,6 @@
 # FC Königsfeld · Umsetzungsplan WordPress
 
-Stand: 21.10.2026. Grundlage sind die Entwürfe in Paper (Startseite, 9 Unterseiten, alle auch mobil), das Konzept in `redesign-konzept.md`, eine Prüfung der Pipeline `fussball.de-2-wordpress` und eine Prüfung von Etch 1.5.1 (Quellcode und Doku).
+Stand: 21.10.2026. Grundlage sind die Entwürfe in Paper (Startseite, 9 Unterseiten, alle auch mobil), das Konzept in `redesign-konzept.md`, eine Prüfung der Pipeline `fussball.de-2-wordpress` und eine Prüfung von Etch (Doku, Quellcode 1.5.1 und 1.7.1).
 
 **Ziel:** So viel wie möglich pflegt sich selbst. Spieldaten kommen automatisch, alles andere pflegen die Teams einmal an einer Stelle, und jede Seite zieht es von dort.
 
@@ -24,21 +24,21 @@ Stand: 21.10.2026. Grundlage sind die Entwürfe in Paper (Startseite, 9 Untersei
 
 | Baustein | Entscheidung | Warum |
 |---|---|---|
-| WordPress | neue Installation (Staging), später Umzug auf die Domain | alte Seite läuft auf IONOS mit Bricks |
+| WordPress | neue Installation `fck.tobiashaas.dev` (xCloud, PHP 8.4, WP 7.1.3), später Umzug auf die Domain | alte Seite läuft auf IONOS mit Bricks |
 | Etch | Page-Builder, **legt auch die Inhaltstypen (CPTs) und Taxonomien an** | Etch hat eigene Content Types; Loops mit echten `WP_Query`-Argumenten |
 | AutomaticCSS + Frames | Design-Tokens, Abstände, Typo | beides läuft schon auf der alten Seite |
 | **Meta Box** (inkl. MB Relationships) | Felder, die Etch selbst nicht kann | siehe unten |
 | Plugin `fck-core` (eigen, im Git) | Rechenwerte (nächstes Spiel, Spiele nach Tag, Form), Sync-Endpoint für die Pipeline, Trainer-Rechte | Etch kann nicht sortieren, gruppieren oder filtern |
-| Bricks2Etch | Migration von der alten Seite | überträgt Beiträge, Medien, CPTs, Meta-Box-Feldgruppen und -Werte |
+| Umzugs-Skripte (WP-CLI über SSH) | Migration von der alten Seite | beide Server per SSH erreichbar; wir ziehen nur, was in die neue Struktur passt |
 | n8n | holt Daten von fussball.de | gibt es schon, wird umgebaut |
 
 ### Warum Etch-Felder allein nicht reichen
 
-Etch kann eigene Felder anlegen, aber nur einfache Typen: Text, Textbereich, Zahl, Ja/Nein, Auswahl, Checkbox, Radio, Datum, Uhrzeit (Etch 1.5.1, Quellcode; die Public-API-Doku nennt nur text/textarea/number/boolean). Es fehlen **Bild/Logo, Datei, Repeater und Verknüpfungen (Relationship)**. Genau die brauchen wir: Teamfoto, Partner-Logo, Trainingszeiten, Spiel → Mannschaft, Person → Mannschaft.
+Etch 1.7.1 kann eigene Felder anlegen: Text, Textbereich, Zahl, Ja/Nein, **Bild**, Datum, Uhrzeit, Auswahl, Checkbox, Radio. Es fehlen weiterhin **Datei, Repeater und Verknüpfungen (Relationship)**. Die brauchen wir für Trainingszeiten, Downloads, Spiel → Mannschaft und Person → Mannschaft. Einfache Felder (z. B. Partner-Website) könnten in Etch liegen; damit nicht zwei Feldsysteme gepflegt werden, legen wir alle Felder in Meta Box an.
 
 ### Warum Meta Box und nicht ACF
 
-- Die alte Seite nutzt Meta Box schon (inkl. Relationships, Builder, Views). Die vorhandenen Feldgruppen und Werte (Mannschaften, Mitglieder, Sponsoren, Vereine) kommen mit Bricks2Etch direkt mit.
+- Die alte Seite nutzt Meta Box schon (inkl. Relationships, Builder, Views). Die vorhandenen Werte (Mannschaften, Mitglieder, Sponsoren, Vereine) lassen sich direkt auslesen und in die neuen Felder schreiben.
 - Etch unterstützt Meta Box offiziell (`this.metabox.*`).
 - **Regel für Verknüpfungen, nach denen gefiltert wird:** als einfaches Feld mit einer Post-ID speichern (z. B. Spiel → `team_id`), nicht über MB Relationships. MB Relationships liegen in einer eigenen Tabelle und brauchen in Etch Sonder-Loops (`mbFrom`/`mbTo`); ein einfaches Feld geht mit `meta_query` und `$team: this.id`.
 - ACF Pro wäre die Alternative mit dem breitesten Etch-Adapter, kostet aber Lizenz und eine zusätzliche Umstellung der Altdaten.
@@ -53,7 +53,7 @@ Etch kann eigene Felder anlegen, aber nur einfache Typen: Text, Textbereich, Zah
 ### SSH-Inventur (21.10.2026, nur gelesen)
 
 - **System:** WordPress 7.1.3, Bricks 2.4.3 + Child, WP-CLI vorhanden, Uploads 620 MB (einzelne Originalfotos 16–17 MB → bei der Migration verkleinern).
-- **Aktive Plugins:** Admin Columns Pro, AutomaticCSS 3.3.8, Frames, Fluent Forms Pro, HappyFiles Pro, Meta Box AIO, SEOPress Pro, Wordfence, WPvivid Backup Pro, Pressidium Cookie Consent, Maileroo SMTP, GDPR-YouTube, Remove CPT Base, IONOS-Plugins, **WP File Manager** (Sicherheitsrisiko, sollte auf der neuen Seite nicht mehr drauf).
+- **Aktive Plugins:** Admin Columns Pro, AutomaticCSS 3.3.8, Frames, Fluent Forms Pro, HappyFiles Pro, Meta Box AIO, SEOPress Pro, Wordfence, WPvivid Backup Pro, Pressidium Cookie Consent, Maileroo SMTP, GDPR-YouTube, Remove CPT Base, IONOS-Plugins, WP File Manager (am 21.10.2026 gelöscht).
 - **Schema per Code:** mu-plugin `fck-club-meta-box` lädt alle Feldgruppen aus JSON (Quelle: Repo `wordpress-club-meta-box`). CPTs und Taxonomien sind in Meta Box angelegt (7 CPTs, 3 Taxonomien, 1 Relationship), dazu 8 MB Views und 7 Bricks-Templates (Header, Footer, Blog, Mannschaft, Historie).
 - **Feldgruppen heute:**
   - *Mannschaften:* Teamschlüssel, fussball.de-ID, Liga, Kategorie, Schalter „Spielplan anzeigen“ + die serialisierten Sync-Felder (letzte Spiele, nächste Spiele, Tabelle).
@@ -65,7 +65,13 @@ Etch kann eigene Felder anlegen, aber nur einfache Typen: Text, Textbereich, Zah
 - **Kategorien:** Aktive 73, Allgemein 57, Nachwuchs 49, Spielberichte 38, Veranstaltungen 20, Kunstrasen 10, Neubau 7, AH 5, Förderverein 5, Bezirkspokal 4, Weihnachten 3, Verbandspokal 2, Gemeindepokal 1.
 - **Fotos:** Die Einwilligung für Fotos und Namen gibt es über die Mitgliedschaft und beim Fotoshooting (Aussage Verein, 21.10.2026). Ein Einzel-Einwilligungsfeld ist deshalb nicht nötig; es gibt nur einen Schalter „Profil ausblenden“ für Widerrufe.
 
-**Was das für den Plan heißt:** Wir bauen die Struktur neu und besser. Die alten Daten ziehen wir per Bricks2Etch und kleinen Umzugs-Skripten in die neue Struktur.
+**Was das für den Plan heißt:** Wir bauen die Struktur neu und besser. Die alten Daten ziehen wir mit eigenen Umzugs-Skripten in die neue Struktur.
+
+### Neue Seite (21.10.2026)
+
+- `fck.tobiashaas.dev` auf xCloud (Hetzner), PHP 8.4, WordPress 7.1.3, Redis-Cache, Nginx-Helper.
+- Etch-Theme 0.0.7, Etch 1.7.1, AutomaticCSS 4.0.1. Fluent SMTP ist installiert, aber aus.
+- Noch leer: keine eigenen Inhaltstypen, keine Inhalte, ein Admin. **Meta Box fehlt noch.**
 
 ### Heute → Neu
 
@@ -189,11 +195,16 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 
 ---
 
-## 7. Migration der alten Seite (nach SSH-Zugang)
+## 7. Migration der alten Seite
 
 1. **Inventur, nur lesend:** WordPress-Version, Theme, Plugins, CPTs, Feldgruppen, Anzahl Beiträge/Seiten/Medien, Menüs, Formulare, Größe der Uploads.
 2. **Was übernommen wird:** Beiträge (mit Datum, Kategorie, Beitragsbild), Medien, Partner-Logos, Teams, Ansprechpartner, Downloads (Satzung, Anträge).
-3. **Wie:** Neue Staging-Seite mit Etch, dann **Bricks2Etch**: überträgt Beiträge, Seiten, Medien, Beitragsbilder, CPTs, Meta-Box-Feldgruppen und Feldwerte, Fonts und globale Klassen. Danach alte Kategorien auf die neuen abbilden und `mitglieder` → Person, `vereine` → Gegner-Wappen nutzen. Bricks-Templates werden nicht gebraucht, die Seiten entstehen neu nach den Paper-Entwürfen.
+3. **Wie:** Kein Bricks2Etch. Beide Server sind per SSH erreichbar; Umzugs-Skripte mit WP-CLI:
+   - **Export alt:** `wp post list`/`wp post meta` und die Relationship-Tabelle als JSON, Uploads per `rsync`.
+   - **Import neu:** zuerst Medien (`wp media import`, dabei auf max. 2560 px verkleinern), dann Beiträge mit Datum, Autor, Kategorie und Beitragsbild, dann Personen, Mannschaften, Partner, Gegner, jeweils mit einer Zuordnung alte ID → neue ID.
+   - **Abbildung:** `mitglieder` → Person (Mannschaft aus `mannschaft-spieler`), `sponsor` → Partner (Stufe aus `partner_type`), `vereine` → Gegner-Wappen, `foerderverein`/`historie`/`rechtlich` → Seiten. Alte Kategorien auf die neuen abbilden.
+   - Bricks-Seiten und -Templates werden nicht übernommen, die Seiten entstehen neu nach den Paper-Entwürfen.
+   - Die Skripte sind wiederholbar (gleiche alte ID → Update statt Duplikat), damit wir vor dem Umzug noch einmal frisch ziehen können.
 4. **Weiterleitungen:** Alle alten URLs auf die neuen (301), damit Google-Links und geteilte Links weiter funktionieren.
 5. **Aufräumen:** Riesige Originalfotos (bis 17 MB) beim Import verkleinern, Reste von WP All Import/Export nicht übernehmen.
 
@@ -227,7 +238,7 @@ Die Pipeline legt **nie** selbst Personen an und schreibt **nie** leere Daten ü
 | Phase | Inhalt | Ergebnis |
 |---|---|---|
 | 0 | SSH-Inventur der alten Seite, Teamliste klären, Rechtsfrage fussball.de anstoßen | Bestandsliste |
-| 1 | Staging-Seite mit Etch, Bricks2Etch-Migration der Inhalte, CPTs in Etch, Felder in Meta Box, `fck-core`, ACSS-Tokens aus den Entwürfen | Datenmodell mit echten Altdaten |
+| 1 | Staging-Seite mit Etch, CPTs in Etch, Umzugs-Skripte für die Inhalte, Felder in Meta Box, `fck-core`, ACSS-Tokens aus den Entwürfen | Datenmodell mit echten Altdaten |
 | 2 | Etch: Header, Footer, Komponenten (Spielkarte, Tabelle, Kachel, Partner-Zeile, Person), dann die Templates | alle Seiten mit Testdaten |
 | 3 | Pipeline umbauen und an `fck/v1/sync` anschließen, Rechenwerte in `fck-core` | echte Spieldaten |
 | 4 | Inhalte aufräumen und ergänzen (Logos als SVG, Rückennummern, Trainingszeiten), Weiterleitungen | Inhalte fertig |
