@@ -502,7 +502,10 @@ function fck_imp_content( string $html ): string {
 	}, $html );
 	$html = preg_replace_callback( '/wp-image-(\d+)/', fn( $m ) => 'wp-image-' . ( fck_imp_media( (int) $m[1] ) ?: $m[1] ), $html );
 	$html = preg_replace_callback( '/data-id="(\d+)"/', fn( $m ) => 'data-id="' . ( fck_imp_media( (int) $m[1] ) ?: $m[1] ) . '"', $html );
-	$html = str_replace( $old_base, $new_base, $html );
+	$www  = str_replace( '://', '://www.', $old_base );
+	$html = str_replace( array( $old_base, $www, str_replace( 'https://', 'http://', $www ), str_replace( 'https://', 'http://', $old_base ) ), $new_base, $html );
+	$old_home_www = str_replace( '://', '://www.', $old_home );
+	$html = str_replace( array( $old_home_www . '/', str_replace( 'https://', 'http://', $old_home_www ) . '/' ), $new_home . '/', $html );
 	$html = str_replace( array( $old_home . '/', str_replace( 'https://', 'http://', $old_home ) . '/' ), $new_home . '/', $html );
 	return $html;
 }
