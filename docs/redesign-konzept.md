@@ -34,6 +34,34 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 >
 > Die Mittellinie mit Mittelkreis liegt seitdem zwischen Tabelle und News.
 
+## Design-System V3 (konsolidiert nach Konsistenz-Audit, 21.10.2026)
+
+| Baustein | Regel |
+|---|---|
+| Section-Kopf | Strich 22×2 `--primary-semi-light` · Kicker 13/16, 600, +0.08em, Versalien, `--text-on-dark-muted` · H2 56/56, −0.02em · rechts: Link **oder** Lead 18/28 **oder** Team-Umschalter · Kopf→Inhalt 40 |
+| Section-Abstand | oben 90, unten 60, Gutter 60, Raster 1320, Kachel-Abstand 16 |
+| Karte | `--card-bg` (#1A1A1A), 1 px `--card-border`, Radius 10, Innenabstand 28 (große 2×2-Karte 36). Akzentkarte: `--primary` ohne Rahmen (nur eine pro Raster) |
+| Karten-Kicker | 12/16, 600, +0.08em, Versalien, `--text-on-dark-muted`, kein Strich |
+| Typo | H1 92/84 (Hero) · H2 56/56 · Lead-Karte 48/52 · H3 28/32 (2×1-Karten) · H4 22/26 (1×1-Karten) · Body-L 18/28 · Body 15/23 · Small 13/16 |
+| Textstufen auf Dunkel | Weiß (Titel) · `--text-on-dark` 0.8 (Fließtext) · `--text-on-dark-muted` 0.64 (Meta) – keine weiteren Alphas |
+| Buttons | Primär (`--primary`), Sekundär (weiß, dunkler Text), Outline (`--outline-on-dark`) · M: 16/20, 16×24 · S: 14/18, 12×18 · Radius 5 |
+| Link | 15/18, 600, `--primary-semi-light`, Pfeil inline „Text →“ (auf Rot: weiß) |
+| Badge | 11/14, 600, +0.08em, Versalien per CSS, 4×8, Radius 5 · neutral `--badge-bg` (Heim, Auswärts) · Akzent (Kategorien) · Status gefüllt (`--win`/`--draw`/`--loss`) |
+| Datum | Fließtext „So 25.10. · 15:00 Uhr“ (Jahr nur außerhalb der Saison) · Datumsblock 56 breit, Radius 5, Zahl Basement 26 + Monat Small |
+| Team-Umschalter | eine Komponente für Hero und Tabelle: 1. Herren · SG B.K.N. · Junioren · Mädchen · Ü35 (aus dem Mannschafts-CPT) |
+| Tabelle | Kopf im Kicker-Stil; Zonen `--zone-promotion` / `--zone-relegation` / `--zone-relegated`; eigene Zeile `--primary-semi-light` 12 % |
+| Begriffe | „Kalender abonnieren“ (Abo) vs. „Zum Kalender hinzufügen“ (einzelnes Spiel) · „Joshua Kimmich Junior Cup“ immer voll · „Partner“ (nicht Sponsoren) · „Probetraining vereinbaren“ |
+
+**Startseiten-Reihenfolge seit V3:** Hero (mit Spieltags-Widget) → Spieltag/Tabelle → Dein FCK (Bento) → Neues vom #FCK → Partner → Footer. Jedes Spiel steht nur noch **einmal**: letztes und nächstes Spiel im Hero, das nächste Heimspiel neben der Tabelle. Die Bento-Kachel „Dein Besuch“ zeigt den Spielort, keinen Gegner.
+
+**Noch offen (Persona-Review V3):**
+- Leerzustände gestalten: Winter-/Sommerpause, „kein Termin“, Sync-Fehler mit „Stand“, Team ohne Tabelle (Mädchen, Ü35, F/Bambini)
+- Partner: Logozeile „weitere Partner“, Erklärung der Stufen, Mediadaten als PDF
+- Trainer-Service (Platzbelegung, Formulare) als Unterseite verlinken
+- Fotos/Galerie, Ferienangebote (Event-Kategorie), sichtbarer Hinweis zu Bild-Einwilligungen
+- Registergericht/VR-Nummer für Footer & Impressum
+- Mobile Version (9-spaltige Tabelle → `Sp · Diff · Pkt`, Footer-Akkordeon, Chip-Umbruch)
+
 ## 1. Grundsätze
 
 1. **Nichts Handgepflegtes, das veraltet.** Spieldaten kommen aus der Pipeline. News, Termine, Partner und Rollen kommen aus WordPress-Inhalten mit Ablaufdatum. Jede Komponente hat einen **Leerzustand**.
