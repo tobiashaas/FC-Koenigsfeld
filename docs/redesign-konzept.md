@@ -307,6 +307,19 @@ Zusätzlich von motion.dev: Mobil bleiben die Hauptlinks als kompakte Zeile sich
 
 **Prototyp:** `prototypes/rasen-shader.html` (Header mit Schrägsegmenten und Rolling Text).
 
+### Navigation V4 (21.10.2026, ersetzt Schrägsegmente und Menü-Button am Desktop)
+
+Abgeschaut von motion.dev (gesichtet 21.10.2026): Die Leiste hat einen dunklen Grund mit feiner diagonaler Schraffur, `repeating-linear-gradient(119deg, Linie 1,5 px, Abstand 8 px)`. Dazu kommen Rolling Text beim Hover und ein schräger Wisch (animierte `clip-path`-Polygonfläche) auf dem CTA. Die Schräge im Winkel von 119° passt zur roten Diagonale im Hero.
+
+- **Desktop ohne Menü-Button:** Wappen links, daneben eine durchgehende Leiste mit Schraffur, bündig zum Raster (60 px).
+  - Hauptpunkte: Spieltag · Teams · Aktuelles · Verein · Mitmachen · Partner.
+  - Rechts der CTA „Mitglied werden“ als roter Block mit schräger linker Kante.
+  - Aktive Seite: 2 px Unterstrich in `--primary-semi-light`.
+- **Mega-Panel:** Jeder Hauptpunkt öffnet bei Hover, Klick oder Fokus ein Panel direkt unter der Leiste, in der Breite der Leiste. Aufbau: Titel mit einem Satz links, zwei Linkspalten, rechts ein Teaser. Der Rest der Seite wird abgedunkelt. `Esc` schließt das Panel, Pfeiltasten führen durch die Links. Damit ersetzen die Panels das Vollbild-Menü am Desktop.
+- **Mobil:** Die Kopfzeile bleibt oben stehen und hat dieselbe Schraffur. Links das Wappen, Schnelllink „Spieltag“, rechts der rote Menü-Block mit schräger Kante. Das rote Vollbild-Menü bleibt nur mobil.
+- **Hover:** Rolling Text auf allen Links. Auf dem CTA ein schräger Wisch von links (0,4 s, `cubic-bezier(.25,0,0,1)`). Bei `prefers-reduced-motion` gibt es nur einen Farbwechsel.
+- Schraffur nur auf Dunkel, nie auf Rot (gleiche Regel wie beim Korn).
+
 ### Hintergrund „Rasen-Shader“ (Vorbild native.security)
 
 native.security nutzt eine three.js-WebGL-Szene: Rauschen wird in Stufen quantisiert (Höhenlinien mit hellem Rand), darüber liegt animiertes Korn. Die Szene bewegt sich langsam mit Zeit und Scroll.
