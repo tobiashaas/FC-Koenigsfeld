@@ -62,12 +62,32 @@ Danach folgt der Nachbau im Design-Tool, dann Etch + WordPress + ACSS.
 
 **Noch offen (Persona-Review V3):**
 - Förderverein: Zweck in einem Satz, Beitrag, Spendenkonto und ggf. Spendenquittung (vom Förderverein liefern lassen)
-- Leerzustände gestalten: Winter-/Sommerpause, „kein Termin“, Sync-Fehler mit „Stand“, Team ohne Tabelle (Mädchen, Ü35, F/Bambini)
+- ~~Leerzustände gestalten~~ erledigt 21.10.2026, siehe unten
 - Partner: Logozeile „weitere Partner“, Erklärung der Stufen, Mediadaten als PDF
 - Trainer-Service (Platzbelegung, Formulare) als Unterseite verlinken
 - Fotos/Galerie, Ferienangebote (Event-Kategorie), sichtbarer Hinweis zu Bild-Einwilligungen
 - Registergericht/VR-Nummer für Footer & Impressum
 - Mobile Version (9-spaltige Tabelle → `Sp · Diff · Pkt`, Footer-Akkordeon, Chip-Umbruch)
+
+### Leerzustände (Paper, Seite „Zustände & Komponenten“, 21.10.2026)
+
+Regeln: nie eine leere Box, sondern Grund und nächsten Schritt nennen · Quelle und Stand bleiben sichtbar · gleiche Karte, gleiche Größe, das Layout springt nicht.
+
+| Modul | Zustand | Auslöser (Daten) | Darstellung |
+|---|---|---|---|
+| Spieltag-Widget | Spielpause | kein Spiel in den nächsten 21 Tagen | Letztes Spiel bleibt stehen; Karte „Nächstes Spiel“ mit Badge Winter-/Sommerpause, Rückrundenstart nur wenn im Spielplan, Buttons „Kalender abonnieren“ und „Alle Termine“ |
+| Spieltag-Widget | Team ohne Liga | Team hat keine fussball.de-ID (Mädchen, Bambini, F) | Eine Karte in der Höhe beider Karten: Badge „Keine Liga“, nächster Termin aus dem CPT oder „Noch nicht eingetragen“, Trainingszeiten, „Probetraining vereinbaren“; Fußzeile „Gepflegt vom Team · Stand …“ |
+| Spieltag-Widget | Daten veraltet | letzter erfolgreicher Import > 36 h | Inhalte bleiben; gelber Hinweis „Stand … – evtl. nicht aktuell · fussball.de ↗“ statt der grauen Quellenzeile |
+| Spieltag-Widget | Spieltag heute | Anstoß heute | Badge „Heute“ in `--primary`, Heim/Auswärts wandert in die Datumszeile; kein Live-Ticker |
+| Spieltag-Widget | Ergebnis folgt | Anstoß + 2 h vorbei, kein Ergebnis | „– –“ mit neutralem Badge „Ergebnis folgt“, Buttons „fussball.de ↗“ und „Alle Ergebnisse“; nie ein falsches 0:0 |
+| Spieltag-Widget | Abgesagt/verlegt | Status von fussball.de | Badge „Abgesagt“ in `--draw`, Uhrzeit durchgestrichen, „Entfällt“, „Nachholtermin folgt“ |
+| Tabelle | Team ohne Tabelle | Wettbewerb nur Pokal oder keine Liga | Karte: was das Team spielt, nächste Runde („Auslosung steht noch aus“), Link zum Wettbewerb und zur Teamseite |
+| Tabelle | Vor dem 1. Spieltag | alle Spiele = 0 | alphabetisch, ohne Platz und Zonen, eigene Zeile markiert, Hinweis „Die Tabelle startet mit dem 1. Spieltag“ |
+| Kachel Termin | Kein Termin | nichts in 60 Tagen | „Gerade ist nichts geplant.“ und „Kalender abonnieren →“ |
+| Partner | Exklusiv-Platz frei | weniger als 3 Exklusiv-Partner | gestrichelte Kachel „Hier könnte dein Logo stehen.“ und „Partner werden →“ |
+| News | Instagram ohne Einwilligung | kein Consent | kein Embed; Profilname, Hinweis auf die Datenübertragung an Meta, „Beiträge laden“ und „Auf Instagram öffnen ↗“ |
+
+Für die Pipeline heißt das: Import-Zeitstempel, Spielstatus (abgesagt/verlegt) und ein Flag „Team hat Liga/Tabelle“ werden gebraucht, siehe Gaps in Abschnitt 5.
 
 ## 1. Grundsätze
 
