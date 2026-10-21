@@ -111,6 +111,22 @@ Reihenfolge mobil: Hero → Spieltag-Modul → **Dein FCK** → Tabelle → News
 - **Footer:** rote Karte, Akkordeon in der Menü-Schrift, Kontakte inkl. Sponsoring und Presse.
 - **Menü-Overlay:** rot, große Hauptpunkte als Akkordeon, unten Schnelllinks und „Mitglied werden“.
 
+### Unterseiten Desktop (Paper, Seite „Unterseiten · Desktop“, 21.10.2026)
+
+Alle Unterseiten nutzen dieselbe Kopfzeile (aktiver Punkt weiß), Korn-Grund, Haarlinien statt Karten und den roten Footer. Karten nur für klickbare Einheiten (Spielerkarten, Spielkarten, Formular).
+
+| Seite | Inhalt |
+|---|---|
+| Aktuelles · Übersicht | Brotkrumen, H1, Filter (Kategorie-Chips + Team-Auswahl), Aufmacher mit Foto, Meldungsliste mit Vorschaubild (Wappen als Platzhalter ohne Foto), Seitenleiste „Nächste Termine“ und „Für Presse & Medien“, „Ältere Meldungen laden“ |
+| Aktuelles · Artikel | Meta, H1, Lead, Autor und Lesezeit, Teilen (WhatsApp, Link kopieren), Titelbild mit Bildnachweis, Spalte „Spieldaten“ (Ergebnis, Halbzeit, Ort, Tore aus fussball.de, Tabelle danach), Fließtext 720 px mit Zitat, Ausblick aufs nächste Spiel, „Weitere Meldungen“ |
+| Teams · 1. Herren | Hero mit Teamfoto und 70°-Diagonale, Platz, Punkte, Form (S/U/N mit Buchstaben, nicht nur Farbe), Trikotsponsor; Unternavigation; Spielkarten + Tabellenausschnitt + nächste Spiele; Kader nach Positionen (Spielerkarten, weitere Gruppen eingeklappt); Trainerteam, Trainingszeiten, Probetraining; Trikotsponsor-Zeile mit HSS-Jobs-Link |
+| Teams · Spielerprofil | Foto-Fläche mit roter 70°-Schräge und Rückennummer, Name, Steckbrief (im Verein seit, starker Fuß, vorherige Vereine, Lieblingsmoment), Saisonzahlen aus fussball.de, vorheriger/nächster Spieler. **Nur für Erwachsene mit Einwilligung, keine Profile für Jugendspieler, kein Geburtsdatum.** |
+| Spieltag · Spielplan | Filter nach Team, Umschalter Kommende/Ergebnisse/Nur Heimspiele, Kalender-Abo, Platzbelegung; Liste nach Tagen mit Uhrzeit, Team, Paarung (eigenes Team fett), Ort, Wettbewerb, Anfahrt; Quelle und Stand |
+| Partner · Übersicht | HSS-Band, Partner-Wand, alle 61 Partner nach Stufe mit Suche, „Partner werden“ mit vier Paketen (Bande, Trikot, Turniere, Jugend), Sponsorenmappe, Ansprechpartner |
+| Verein · Kontakt | Kennzahlen, „Wer hilft dir weiter?“ (Vorstand, Jugend, Kinderschutz, Spielbetrieb, Förderverein, Spieltag), Kontaktformular mit Themenauswahl, Spielstätten mit Route, Formulare & Downloads (Mitgliedsantrag, Satzung, Kinderschutzkonzept, Förderverein) |
+
+Offen vom Verein: echte Spieler- und Trainerfotos, Trainingszeiten je Team, Adressen der Plätze Neuhausen und Buchenberg, Namen der Jugendleitung und der Kinderschutz-Vertrauensperson, Satzung und Kinderschutzkonzept als PDF.
+
 ### Leerzustände (Paper, Seite „Zustände & Komponenten“, 21.10.2026)
 
 Regeln: nie eine leere Box, sondern Grund und nächsten Schritt nennen · Quelle und Stand bleiben sichtbar · gleiche Karte, gleiche Größe, das Layout springt nicht.
